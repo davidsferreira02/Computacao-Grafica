@@ -1,6 +1,6 @@
 # CG 2023/2024
 
-## Group T0xG0y
+## Group T12G03
 | Name             | Number    | E-Mail             |
 | ---------------- | --------- | ------------------ |
 | David dos Santos Ferreira       | 202006302 | up202006302@up.pt               |
