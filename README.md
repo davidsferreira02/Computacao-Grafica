@@ -3,8 +3,8 @@
 ## Group T0xG0y
 | Name             | Number    | E-Mail             |
 | ---------------- | --------- | ------------------ |
-| John Doe         | 201901010 | ...                |
-| Jane Doe         | 201901011 | ...                |
+| David dos Santos Ferreira       | 202006302 | up202006302@up.pt               |
+| Nuno Rodrigo Moreira Silva        | 202108827| up202108827@up.pt                |
 
 ----
 
