@@ -41,11 +41,6 @@ export class MyScene extends CGFscene {
 
     //Objects connected to MyInterface
     this.displayAxis = true;
-    this.displayDiamond=false;
-    this.displayTriangle=false;
-    this.displayTriangleSmall=false;
-    this.displayTriangleBig=false;
-    this.displayParallelogram=false;
     this.displayTangram=true;
     
     this.scaleFactor = 1;
@@ -86,9 +81,12 @@ export class MyScene extends CGFscene {
     this.Tx = 1;
     this.Ty = 0;
     this.Tz = 0;
-    var a = 3.14/2;
+    var a = Math.PI/2;
+  this.Sx=1;
+  this.Sy=1;
+  this.Sz=1;
 
-    this.matrixTranslate = [ 1, 0, 0, 0,
+  /*  this.matrixTranslate = [ 1, 0, 0, 0,
                              0, 1, 0, 0,
                              0, 0, 1, 0,
                              this.Tx, this.Ty, this.Tz, 1 ];
@@ -96,9 +94,14 @@ export class MyScene extends CGFscene {
     this.matrixRotate = [ Math.cos(a), Math.sin(a), 0, 0,
                          -Math.sin(a), Math.cos(a), 0, 0,
                           0, 0, 1, 0,
-                          0, 0, 0, 1 ];  
+                          0, 0, 0, 1 ]; 
+                          
+     this.matrixScaling = [this.Sx,0,0,0,
+                           0,this.Sy,0,0,
+                           0,0,this.Sz,0,
+                           0,0,0,1];                     
     
-
+*/
     // Apply transformations corresponding to the camera position relative to the origin
     this.applyViewMatrix();
 
@@ -131,10 +134,9 @@ export class MyScene extends CGFscene {
     this.multMatrix(sca);
 
     this.pushMatrix();
-    this.multMatrix(this.matrixTranslate);
+   /* this.multMatrix(this.matrixTranslate);
     this.multMatrix(this.matrixRotate);
-    if(this.displayDiamond) this.diamond.display();
-    
+    this.multMatrix(this.matrixScaling);*/
     this.popMatrix();
 
     
@@ -142,14 +144,7 @@ export class MyScene extends CGFscene {
     // ---- BEGIN Primitive drawing section
 
 
-    if(this.displayParallelogram) this.parallelogram.display();
-    
-    if(this.displayTriangle) this.triangle.display();
-    
-    if(this.displayTriangleBig) this.triangleBig.display();
-
-    if(this.displayTriangleSmall) this.triangleSmall.display();
-
+    if(this.displayTangram) 
     this.tangram.display();
 
     
