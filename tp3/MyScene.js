@@ -43,6 +43,7 @@ export class MyScene extends CGFscene {
         this.displayNormals = false;
         this.objectComplexity = 0.5;
         this.scaleFactor = 2.0;
+        this.Ambient=1;
 
     }
     initLights() {
@@ -159,6 +160,8 @@ export class MyScene extends CGFscene {
         // Draw axis
         if (this.displayAxis)
             this.axis.display();
+
+         this.setGlobalAmbientLight(this.Ambient,this.Ambient,this.Ambient,1);   
 
         // ---- BEGIN Primitive drawing section
 
