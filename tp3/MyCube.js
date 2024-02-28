@@ -15,14 +15,32 @@ export class MyCube extends CGFobject {
 			-1, 1, 0,	//0
 			-1, 0, 0,	//1
 			0, 0, 0,	//2
+			0, 1, 0,	//3
+			-1, 1, 0,	//0
+			-1, 0, 0,	//1
+			0, 0, 0,	//2
 			0, 1, 0		//3
 		];
 
 		//Counter-clockwise reference of vertices
 		this.indices = [
 			0, 1, 3,
-			1, 2, 3
+			1, 2, 3,
+			7, 5, 4,
+			7, 6, 5
 		];
+
+		this.normals = [
+            0, 0, 1,   
+            0, 0, 1,   
+            0, 0, 1,   
+            0, 0, 1,   
+            -1, 0, 0,  
+            -1, 0, 0,  
+            1, 0, 0,   
+            1, 0, 0, 
+			
+        ];
 
 
 		//The defined indices (and corresponding vertices)
