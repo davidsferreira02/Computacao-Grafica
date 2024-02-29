@@ -28,12 +28,6 @@ export class MyTangram extends CGFobject {
     }
 
     initMaterials() {
-      // this.diamond
-      this.cubeMaterial = new CGFappearance(this.scene);
-      this.cubeMaterial.setAmbient(0, 1, 0, 1.0);
-      this.cubeMaterial.setDiffuse(0, 1, 0, 0)
-      this.cubeMaterial.setSpecular(0.9, 0.9, 0.9, 1.0);
-      this.cubeMaterial.setShininess(10.0);
 
       // this.triangle purple
       this.triangleVioletMaterial = new CGFappearance(this.scene);
@@ -41,6 +35,13 @@ export class MyTangram extends CGFobject {
       this.triangleVioletMaterial.setDiffuse(76 / 255, 0 / 255, 153 / 255, 0)
       this.triangleVioletMaterial.setSpecular(0.9, 0.9, 0.9, 1.0);
       this.triangleVioletMaterial.setShininess(10.0);
+      
+      // this.cube
+      this.cubeMaterial = new CGFappearance(this.scene);
+      this.cubeMaterial.setAmbient(0, 1, 0, 1.0);
+      this.cubeMaterial.setDiffuse(0, 1, 0, 0)
+      this.cubeMaterial.setSpecular(0.9, 0.9, 0.9, 1.0);
+      this.cubeMaterial.setShininess(10.0);
 
       // this.triangle pink
       this.trianglePinkMaterial = new CGFappearance(this.scene);
@@ -80,19 +81,20 @@ export class MyTangram extends CGFobject {
 
 
     display(){
-      
-      this.scene.pushMatrix();
-      this.scene.rotate(-90 * Math.PI / 180,0,0,-180 * Math.PI / 180);
-      this.scene.scale(1,-1,0);
-      this.paralellogramMaterial.apply()
-      this.parallelogram.display();
-      this.scene.popMatrix();
+    
 
       this.scene.pushMatrix();
       this.scene.translate(-1,0,0);
       this.scene.rotate(-45 * Math.PI / 180,0,0,-90 * Math.PI / 180);
       this.triangleBlueMaterial.apply()
       this.triangleBlue.display();
+      this.scene.popMatrix();
+
+      this.scene.pushMatrix();
+      this.scene.rotate(-90 * Math.PI / 180,0,0,-180 * Math.PI / 180);
+      this.scene.scale(1,-1,0);
+      this.paralellogramMaterial.apply()
+      this.parallelogram.display();
       this.scene.popMatrix();
 
       this.scene.pushMatrix();
@@ -137,11 +139,11 @@ export class MyTangram extends CGFobject {
 
     enableNormalViz(){
       this.cube.enableNormalViz()
-      this.triangleBlue.disableNormalViz()     
-      this.triangleOrange.disableNormalViz()  
-      this.trianglePink.disableNormalViz()    
-      this.triangleRed.disableNormalViz()   
-      this.triangleViolet.disableNormalViz() 
+      this.triangleBlue.enableNormalViz()     
+      this.triangleOrange.enableNormalViz()  
+      this.trianglePink.enableNormalViz()    
+      this.triangleRed.enableNormalViz()   
+      this.triangleViolet.enableNormalViz() 
       this.parallelogram.enableNormalViz()
   };
 

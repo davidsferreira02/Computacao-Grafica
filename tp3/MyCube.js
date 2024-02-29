@@ -20,6 +20,7 @@ export class MyCube extends CGFobject {
 			-1, 0, 0,	//1
 			0, 0, 0,	//2
 			0, 1, 0		//3
+
 		];
 
 		//Counter-clockwise reference of vertices
@@ -35,11 +36,10 @@ export class MyCube extends CGFobject {
             0, 0, 1,   
             0, 0, 1,   
             0, 0, 1,   
-            -1, 0, 0,  
-            -1, 0, 0,  
-            1, 0, 0,   
-            1, 0, 0, 
-			
+			0, 0, -1,   
+            0, 0, -1,   
+            0, 0, -1,   
+            0, 0, -1,
         ];
 
 
