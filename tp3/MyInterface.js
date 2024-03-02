@@ -60,8 +60,6 @@ export class MyInterface extends CGFinterface {
 
 
         var f3 =this.gui.addFolder('Intensity');
-        
-
         f3.add(this.scene, 'Ambient', 0.0, 1.0).name('Ambient');
        
         return true;
