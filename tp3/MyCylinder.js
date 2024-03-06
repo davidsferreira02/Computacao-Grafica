@@ -41,6 +41,9 @@ export class MyCylinder extends CGFobject {
         for(var j=0;j<this.stacks;j++){
             this.indices.push(i*(this.stacks+1)+j,i*(this.stacks+1)+1+this.stacks+j,i*(this.stacks+1)+2+this.stacks+j);
             this.indices.push(i*(this.stacks+1)+j,i*(this.stacks+1)+2+this.stacks+j,i*(this.stacks+1)+1+j);
+             this.indices.push(i*(this.stacks+1)+2+this.stacks+j,i*(this.stacks+1)+1+this.stacks+j,i*(this.stacks+1)+j);
+             this.indices.push(i*(this.stacks+1)+1+j,i*(this.stacks+1)+2+this.stacks+j,i*(this.stacks+1)+j);
+
         }
       }
 

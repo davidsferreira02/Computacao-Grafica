@@ -38,6 +38,8 @@ export class MyPrism extends CGFobject {
 
                 this.indices.push((counter +1), (counter +0), (counter +2) );
 				this.indices.push((counter +1), (counter +2), (counter +3) );
+                this.indices.push((counter +2), (counter +0), (counter +1) );
+				this.indices.push((counter +3), (counter +2), (counter +1) );
                 counter += 4;
 
                 var s2 = Math.sin(ang2+2*alphaAng);
