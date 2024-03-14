@@ -90,6 +90,7 @@ export class MyTangram extends CGFobject {
       this.paralellogramMaterial.setShininess(10.0);
       this.paralellogramMaterial.loadTexture('images/tangram.png');
       this.paralellogramMaterial.setTextureWrap('REPEAT', 'REPEAT');
+      
     }
 
 
