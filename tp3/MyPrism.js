@@ -68,4 +68,3 @@ export class MyPrism extends CGFobject {
         this.initNormalVizBuffers();
     }
 }
-
