@@ -81,6 +81,7 @@ export class ShaderScene extends CGFscene {
 
 		this.testShaders = [
 			new CGFshader(this.gl, "shaders/flat.vert", "shaders/flat.frag"),
+			new CGFshader(this.gl, "shaders/flat2.vert", "shaders/flat2.frag"),
 			new CGFshader(this.gl, "shaders/uScale.vert", "shaders/uScale.frag"),
 			new CGFshader(this.gl, "shaders/varying.vert", "shaders/varying.frag"),
 			new CGFshader(this.gl, "shaders/texture1.vert", "shaders/texture1.frag"),
@@ -102,14 +103,15 @@ export class ShaderScene extends CGFscene {
 
 		this.shadersList = {
 			'Flat Shading': 0,
-			'Passing a scale as uniform': 1,
-			'Passing a varying parameter from VS -> FS': 2,
-			'Simple texturing': 3,
-			'Multiple textures in the FS': 4,
-			'Multiple textures in VS and FS': 5,
-			'Animation example': 6,
-			'Sepia': 7,
-			'Convolution': 8
+			'Flat 2 Shading': 1,
+			'Passing a scale as uniform': 2,
+			'Passing a varying parameter from VS -> FS': 3,
+			'Simple texturing': 4,
+			'Multiple textures in the FS': 5,
+			'Multiple textures in VS and FS': 6,
+			'Animation example': 7,
+			'Sepia': 8,
+			'Convolution': 9
 		};
 
 		// shader code panels references
