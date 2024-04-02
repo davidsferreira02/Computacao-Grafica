@@ -76,6 +76,8 @@ export class ShaderScene extends CGFscene {
 		this.appearance.setTextureWrap('REPEAT', 'REPEAT');
 
 		this.texture2 = new CGFtexture(this, "textures/FEUP.jpg");
+		this.texture3= new CGFtexture(this,"textures/waterTex.jpg");
+		this.texture4= new CGFtexture(this,"textures/waterMap.jpg");
 
 		// shaders initialization
 
@@ -90,7 +92,9 @@ export class ShaderScene extends CGFscene {
 			new CGFshader(this.gl, "shaders/texture3anim.vert", "shaders/texture3anim.frag"),
 			new CGFshader(this.gl, "shaders/texture1.vert", "shaders/sepia.frag"),
 			new CGFshader(this.gl, "shaders/flat2.vert", "shaders/sepia2.frag"),
-			new CGFshader(this.gl, "shaders/texture1.vert", "shaders/convolution.frag")
+			new CGFshader(this.gl, "shaders/texture1.vert", "shaders/convolution.frag"),
+			new CGFshader(this.gl, "shaders/water.vert", "shaders/water.frag"),
+			
 		];
 
 		// additional texture will have to be bound to texture unit 1 later, when using the shader, with "this.texture2.bind(1);"
@@ -98,6 +102,10 @@ export class ShaderScene extends CGFscene {
 		this.testShaders[5].setUniformsValues({ uSampler2: 1 });
 		this.testShaders[6].setUniformsValues({ uSampler2: 1 });
 		this.testShaders[6].setUniformsValues({ timeFactor: 0 });
+	
+        this.testShaders[11].setUniformsValues({ uSampler2: 3});
+		
+
 
 
 		// Shaders interface variables
@@ -113,7 +121,8 @@ export class ShaderScene extends CGFscene {
 			'Animation example': 7,
 			'Sepia': 8,
 			'Sepia2': 9,
-			'Convolution': 10
+			'Convolution': 10,
+			'water':11
 		};
 
 		// shader code panels references
@@ -224,12 +233,22 @@ export class ShaderScene extends CGFscene {
 		// aplly main appearance (including texture in default texture unit 0)
 		this.appearance.apply();
 
+		if(this.selectedExampleShader == 11){
+            this.appearance.setTexture(this.texture3);
+            this.appearance.setTextureWrap('MIRRORED_REPEAT', 'MIRRORED_REPEAT');
+        } else {
+            this.appearance.setTexture(this.texture);
+            this.appearance.setTextureWrap('REPEAT', 'REPEAT');
+        }
+
 		// activate selected shader
 		this.setActiveShader(this.testShaders[this.selectedExampleShader]);
 		this.pushMatrix();
 
 		// bind additional texture to texture unit 1
 		this.texture2.bind(1);
+		this.texture4.bind(3);
+	
 
 		if (this.selectedObject==0) {
 			// teapot (scaled and rotated to conform to our axis)
