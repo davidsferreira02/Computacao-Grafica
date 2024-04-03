@@ -37,9 +37,15 @@ export class MyScene extends CGFscene {
     this.enableTextures(true);
 
 this.texture = new CGFtexture(this, "images/terrain.jpg");
+this.textureEarth = new CGFtexture(this,"images/earth.jpg");
 this.appearance = new CGFappearance(this);
 this.appearance.setTexture(this.texture);
 this.appearance.setTextureWrap('REPEAT', 'REPEAT');
+this.appearance2= new CGFappearance(this);
+this.appearance2.setTexture(this.textureEarth);
+this.appearance2.setTextureWrap('REPEAT','REPEAT');
+
+
 
   }
   initLights() {
@@ -77,11 +83,20 @@ this.appearance.setTextureWrap('REPEAT', 'REPEAT');
     // Draw axis
     if (this.displayAxis) this.axis.display();
 
-    if(this.displaySphere) this.sphere.display();
+    if(this.displaySphere){
+      this.pushMatrix();
+      this.appearance2.apply();
+      this.sphere.display(); 
+      this.popMatrix();
+     
+    }; 
+  
 
     // ---- BEGIN Primitive drawing section
 
     this.pushMatrix();
+   
+  
     this.appearance.apply();
     this.translate(0,-100,0);
     this.scale(400,400,400);

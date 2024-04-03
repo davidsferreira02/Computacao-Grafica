@@ -18,6 +18,7 @@ export class MySphere extends CGFobject {
         this.vertices = [];
         this.indices = [];
         this.normals = [];
+        this.texCoords = [];
     
         var alpha = 0; // angulo vertical 
         var theta = 0; // angulo com a horizontal
@@ -46,9 +47,10 @@ export class MySphere extends CGFobject {
               this.normals.push(x, y, z);
           
             theta += (2 * Math.PI) / this.slices; // 2PI pois ele faz uma volta 360 
-         
+            this.texCoords.push(j/this.slices,i/this.stacks);
           }
           alpha += Math.PI / this.stacks; // Pi pois ele faz uma volta de apenas de 180 
+          
         }
     
         this.primitiveType = this.scene.gl.TRIANGLES;
