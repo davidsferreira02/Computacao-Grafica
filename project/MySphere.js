@@ -6,10 +6,11 @@ import { CGFobject } from '../lib/CGF.js';
  * @constructor
  */
 export class MySphere extends CGFobject {
-	constructor(scene, slices, stacks) {
+	constructor(scene, slices, stacks,inverted) {
         super(scene);
         this.stacks = stacks; // vertical
         this.slices = slices; // horizontal
+        this.inverted=inverted //panorama
     
         this.initBuffers();
       }
@@ -39,12 +40,22 @@ export class MySphere extends CGFobject {
               var first = i * latVert + j;
               var second = first + latVert;
     
-          
+              if(!this.inverted){
                 this.indices.push(first + 1, first, second);
                 this.indices.push(first + 1, second, second + 1);
             }
+            else {
+              this.indices.push(first , first + 1, second);
+              this.indices.push(second, first +1, second + 1);
+            }
+          }
     
+            if(!this.inverted){
               this.normals.push(x, y, z);
+            }
+            else {
+              this.normals.push(-x,-y,-z);
+            }
           
             theta += (2 * Math.PI) / this.slices; // 2PI pois ele faz uma volta 360 
             this.texCoords.push(j/this.slices,i/this.stacks);
