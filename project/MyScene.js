@@ -1,7 +1,7 @@
 import { CGFscene, CGFcamera, CGFaxis, CGFappearance, CGFshader, CGFtexture } from "../lib/CGF.js";
 import { MyPlane } from "./MyPlane.js";
 import { MySphere } from "./MySphere.js";
-
+import { MyPanorama } from "./MyPanorama.js";
 /**
  * MyScene
  * @constructor
@@ -27,23 +27,31 @@ export class MyScene extends CGFscene {
     //Initialize scene objects
     this.axis = new CGFaxis(this);
     this.plane = new MyPlane(this,30);
-    this.sphere= new MySphere(this,10,10);
+    this.sphere= new MySphere(this ,10 ,50 ,50 , false);
+    
 
     //Objects connected to MyInterface
     this.displayAxis = true;
     this.scaleFactor = 1;
     this.displaySphere = true ;
+    this.displayPanorama = true;
+    this.displayPlane = true;
 
     this.enableTextures(true);
 
-this.texture = new CGFtexture(this, "images/terrain.jpg");
-this.textureEarth = new CGFtexture(this,"images/earth.jpg");
-this.appearance = new CGFappearance(this);
-this.appearance.setTexture(this.texture);
-this.appearance.setTextureWrap('REPEAT', 'REPEAT');
-this.appearance2= new CGFappearance(this);
-this.appearance2.setTexture(this.textureEarth);
-this.appearance2.setTextureWrap('REPEAT','REPEAT');
+    this.texture = new CGFtexture(this, "images/terrain.jpg");
+    this.textureEarth = new CGFtexture(this,"images/earth.jpg");
+    this.panorama = new CGFtexture(this,"images/panorama4.jpg");
+    this.appearance = new CGFappearance(this);
+    this.appearance.setTexture(this.texture);
+    this.appearance.setTextureWrap('REPEAT', 'REPEAT');
+    this.appearance2= new CGFappearance(this);
+    this.appearance2.setTexture(this.textureEarth);
+    this.appearance2.setTextureWrap('REPEAT','REPEAT');
+    this.appearance3= new CGFappearance(this);
+    this.appearance3.setTexture(this.panorama);
+    this.appearance3.setTextureWrap('REPEAT','REPEAT');
+
 
 
 
@@ -90,19 +98,24 @@ this.appearance2.setTextureWrap('REPEAT','REPEAT');
       this.popMatrix();
      
     }; 
+
+    if(this.displayPanorama){
+      this.panorama = new MyPanorama(this, this.appearance3);
+    }; 
   
 
     // ---- BEGIN Primitive drawing section
 
     this.pushMatrix();
    
-  
-    this.appearance.apply();
-    this.translate(0,-100,0);
-    this.scale(400,400,400);
-    this.rotate(-Math.PI/2.0,1,0,0);
-    this.plane.display();
-    this.popMatrix();
+    if (this.displayPlane){
+      this.appearance.apply();
+      this.translate(0,-100,0);
+      this.scale(400,400,400);
+      this.rotate(-Math.PI/2.0,1,0,0);
+      this.plane.display();
+      this.popMatrix();
+    }
 
     // ---- END Primitive drawing section
   }
