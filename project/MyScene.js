@@ -3,6 +3,7 @@ import { MyPlane } from "./MyPlane.js";
 import { MySphere } from "./MySphere.js";
 import { MyPanorama } from "./MyPanorama.js";
 import { MyStem } from "./MyStem.js";
+import { MyPetal } from "./MyPetal.js";
 /**
  * MyScene
  * @constructor
@@ -30,6 +31,7 @@ export class MyScene extends CGFscene {
     this.plane = new MyPlane(this,30);
     this.sphere= new MySphere(this ,10 ,50 ,50 , false);
     this.stem= new MyStem(this,10,10);
+    this.petal = new MyPetal(this);
     
 
     //Objects connected to MyInterface
@@ -38,7 +40,8 @@ export class MyScene extends CGFscene {
     this.displaySphere = false ;
     this.displayPanorama = true;
     this.displayPlane = false;
-    this.displayStem = true;
+    this.displayStem = false;
+    this.displayPetal =true;
 
     this.enableTextures(true);
 
@@ -128,6 +131,22 @@ export class MyScene extends CGFscene {
       this.scale(0.2,1,0.2);
       this.rotate(-Math.PI/2.0,1,0,0);
       this.stem.display();
+    }
+
+
+    if(this.displayPetal){
+     this.pushMatrix();
+      this.appearance.apply();
+      this.translate(1,1,0);
+      this.petal.display();
+      this.popMatrix();
+     this.pushMatrix();
+      this.appearance.apply();
+      this.translate(1,1,0);
+      this.rotate(Math.PI,0,0,1);
+      this.petal.display();
+      this.popMatrix();
+     
     }
 
     // ---- END Primitive drawing section
