@@ -2,6 +2,7 @@ import { CGFscene, CGFcamera, CGFaxis, CGFappearance, CGFshader, CGFtexture } fr
 import { MyPlane } from "./MyPlane.js";
 import { MySphere } from "./MySphere.js";
 import { MyPanorama } from "./MyPanorama.js";
+import { MyStem } from "./MyStem.js";
 /**
  * MyScene
  * @constructor
@@ -28,14 +29,16 @@ export class MyScene extends CGFscene {
     this.axis = new CGFaxis(this);
     this.plane = new MyPlane(this,30);
     this.sphere= new MySphere(this ,10 ,50 ,50 , false);
+    this.stem= new MyStem(this,10,10);
     
 
     //Objects connected to MyInterface
     this.displayAxis = true;
     this.scaleFactor = 1;
-    this.displaySphere = true ;
+    this.displaySphere = false ;
     this.displayPanorama = true;
-    this.displayPlane = true;
+    this.displayPlane = false;
+    this.displayStem = true;
 
     this.enableTextures(true);
 
@@ -106,15 +109,25 @@ export class MyScene extends CGFscene {
 
     // ---- BEGIN Primitive drawing section
 
-    this.pushMatrix();
+
    
     if (this.displayPlane){
+      this.pushMatrix();
       this.appearance.apply();
       this.translate(0,-100,0);
       this.scale(400,400,400);
       this.rotate(-Math.PI/2.0,1,0,0);
       this.plane.display();
       this.popMatrix();
+    }
+
+
+    if(this.displayStem){
+      this.pushMatrix();
+      this.appearance.apply();
+      this.scale(0.2,1,0.2);
+      this.rotate(-Math.PI/2.0,1,0,0);
+      this.stem.display();
     }
 
     // ---- END Primitive drawing section
