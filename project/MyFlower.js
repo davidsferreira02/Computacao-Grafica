@@ -32,7 +32,8 @@ export class MyFlower extends CGFobject {
    initFlower(){
       this.stem=new MyStem(this.scene,100,100,this.raioCilind,this.tamanhoCaule);
       this.receptacle = new MyReceptacle(this.scene,10,10,this.raioCirc);
-      this.petal = new MyPetal(this.scene);
+      this.raioFlor = this.raio - this.raioCirc;
+      this.petal = new MyPetal(this.scene,this.raioFlor,this.nrPetalas);
 
       
    }
@@ -61,7 +62,7 @@ export class MyFlower extends CGFobject {
  
 
 this.scene.pushMatrix();
-//this.petal.display(); 
+this.petal.display(); 
 
   //Petal
  /*  

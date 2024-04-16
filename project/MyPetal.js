@@ -8,16 +8,19 @@ import { MyTriangle } from './MyTriangle.js';
  */ 
 
 export class MyPetal extends CGFobject {
-	constructor(scene) {
+	constructor(scene,raio,nrPetalas) {
 		super(scene);
+        this.raio=raio;
+        this.nrPetalas;
 	}
 	
 	display(){
-        this.triangle=new MyTriangle(this.scene);
+        this.triangle=new MyTriangle(this.scene,this.raio,this.raio);
         this.triangle.display();
         this.scene.rotate(Math.PI,0,1,0);
-        this.triangle2= new MyTriangle(this.scene);
+        this.triangle2= new MyTriangle(this.scene,this.raio,this.raio);
         this.scene.rotate(Math.PI,1,0,0);
+        this.scene.translate(0,this.raio,0);
         this.triangle2.display();
        
 
