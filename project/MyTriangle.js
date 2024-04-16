@@ -26,7 +26,8 @@ export class MyTriangle extends CGFobject {
 		];
 
 		this.indices = [
-			0, 1, 2, // Face frontal
+			0, 1, 2,
+			2,1,0, // Face frontal
 		];
 
 		// Calculando os vetores normais
