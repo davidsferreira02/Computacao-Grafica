@@ -20,23 +20,24 @@ export class MyTriangle extends CGFobject {
 		const halfHeight = this.height / 2;
 
 		this.vertices = [
-			-halfBase, -halfHeight, 0, // V0
-			halfBase, -halfHeight, 0, // V1
-			0, halfHeight, 0, // V2
+			-halfBase, -halfHeight, 0, 
+			halfBase, -halfHeight, 0, 
+			0, halfHeight, 0, 
 		];
 
 		this.indices = [
 			0, 1, 2,
-			2,1,0, // Face frontal
+			2,1,0
 		];
 
-		// Calculando os vetores normais
-		const normal = [0, 0, 1]; // Normais para a face frontal
+	
+	
 
 		this.normals = [
-			...normal,
-			...normal,
-			...normal,
+			0,0,1,
+			0,0,1,
+			0,0,1
+		
 		];
 
 		this.primitiveType = this.scene.gl.TRIANGLES;
