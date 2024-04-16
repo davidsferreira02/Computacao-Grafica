@@ -68,15 +68,15 @@ export class MyFlower extends CGFobject {
 
   //Petal 
 
-  const angleIncrement = (2 * Math.PI) / this.nrPetalas;
-  let currentAngle = Math.PI/2;
+  const angleIncrement = (2 * Math.PI) /this.nrPetalas;
+  let currentAngle = angleIncrement;
 
 
     
     for(var i=0;i<this.nrPetalas;i++){
       this.scene.pushMatrix();
-    this.scene.rotate(-currentAngle, 1,0,1);
-    this.scene.translate(this.raioCirc * Math.cos(currentAngle), this.tamanhoCaule + (this.raioCirc) , this.raioCirc * Math.sin(currentAngle));
+    this.scene.rotate(-currentAngle,1,0,1);
+    this.scene.translate(0,((2*this.raio )- this.tamanhoCaule) - Math.sin(currentAngle),0)
     this.petal.display();
     this.scene.popMatrix();
     currentAngle += angleIncrement;
