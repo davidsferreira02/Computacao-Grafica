@@ -6,10 +6,11 @@ import { CGFobject } from '../lib/CGF.js';
  * @constructor
  */
 export class MyReceptacle extends CGFobject {
-    constructor(scene, slices, stacks) {
+    constructor(scene, slices, stacks,radius) {
         super(scene);
         this.latDivs = stacks * 2;
         this.longDivs = slices;
+        this.radius=radius;
         this.initBuffers();
       }
       initBuffers() {
@@ -27,8 +28,8 @@ export class MyReceptacle extends CGFobject {
             const phi = long * 2 * Math.PI / this.longDivs;
             const cosPhi = Math.cos(phi);
       
-            const x = sinTheta * cosPhi;
-            const y = cosTheta;
+            const x = this.radius*sinTheta * cosPhi;
+            const y = this.radius*cosTheta;
             const z = 0;
             const u = 1 - (long / this.longDivs);
             const v = lat / this.latDivs;
@@ -51,6 +52,8 @@ export class MyReceptacle extends CGFobject {
           this.initGLBuffers();
         }
       }
+
+     
     
     }
     

@@ -7,10 +7,12 @@ import {CGFobject} from '../lib/CGF.js';
  */ 
 
 export class MyStem extends CGFobject {
-	constructor(scene, slices, stacks) {
+	constructor(scene, slices, stacks,radius,height) {
 		super(scene);
 		this.slices = slices; 
-		this.stacks = stacks; 
+		this.stacks = stacks;
+        this.radius=radius;
+        this.height=height; 
 		this.initBuffers();
 	}
 	
@@ -26,9 +28,9 @@ export class MyStem extends CGFobject {
 
         for(var i = 0; i <=this.slices; i++){
 
-            var x=Math.cos(alphaAng*i);
-            var y=Math.sin(alphaAng*i);
-            var z = 1/this.stacks;
+            var x=this.radius*Math.cos(alphaAng*i);
+            var y=this.radius*Math.sin(alphaAng*i);
+            var z = this.height/this.stacks;
 
 			for (var j = 0; j <=this.stacks; j++){
 				var k = z * j;
@@ -48,8 +50,8 @@ export class MyStem extends CGFobject {
       }
 
       for(var i=0;i<=this.slices;i++){
-            var x=Math.cos(alphaAng*i);
-            var y=Math.sin(alphaAng*i);
+            var x=this.radius*Math.cos(alphaAng*i);
+            var y=this.radius*Math.sin(alphaAng*i);
             for(var j=0;j<=this.stacks;j++){
                this.normals.push(x, y, 0);
             }
