@@ -23,20 +23,30 @@ export class MyTriangle extends CGFobject {
 			-halfBase, -halfHeight, 0, 
 			halfBase, -halfHeight, 0, 
 			0, halfHeight, 0, 
+			-halfBase, -halfHeight, 0, 
+			halfBase, -halfHeight, 0, 
+			0, halfHeight, 0,
 		];
 
 		this.indices = [
-			0, 1, 2,
-			2,1,0
+			0, 1, 2, 
+			1, 2, 0,
+			5, 4, 3, 
+
 		];
 
 	
 	
 
 		this.normals = [
-			0,0,1,
-			0,0,1,
-			0,0,1
+			0, 0, 1,
+			0, 0, 1,
+			0, 0, 1,
+			0, 0, -1,
+			0, 0, -1,
+			0, 0, -1,
+
+			
 		
 		];
 
