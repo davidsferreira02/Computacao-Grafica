@@ -4,6 +4,7 @@ import { MySphere } from "./MySphere.js";
 import { MyPanorama } from "./MyPanorama.js";
 import { MyStem } from "./MyStem.js";
 import { MyPetal } from "./MyPetal.js";
+
 import { MyReceptacle } from "./MyReceptacle.js";
 import { MyFlower } from "./MyFlower.js";
 /**
@@ -33,21 +34,28 @@ export class MyScene extends CGFscene {
     this.plane = new MyPlane(this, 30);
     this.sphere = new MySphere(this, 10, 50, 50, false);
     this.stem = new MyStem(this, 10, 10);
-    this.petal = new MyPetal(this);
+    //this.petal = new MyPetal(this);
     this.receptacle = new MyReceptacle(this, 10, 10);
-    this.flower = new MyFlower(this,3,16,[255/255,255/255,0/255,1.0],1,[255/255,140/255,0/255,1.0],0.3,3,[85/255,107/255,47/255,1.0],[234/255,219/255,208/255,1.0]);
+    //this.garden= new MyGarden(this,5,5);
+    this.raio=  Math.random() * 4 + 3;
+    this.nrPetalas = Math.random() * 16 + 4;
+    this.raioCirc = Math.random() * 1 + 1 ;
+    this.raioCilindro = Math.random() * 0.2 + 0.1;
+    this.alturaCilindro = Math.random() * 2 + 3;
+   
+    this.flower = new MyFlower(this,Math.round(this.raio),Math.round(this.nrPetalas),[255/255,255/255,0/255,1.0],Math.round(this.raioCirc),[255/255,140/255,0/255,1.0],this.raioCilindro,Math.round(this.alturaCilindro),[85/255,107/255,47/255,1.0],[183/255,65/255,14/255,1.0]);
 
-  
     //Objects connected to MyInterface
     this.displayAxis = true;
     this.scaleFactor = 1;
     this.displaySphere = false;
     this.displayPanorama = true;
     this.displayPlane = false;
-    /*this.displayStem = false;
-    this.displayPetal = true;
-    this.displayReceptable = false;*/
     this.displayFlower=true;
+
+
+
+this.flowerGarden=[];
 
     this.enableTextures(true);
 
@@ -130,190 +138,12 @@ export class MyScene extends CGFscene {
       this.popMatrix();
     }
 
-    
-/*
-    if (this.displayStem) {
-      this.pushMatrix();
-      this.appearance.apply();
-      this.scale(0.2, 2, 0.2);
-      this.rotate(-Math.PI / 2.0, 1, 0, 0);
-      this.stem.display();
-      this.popMatrix();
-    }
-
-    if (this.displayReceptable) {
-      this.pushMatrix();
-      this.appearance.apply();
-      this.scale(0.5, 0.5, 0);
-      this.translate(0, 4.8, 0);
-      this.receptacle.display();
-      this.popMatrix();
-
-    }
-
-    if (this.displayPetal) {
-
-      //Petala1 Lado Esquerdo Inferior
-      this.pushMatrix();
-      this.appearance.apply();
-      this.scale(0.3, 0.3, 0);
-      this.translate(-1.9, 5.7, 0);
-      
-      this.petal.display();
-
-      this.popMatrix();
-      this.pushMatrix();
-      //Parte Preta 
-      this.scale(0.3, 0.3, 0);
-      this.translate(-1.9, 5.7, 0);
-      
-      this.rotate(-Math.PI, 0, 0, 1);
-      this.petal.display();
-
-      this.popMatrix();
-      //FimPetala1
-
-
-
-
-
-      //Petala2 Parte do Meio Lado Esquerdo
-      this.pushMatrix();
-      this.appearance.apply();
-
-
-      this.scale(0.3, 0.3, 0);
-      this.translate(-3, 8.5, 0);
-      this.rotate(-Math.PI / 4, 0, 0, 1);
-
-      this.petal.display();
-
-      this.popMatrix();
-      this.pushMatrix();
-      //Parte Preta 
-
   
-
-      this.scale(0.3, 0.3, 0);
-      this.translate(-3, 8.5, 0);
-      this.rotate(-5*Math.PI / 4, 0, 0, 1);
-      this.petal.display();
-
-      this.popMatrix();
-      //FimPetala2
-
-
-
-       //Petala3 Lado Esquerdo Superior
-    this.pushMatrix();
-    this.pushMatrix();
-    this.appearance.apply();
-    this.scale(0.3, 0.3, 0);
-    this.translate(-1.5, 10.7, 0); // 3,2
-    
-    this.rotate(-2 * Math.PI / 4, 0, 0, 1);
-
-    this.petal.display();
-
-    this.popMatrix();
-    this.pushMatrix();
-    //Parte Preta 
-    this.appearance.apply();
-    this.scale(0.3, 0.3, 0);
-    this.translate(-1.5,10.7, 0); //2.7,1.7
-   
-    this.rotate(-6*Math.PI / 4, 0, 0, 1);
-    this.petal.display();
-
-    this.popMatrix();
-    //FimPetala3
-
-
-
-
-    //Petala5 Lado Direito Superior
-    this.pushMatrix();
-    this.appearance.apply();
-    this.scale(0.3, 0.3, 0);
-    this.translate(1.5, 10.7, 0); // 3,2
-   
-    this.rotate(-4*Math.PI/4, 0, 0, 1);
-    //  this.translate(-19,-1,0);
-    this.petal.display();
-
-    this.popMatrix();
-    this.pushMatrix();
-    //Parte Preta 
-   
-    this.scale(0.3, 0.3, 0);
-    this.translate(1.5, 10.7, 0); // 3,2
-    this.rotate(-8*Math.PI / 4,0,0,1);
-    this.petal.display();
-
-    this.popMatrix();
-    //FimPetala2 
-
-
-
-
-      //Petala4 Parte do Meio Lado Direito
-      this.pushMatrix();
-      this.appearance.apply();
-
-
-      this.scale(0.3, 0.3, 0);
-      this.translate(3, 8.5, 0);
-      this.rotate(-5*Math.PI / 4, 0, 0, 1);
-
-      this.petal.display();
-
-      this.popMatrix();
-      this.pushMatrix();
-      //Parte Preta 
-
- 
-
-      this.scale(0.3, 0.3, 0);
-      this.translate(3, 8.5, 0);
-      //  this.rotate((3*Math.PI,0,0,1);
-      this.rotate(-9 * Math.PI / 4, 0, 0, 1);
-      this.petal.display();
-
-      this.popMatrix();
-      //FimPetala4
-
-
-
-      //Petala3 Parte Inferior Direita
-      this.pushMatrix();
-      this.appearance.apply();
-      this.scale(0.3, 0.3, 0);
-      this.translate(1.9, 5.7, 0);
-      
-      this.rotate(-3*Math.PI / 2, 0, 0, 1);
-      this.petal.display();
-      this.popMatrix();
-      this.pushMatrix();
-      //Parte Preta 
-      this.scale(0.3, 0.3, 0);
-      this.translate(1.9, 5.7, 0);
-      this.rotate(-10*Math.PI / 4, 0, 0, 1);
-
-
-
-      this.petal.display();
-
-      this.popMatrix();
-      //FimPetala3
-
-
-*/
-
-
 
     if(this.displayFlower){
       this.flower.display();
     }
+
 
 
    

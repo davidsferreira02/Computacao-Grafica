@@ -22,9 +22,6 @@ export class MyInterface extends CGFinterface {
         this.gui.add(this.scene, 'displaySphere').name('Display Sphere');
         this.gui.add(this.scene, 'displayPanorama').name('Display Pano');
         this.gui.add(this.scene, 'displayPlane').name('Display Plane');
-      /*  this.gui.add(this.scene,'displayStem').name('Display Stem');
-        this.gui.add(this.scene,'displayPetal').name('Display Petal');
-        this.gui.add(this.scene,'displayReceptable').name('Display Receptable');*/
         this.gui.add(this.scene,'displayFlower').name('Display Flower');
 
         //Slider element in GUI

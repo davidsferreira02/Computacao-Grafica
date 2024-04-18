@@ -17,6 +17,7 @@ export class MyReceptacle extends CGFobject {
         this.vertices = [];
         this.indices=[];
         this.texCoords = [];
+        this.normals = [];
       
         // Set up the vertices, indices, and texture coordinates
         for (let lat = 0; lat <= this.latDivs; ++lat) {
@@ -27,6 +28,7 @@ export class MyReceptacle extends CGFobject {
           for (let long = 0; long <= this.longDivs; ++long) {
             const phi = long * 2 * Math.PI / this.longDivs;
             const cosPhi = Math.cos(phi);
+            const sinPhi = Math.sin(phi);
       
             const x = this.radius*sinTheta * cosPhi;
             const y = this.radius*cosTheta;
@@ -36,6 +38,7 @@ export class MyReceptacle extends CGFobject {
       
             this.vertices.push(x, y, z);
             this.texCoords.push(u, v);
+            this.normals.push(sinTheta*cosPhi,cosTheta,sinTheta*sinPhi);
           }
         }
         for (let lat = 0; lat < this.latDivs; ++lat) {
@@ -46,6 +49,7 @@ export class MyReceptacle extends CGFobject {
            
               this.indices.push(first, first + 1, second);
               this.indices.push(second, first + 1, second + 1);
+              
             
           }
           this.primitiveType = this.scene.gl.TRIANGLES;
