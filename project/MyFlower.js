@@ -75,7 +75,7 @@ export class MyFlower extends CGFobject {
    display(){
 
 
-    console.log(this.raio);
+   
   
     //Steam
       this.scene.pushMatrix();

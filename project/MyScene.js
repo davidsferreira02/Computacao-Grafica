@@ -7,6 +7,7 @@ import { MyPetal } from "./MyPetal.js";
 
 import { MyReceptacle } from "./MyReceptacle.js";
 import { MyFlower } from "./MyFlower.js";
+import { MyBee } from "./MyBee.js";
 /**
  * MyScene
  * @constructor
@@ -44,6 +45,7 @@ export class MyScene extends CGFscene {
     this.alturaCilindro = Math.random() * 2 + 3;
    
     this.flower = new MyFlower(this,Math.round(this.raio),Math.round(this.nrPetalas),[255/255,255/255,0/255,1.0],Math.round(this.raioCirc),[255/255,140/255,0/255,1.0],this.raioCilindro,Math.round(this.alturaCilindro),[85/255,107/255,47/255,1.0],[183/255,65/255,14/255,1.0]);
+    this.bee = new MyBee(this);
 
     //Objects connected to MyInterface
     this.displayAxis = true;
@@ -51,7 +53,8 @@ export class MyScene extends CGFscene {
     this.displaySphere = false;
     this.displayPanorama = true;
     this.displayPlane = false;
-    this.displayFlower=true;
+    this.displayFlower=false;
+    this.displayBee=true;
 
 
 
@@ -141,7 +144,16 @@ this.flowerGarden=[];
   
 
     if(this.displayFlower){
+      this.pushMatrix();
       this.flower.display();
+      this.popMatrix();
+    }
+
+    if(this.displayBee){
+      this.pushMatrix();
+      this.bee.display();
+      this.popMatrix();
+
     }
 
 
