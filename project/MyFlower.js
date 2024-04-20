@@ -22,7 +22,6 @@ export class MyFlower extends CGFobject {
       this.tamanhoCaule=tamanhoCaule; // tamanho do caule altura do cilindro 
       this.corCaule=corCaule;
       this.corFolha=corFolha;
-      this.anguloCaule = Math.PI/4;
       this.initMaterials();
       this.initFlower();
   }
@@ -65,9 +64,9 @@ export class MyFlower extends CGFobject {
       this.receptacle = new MyReceptacle(this.scene,10,10,this.raioCirc);
       this.raioFlor = this.raio - this.raioCirc;
       this.raioFlor=this.raioFlor/2;
+     
       this.folha = new MyLeaf(this.scene,this.raioFlor,this.nrPetalas,Math.PI/3);
-      this.petal = new MyPetal(this.scene,this.raioFlor,this.nrPetalas,Math.PI/3,this.anguloCaule); // erro porque que o anguloCaule ao mudar não faz nada o valor do anguloCaule é sempre 1.04719
-      
+      this.petal = new MyPetal(this.scene,this.raioFlor,this.nrPetalas,Math.random() * Math.PI/4 + Math.PI/2 ); // erro porque que o anguloCaule ao mudar não faz nada o valor do anguloCaule é sempre 1.04719
 
       
    }

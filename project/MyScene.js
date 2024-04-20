@@ -39,7 +39,7 @@ export class MyScene extends CGFscene {
     this.receptacle = new MyReceptacle(this, 10, 10);
     //this.garden= new MyGarden(this,5,5);
     this.raio=  Math.random() * 4 + 3;
-    this.nrPetalas = Math.random() * 16 + 4;
+    this.nrPetalas = Math.random() * 10 + 15;
     this.raioCirc = Math.random() * 1 + 1 ;
     this.raioCilindro = Math.random() * 0.2 + 0.1;
     this.alturaCilindro = Math.random() * 2 + 3;
@@ -53,8 +53,8 @@ export class MyScene extends CGFscene {
     this.displaySphere = false;
     this.displayPanorama = true;
     this.displayPlane = false;
-    this.displayFlower=false;
-    this.displayBee=true;
+    this.displayFlower=true;
+    this.displayBee=false;
 
 
 
