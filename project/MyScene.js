@@ -151,6 +151,7 @@ this.flowerGarden=[];
 
     if(this.displayBee){
       this.pushMatrix();
+      this.scale(3,3,3);
       this.bee.display();
       this.popMatrix();
 

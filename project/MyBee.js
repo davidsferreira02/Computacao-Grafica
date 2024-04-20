@@ -27,7 +27,6 @@ export class MyBee extends CGFobject {
 
   
         this.head.display();
-
         this.body.display();
        
 

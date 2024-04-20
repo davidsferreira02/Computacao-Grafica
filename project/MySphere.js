@@ -60,7 +60,9 @@ export class MySphere extends CGFobject {
               if (this.inverted) {
                   this.texCoords.push(j / this.slices, 1 - (i / this.stacks));
               } else {
-                  this.texCoords.push(j / this.slices, i / this.stacks);
+                  this.texCoords.push( j / this.slices, i / this.stacks);
+                  
+                
               }
 
               theta += (2 * Math.PI) / this.slices;
