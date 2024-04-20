@@ -66,7 +66,8 @@ export class MyFlower extends CGFobject {
       this.raioFlor=this.raioFlor/2;
      
       this.folha = new MyLeaf(this.scene,this.raioFlor,this.nrPetalas,Math.PI/3);
-      this.petal = new MyPetal(this.scene,this.raioFlor,this.nrPetalas,Math.random() * Math.PI/4 + Math.PI/2 ); // erro porque que o anguloCaule ao mudar não faz nada o valor do anguloCaule é sempre 1.04719
+      var angulo =Math.random() * Math.PI/4 + Math.PI/2;
+      this.petal = new MyPetal(this.scene,this.raioFlor,this.nrPetalas,angulo ); // erro porque que o anguloCaule ao mudar não faz nada o valor do anguloCaule é sempre 1.04719
 
       
    }

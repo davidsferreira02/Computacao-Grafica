@@ -31,9 +31,11 @@ export class MyPetal extends CGFobject {
         this.scene.pushMatrix();
     
         this.triangle2= new MyTriangle(this.scene,this.raio,this.raio);
+       
         this.scene.rotate(Math.PI/4,0,1,0);
         this.scene.rotate(Math.PI,1,0,0);
-        this.scene.rotate(-this.angulo,1,0,0);
+        this.scene.rotate(this.angulo* Math.PI / 180,1,0,0);
+       // this.scene.rotate(this.angulo,1,0,0);
         console.log(this.angulo);
         this.scene.translate(0,this.raio/2,0);
         
