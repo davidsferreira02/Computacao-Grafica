@@ -48,7 +48,7 @@ export class MyScene extends CGFscene {
    
     this.flower = new MyFlower(this,Math.round(this.raio),Math.round(this.nrPetalas),[255/255,255/255,0/255,1.0],Math.round(this.raioCirc),[255/255,140/255,0/255,1.0],this.raioCilindro,Math.round(this.alturaCilindro),[85/255,107/255,47/255,1.0],[183/255,65/255,14/255,1.0]);
     this.bee = new MyBee(this);
-    this.rock=new MyRock(this,2,100,100);
+    this.rock=new MyRock(this,0.5,10,3, 0.8);
 
 
     //Objects connected to MyInterface
