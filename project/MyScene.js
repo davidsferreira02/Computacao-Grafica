@@ -8,6 +8,8 @@ import { MyPetal } from "./MyPetal.js";
 import { MyReceptacle } from "./MyReceptacle.js";
 import { MyFlower } from "./MyFlower.js";
 import { MyBee } from "./MyBee.js";
+import { MyRock } from "./MyRock.js";
+
 /**
  * MyScene
  * @constructor
@@ -46,6 +48,8 @@ export class MyScene extends CGFscene {
    
     this.flower = new MyFlower(this,Math.round(this.raio),Math.round(this.nrPetalas),[255/255,255/255,0/255,1.0],Math.round(this.raioCirc),[255/255,140/255,0/255,1.0],this.raioCilindro,Math.round(this.alturaCilindro),[85/255,107/255,47/255,1.0],[183/255,65/255,14/255,1.0]);
     this.bee = new MyBee(this);
+    this.rock=new MyRock(this,2,100,100);
+
 
     //Objects connected to MyInterface
     this.displayAxis = true;
@@ -53,8 +57,9 @@ export class MyScene extends CGFscene {
     this.displaySphere = false;
     this.displayPanorama = true;
     this.displayPlane = false;
-    this.displayFlower=true;
+    this.displayFlower=false;
     this.displayBee=false;
+    this.displayRock= true;
 
 
 
@@ -156,6 +161,15 @@ this.flowerGarden=[];
       this.popMatrix();
 
     }
+
+    if(this.displayRock){
+      this.pushMatrix();
+      this.rock.display();
+      this.popMatrix();
+    }
+
+
+    
 
 
 
