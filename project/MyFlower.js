@@ -61,6 +61,7 @@ export class MyFlower extends CGFobject {
 
    initFlower(){
       this.stem=new MyStem(this.scene,100,100,this.raioCilind,this.tamanhoCaule);
+      this.stemFolha=new MyStem(this.scene,100,100,this.raioCilind,this.tamanhoCaule/3);
       this.receptacle = new MyReceptacle(this.scene,10,10,this.raioCirc);
       this.raioFlor = this.raio - this.raioCirc;
       this.raioFlor=this.raioFlor/2;
@@ -68,8 +69,7 @@ export class MyFlower extends CGFobject {
       this.folha = new MyLeaf(this.scene,this.raioFlor,this.nrPetalas,Math.PI/3);
       var angulo =Math.random() * Math.PI/4 + Math.PI/2;
       this.petal = new MyPetal(this.scene,this.raioFlor,this.nrPetalas,angulo ); // erro porque que o anguloCaule ao mudar não faz nada o valor do anguloCaule é sempre 1.04719
-
-      
+    
    }
 
    display(){
@@ -126,16 +126,16 @@ export class MyFlower extends CGFobject {
 
     this.scene.pushMatrix();
     this.appearanceCaule.apply();
-    this.scene.translate(0,this.tamanhoCaule/2,0);
+    this.scene.translate(0,this.tamanhoCaule/3,0);
     this.scene.rotate(Math.PI,1,0,0);
-   // this.scene.rotate(-Math.PI/6,1,0,0);
-    this.stem.display();
+    this.scene.rotate(Math.PI/6,1,0,0);
+    this.stemFolha.display();
     this.scene.popMatrix();
 
 
     this.scene.pushMatrix();
     this.appearanceFolha.apply()
-    this.scene.translate(0,this.tamanhoCaule/2,-this.tamanhoCaule);
+    this.scene.translate(0,this.tamanhoCaule/2,-this.tamanhoCaule/3.5);
     this.scene.rotate(Math.PI/4,1,0,0);
     this.scene.translate(0,-this.raioFlor,0);
     this.folha.display();
