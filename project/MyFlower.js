@@ -11,17 +11,20 @@ import { MyLeaf } from './MyLeaf.js';
  * @constructor
  */
 export class MyFlower extends CGFobject {
-  constructor(scene,raio,nrPetalas,corPetalas,raioCirc,corCirc,raioCilind,tamanhoCaule,corCaule,corFolha) {
+  constructor(scene,x,y,z) {
       super(scene);
-      this.raio=raio; //Raio Exterior
-      this.nrPetalas=nrPetalas; // Numero de Petalas
-      this.corPetalas=corPetalas;
-      this.raioCirc=raioCirc; // raio do circulo
-      this.corCirc=corCirc;
-      this.raioCilind=raioCilind; // raio do cilindro
-      this.tamanhoCaule=tamanhoCaule; // tamanho do caule altura do cilindro 
-      this.corCaule=corCaule;
-      this.corFolha=corFolha;
+      this.x = x;
+      this.y = y;
+      this.z = z;
+      this.raio=  Math.random() * 4 + 3;
+      this.nrPetalas = Math.random() * 10 + 5;
+      this.raioCirc = Math.random() * 1 + 1 ;
+      this.raioCilind = Math.random() * 0.2 + 0.1;
+      this.corPetalas=[Math.floor(Math.random() * 256)/256, Math.floor(Math.random() * 256)/256, Math.floor(Math.random() * 256)/256, 1.0];
+      this.corCirc=[Math.floor(Math.random() * 256)/256, Math.floor(Math.random() * 256)/256, Math.floor(Math.random() * 256)/256, 1.0];
+      this.tamanhoCaule= Math.random() * 10 + 4;
+      this.corCaule=[Math.floor(Math.random() * 256)/256, Math.floor(Math.random() * 256)/256, Math.floor(Math.random() * 256)/256, 1.0];
+      this.corFolha=[Math.floor(Math.random() * 256)/256, Math.floor(Math.random() * 256)/256, Math.floor(Math.random() * 256)/256, 1.0];
       this.initMaterials();
       this.initFlower();
   }
@@ -74,6 +77,8 @@ export class MyFlower extends CGFobject {
 
    display(){
 
+    this.scene.translate(this.x, this.y, this.z);
+
 
    
   
@@ -104,24 +109,24 @@ export class MyFlower extends CGFobject {
 
   //Petal 
 
-  const angleIncrement = (9*Math.PI / 5 ) /this.nrPetalas;
-  let currentAngle = angleIncrement;
+      const angleIncrement = (7*Math.PI / 4 ) /this.nrPetalas;
+      let currentAngle = angleIncrement;
 
 
-  //this.scene.translate(0,this.raioCirc,0);
-    for(var i=0;i<this.nrPetalas;i++){
-      this.scene.pushMatrix();
-      this.appearancePetala.apply();
-    this.scene.translate(0,this.raioCirc + this.tamanhoCaule,0);  
-    this.scene.rotate(-currentAngle,1,0,1);
-    this.scene.translate(0,-this.raioFlor - this.raioCirc,0);
-    this.petal.display();
-    this.scene.popMatrix();
-    currentAngle += angleIncrement;
-    }
+      //this.scene.translate(0,this.raioCirc,0);
+        for(var i=0;i<this.nrPetalas;i++){
+          this.scene.pushMatrix();
+          this.appearancePetala.apply();
+          this.scene.translate(0,this.raioCirc + this.tamanhoCaule,0);  
+          this.scene.rotate(-currentAngle,1,0,1);
+          this.scene.translate(0,-this.raioFlor - this.raioCirc,0);
+          this.petal.display();
+          this.scene.popMatrix();
+          currentAngle += angleIncrement;
+        }
 
 
-    //Folha
+        //Folha
 
 
     this.scene.pushMatrix();
@@ -140,14 +145,6 @@ export class MyFlower extends CGFobject {
     this.scene.translate(0,-this.raioFlor,0);
     this.folha.display();
     this.scene.popMatrix();
-
-
-
-
-
-
-
-
 
    }
 

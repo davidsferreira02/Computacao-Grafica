@@ -4,6 +4,7 @@ import { MySphere } from "./MySphere.js";
 import { MyPanorama } from "./MyPanorama.js";
 import { MyStem } from "./MyStem.js";
 import { MyPetal } from "./MyPetal.js";
+import { MyGarden } from "./MyGarden.js";
 
 import { MyReceptacle } from "./MyReceptacle.js";
 import { MyFlower } from "./MyFlower.js";
@@ -38,15 +39,9 @@ export class MyScene extends CGFscene {
     this.sphere = new MySphere(this, 10, 50, 50, false);
     this.stem = new MyStem(this, 10, 10);
     //this.petal = new MyPetal(this);
-    this.receptacle = new MyReceptacle(this, 10, 10);
-    //this.garden= new MyGarden(this,5,5);
-    this.raio=  Math.random() * 4 + 3;
-    this.nrPetalas = Math.random() * 10 + 5;
-    this.raioCirc = Math.random() * 1 + 1 ;
-    this.raioCilindro = Math.random() * 0.2 + 0.1;
-    this.alturaCilindro = Math.random() * 2 + 5;
-   
-    this.flower = new MyFlower(this,/*Math.round(this.raio)*/3,/*Math.round(this.nrPetalas)*/10,[255/255,255/255,0/255,1.0],/*Math.round(this.raioCirc)*/1,[255/255,140/255,0/255,1.0],this.raioCilindro,/*Math.round(this.alturaCilindro)*/6,[85/255,107/255,47/255,1.0],[183/255,65/255,14/255,1.0]);
+    this.receptacle = new MyReceptacle(this, 10, 10);       
+    this.flower = new MyFlower(this, 0, 0, 0);
+    this.garden = new MyGarden(this, 5, 5)
     this.bee = new MyBee(this);
     this.rock=new MyRock(this,0.5,10,3, 0.8);
 
@@ -57,13 +52,12 @@ export class MyScene extends CGFscene {
     this.displaySphere = false;
     this.displayPanorama = true;
     this.displayPlane = false;
-    this.displayFlower=false;
+    this.displayFlower=true;
     this.displayBee=false;
     this.displayRock= true;
+    this.displayGarden = true;
 
 
-
-this.flowerGarden=[];
 
     this.enableTextures(true);
 
@@ -165,6 +159,12 @@ this.flowerGarden=[];
     if(this.displayRock){
       this.pushMatrix();
       this.rock.display();
+      this.popMatrix();
+    }
+
+    if(this.displayGarden){
+      this.pushMatrix();
+      this.garden.display();
       this.popMatrix();
     }
 
