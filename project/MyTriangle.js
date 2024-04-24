@@ -50,6 +50,15 @@ export class MyTriangle extends CGFobject {
 		
 		];
 
+		this.texCoords = [
+			-halfBase, -halfHeight, 0, 
+			halfBase, -halfHeight, 0, 
+			0, halfHeight, 0, 
+			-halfBase, -halfHeight, 0, 
+			halfBase, -halfHeight, 0, 
+			0, halfHeight, 0,
+		];
+
 		this.primitiveType = this.scene.gl.TRIANGLES;
 		this.initGLBuffers();
 	}

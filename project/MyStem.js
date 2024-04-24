@@ -20,6 +20,7 @@ export class MyStem extends CGFobject {
         this.vertices = [];
         this.indices = [];
         this.normals = [];
+        this.texCoords = [];
 
     
         var alphaAng = 2*Math.PI/this.slices;
@@ -35,7 +36,10 @@ export class MyStem extends CGFobject {
 			for (var j = 0; j <=this.stacks; j++){
 				var k = z * j;
 				this.vertices.push(x, y, k);
-			
+                
+                var u = i / this.slices;
+                var v = j / this.stacks;
+                this.texCoords.push(u, v);
 			}
         }
             

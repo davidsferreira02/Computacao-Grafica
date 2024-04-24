@@ -27,6 +27,7 @@ export class MyFlower extends CGFobject {
       this.corFolha=[Math.floor(Math.random() * 256)/256, Math.floor(Math.random() * 256)/256, Math.floor(Math.random() * 256)/256, 1.0];
       this.initMaterials();
       this.initFlower();
+      this.loadTextures();
   }
 
   initMaterials() {
@@ -56,9 +57,7 @@ export class MyFlower extends CGFobject {
       this.appearanceFolha= new CGFappearance(this.scene);
       this.appearanceFolha.setAmbient(this.corFolha[0],this.corFolha[1],this.corFolha[2],this.corFolha[3]);
       this.appearanceFolha.setDiffuse(this.corFolha[0],this.corFolha[1],this.corFolha[2],this.corFolha[3]);
-      this.appearanceFolha.setSpecular(this.corFolha[0],this.corFolha[1],this.corFolha[2],this.corFolha[3]);
-     
-
+      this.appearanceFolha.setSpecular(this.corFolha[0],this.corFolha[1],this.corFolha[2],this.corFolha[3]); 
       
   }
 
@@ -74,6 +73,34 @@ export class MyFlower extends CGFobject {
       this.petal = new MyPetal(this.scene,this.raioFlor,this.nrPetalas,angulo ); // erro porque que o anguloCaule ao mudar não faz nada o valor do anguloCaule é sempre 1.04719
     
    }
+
+   loadTextures() {
+      this.texture = new CGFtexture(this.scene, "textures/texture.jpg");
+      this.texture2 = new CGFtexture(this.scene, "textures/FEUP.jpg");
+      this.texture3= new CGFtexture(this.scene,"textures/waterTex.jpg");
+      this.texture4= new CGFtexture(this.scene,"textures/waterMap.jpg");  
+      // Load textures for petals, leaves, stem, etc.
+      this.petalsTextures = [this.texture, this.texture2, this.texture3, this.texture4]; // Array of textures for petals
+      this.leavesTexture = [this.texture, this.texture2, this.texture3, this.texture4]; // Array of textures for leaves
+      this.stemTexture = [this.texture, this.texture2, this.texture3, this.texture4]; // Array of textures for stem
+      this.receptacleTexture = [this.texture, this.texture2, this.texture3, this.texture4]; // Array of textures for receptacle
+      // Load other textures...
+
+      // Randomly select textures for each component
+      this.appearancePetala.setTexture(this.petalsTextures[Math.floor(Math.random() * this.petalsTextures.length)]); 
+      this.appearancePetala.setTextureWrap('REPEAT', 'REPEAT');
+
+      this.appearanceFolha.setTexture(this.leavesTexture[Math.floor(Math.random() * this.leavesTexture.length)]); 
+      this.appearanceFolha.setTextureWrap('REPEAT', 'REPEAT');
+      
+      this.appearanceCaule.setTexture(this.stemTexture[Math.floor(Math.random() * this.stemTexture.length)]); 
+      this.appearanceCaule.setTextureWrap('REPEAT', 'REPEAT');
+
+      this.appearanceCirc.setTexture(this.receptacleTexture[Math.floor(Math.random() * this.receptacleTexture.length)]); 
+      this.appearanceCirc.setTextureWrap('REPEAT', 'REPEAT');
+      console.log(this.appearanceCirc);
+    
+    }
 
    display(){
 
@@ -96,16 +123,11 @@ export class MyFlower extends CGFobject {
       this.scene.pushMatrix();
       this.appearanceCirc.apply();
       this.scene.rotate(Math.PI/4,0,1,0);
-      this.scene.translate(0,this.tamanhoCaule+ this.raioCirc,0)
+      this.scene.translate(0,this.tamanhoCaule+ this.raioCirc,0);
       this.receptacle.display();
       this.scene.popMatrix();
 
  
-
-
-
-
-
 
   //Petal 
 
@@ -147,6 +169,7 @@ export class MyFlower extends CGFobject {
     this.scene.popMatrix();
 
    }
+
 
 
 }
