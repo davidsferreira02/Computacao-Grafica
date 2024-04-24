@@ -10,6 +10,7 @@ import { MyReceptacle } from "./MyReceptacle.js";
 import { MyFlower } from "./MyFlower.js";
 import { MyBee } from "./MyBee.js";
 import { MyRock } from "./MyRock.js";
+import { MyRockSet } from "./MyRockSet.js";
 
 /**
  * MyScene
@@ -43,19 +44,21 @@ export class MyScene extends CGFscene {
     this.flower = new MyFlower(this, 0, 0, 0);
     this.garden = new MyGarden(this, 5, 5)
     this.bee = new MyBee(this);
-    this.rock=new MyRock(this,0.5,10,3, 0.8);
+    this.rock=new MyRock(this,0.5,10,3, 0.8, 2);
+    this.setRock = new MyRockSet(this, 10);
 
 
     //Objects connected to MyInterface
-    this.displayAxis = true;
+    this.displayAxis = false;
     this.scaleFactor = 1;
     this.displaySphere = false;
     this.displayPanorama = true;
     this.displayPlane = false;
-    this.displayFlower=true;
+    this.displayFlower=false;
     this.displayBee=false;
     this.displayRock= true;
-    this.displayGarden = true;
+    this.displayGarden = false;
+    this.displaySetRock = true;
 
 
 
@@ -73,6 +76,10 @@ export class MyScene extends CGFscene {
     this.appearance3 = new CGFappearance(this);
     this.appearance3.setTexture(this.panorama);
     this.appearance3.setTextureWrap('REPEAT', 'REPEAT');
+    this.appearancePedras= new CGFappearance(this);
+    this.appearancePedras.setAmbient(128/255,128/255,128/255,1.0);
+    this.appearancePedras.setDiffuse(128/255,128/255,128/255,1.0);
+    this.appearancePedras.setSpecular(128/255,128/255,128/255,1.0);
 
 
 
@@ -158,6 +165,7 @@ export class MyScene extends CGFscene {
 
     if(this.displayRock){
       this.pushMatrix();
+      this.appearancePedras.apply();
       this.rock.display();
       this.popMatrix();
     }
@@ -168,23 +176,13 @@ export class MyScene extends CGFscene {
       this.popMatrix();
     }
 
+    if(this.displaySetRock){
 
-    
+      this.pushMatrix();
+      this.appearancePedras.apply();
+      this.setRock.display();
+      this.popMatrix();
+    }
 
-
-
-   
-
-
-
-
-
-
-
-
-
-
-
-    // ---- END Primitive drawing section
   }
 }

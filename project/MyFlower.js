@@ -98,7 +98,6 @@ export class MyFlower extends CGFobject {
 
       this.appearanceCirc.setTexture(this.receptacleTexture[Math.floor(Math.random() * this.receptacleTexture.length)]); 
       this.appearanceCirc.setTextureWrap('REPEAT', 'REPEAT');
-      console.log(this.appearanceCirc);
     
     }
 

@@ -6,12 +6,13 @@ import { CGFobject } from '../lib/CGF.js';
  * @constructor
  */
 export class MyRock extends CGFobject {
-  constructor(scene, radius, slices, stacks, prob) {
+  constructor(scene, radius, slices, stacks, prob, size) {
       super(scene);
       this.radius = radius;
       this.stacks = stacks; // vertical
       this.slices = slices; // horizontal
       this.prob = prob; 
+      this.size = size;
 
 
       this.initBuffers();
@@ -32,20 +33,20 @@ export class MyRock extends CGFobject {
           for (let j = 0; j <= this.slices; j++) { // largura 
 
             if(this.prob >= 0.66){
-                var x =  this.radius * 2 * Math.cos(theta) * Math.sin(alpha);
-                var y =  this.radius / 2 * Math.cos(alpha);
+                var x =  this.radius * this.size * Math.cos(theta) * Math.sin(alpha);
+                var y =  this.radius / this.size * Math.cos(alpha);
                 var z =  this.radius * Math.sin(-theta) * Math.sin(alpha);
             }
             else if(this.prob >= 0.33){
                 var x =  this.radius * Math.cos(theta) * Math.sin(alpha);
-                var y =  this.radius * 2 * Math.cos(alpha);
-                var z =  this.radius / 2 * Math.sin(-theta) * Math.sin(alpha);
+                var y =  this.radius * this.size * Math.cos(alpha);
+                var z =  this.radius / this.size * Math.sin(-theta) * Math.sin(alpha);
             }
             else{
 
-                var x =  this.radius / 2 * Math.cos(theta) * Math.sin(alpha);
+                var x =  this.radius / this.size * Math.cos(theta) * Math.sin(alpha);
                 var y =  this.radius * Math.cos(alpha);
-                var z =  this.radius * 2 * Math.sin(-theta) * Math.sin(alpha);
+                var z =  this.radius * this.size * Math.sin(-theta) * Math.sin(alpha);
             }
               var noise = Math.random() * this.prob; // Adjust the level of irregularity
               var dx = noise * Math.cos(theta) * Math.sin(alpha);

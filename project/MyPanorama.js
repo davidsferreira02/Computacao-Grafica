@@ -16,6 +16,5 @@ export class MyPanorama {
     display() {
         this.texture.apply();
         this.sphere.display();
-        console.log(this.texture);
     }
 }
