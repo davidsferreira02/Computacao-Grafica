@@ -51,11 +51,11 @@ export class MyScene extends CGFscene {
     this.scaleFactor = 1;
     this.displaySphere = false;
     this.displayPanorama = true;
-    this.displayPlane = false;
-    this.displayFlower=true;
-    this.displayBee=false;
-    this.displayRock= true;
-    this.displayGarden = true;
+    this.displayPlane = true;
+    this.displayFlower=false;
+    this.displayBee=true;
+    this.displayRock= false;
+    this.displayGarden = false;
 
 
 
