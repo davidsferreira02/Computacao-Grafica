@@ -53,11 +53,13 @@ export class MyBeeHead extends CGFobject {
         // Display body
         this.scene.pushMatrix();
         this.appearanceHead.apply();
+        this.scene.scale(0.7,0.7,0.7);
         this.head.display();
         this.scene.popMatrix();
     
         // Display left antenna
         this.scene.pushMatrix();
+        this.scene.scale(0.7,0.7,0.7);
         this.scene.translate(-0.25,0.25,-0.125);
         this.scene.rotate(Math.PI/2,0,1,0);
         this.scene.rotate(Math.PI/4,1,0,0);
@@ -67,6 +69,7 @@ export class MyBeeHead extends CGFobject {
     
         // Display right antenna
         this.scene.pushMatrix();
+        this.scene.scale(0.7,0.7,0.7);
         this.scene.translate(-0.25,0.25,0.125);
         this.scene.rotate(Math.PI/2,0,1,0);
         this.scene.rotate(Math.PI/4,1,0,0);
@@ -77,6 +80,7 @@ export class MyBeeHead extends CGFobject {
         // Display eye
 
         this.scene.pushMatrix();
+        this.scene.scale(0.7,0.7,0.7);
         this.scene.translate(-0.25,0.05,-0.05);
         this.scene.rotate(-Math.PI/2,0,0,1);
         this.scene.scale(0.15,0.1,0.1);
@@ -88,6 +92,7 @@ export class MyBeeHead extends CGFobject {
 
 
         this.scene.pushMatrix();
+        this.scene.scale(0.7,0.7,0.7);
         this.scene.translate(-0.25,0.05,0.05);
         this.scene.rotate(-Math.PI/2,0,0,1);
         this.scene.scale(0.15,0.1,0.1);

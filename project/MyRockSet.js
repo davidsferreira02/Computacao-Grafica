@@ -6,12 +6,12 @@ import { MyRock } from "./MyRock.js";
  * @constructor
  */
 export class MyRockSet extends CGFobject {
-  constructor(scene, numRocks) {
-      super(scene);
-      this.numRocks = numRocks;
-      this.rocks = [];
-      this.generateRocks();
-    }
+    constructor(scene, numRocks) {
+        super(scene);
+        this.numRocks = numRocks;
+        this.rocks = [];
+        this.generateRocks();
+        }
 
     generateRocks() {
         for (let i = 0; i < this.numRocks; i++) {
@@ -27,37 +27,45 @@ export class MyRockSet extends CGFobject {
     }
 
     display() {
-        const baseWidth = Math.floor(this.numRocks/4);  
-        let currentRow = 0; 
-        let currentOffset = 0; 
+        const baseWidth = Math.floor(this.numRocks / 3); // Largura da base da pirâmide
+        const numRows = Math.ceil(this.numRocks / baseWidth); // Número de linhas na pirâmide
 
-        // Loop through each rock and position it in the pyramid
+        // Definir os incrementos de deslocamento para cada linha
+        const offsetXIncrement = 0; // Deslocamento horizontal entre rochas
+        const offsetYIncrement = 0; // Deslocamento vertical entre linhas
+        const offsetZIncrement = 0; // Deslocamento frontal entre linhas
+
+        let currentRow = 0; // Índice da linha atual
+        let currentOffsetX = 0; // Deslocamento horizontal atual
+        let currentOffsetY = 0; // Deslocamento vertical atual
+        let currentOffsetZ = 0; // Deslocamento frontal atual
+
+        // Loop para organizar as rochas em uma pirâmide
         for (let i = 0; i < this.numRocks; i++) {
             const rock = this.rocks[i];
 
-            // Calculate the position of the current rock
-            const x = rock.radius * 2 ; 
-            const y = currentOffset + (rock.radius * 2);// Increase height with each row
-            const z = rock.radius * 2 ; // No offset in the z-axis for a simple pyramid
-
-            // Apply translation to position the rock
-            
-            //this.scene.translate(10, 0, -100);
+            // Aplicar os deslocamentos na matriz de transformação
             this.scene.pushMatrix();
-            this.scene.translate(x, y, z);
+            this.scene.translate(currentOffsetX + 2*rock.x, currentOffsetY + 2*rock.y, currentOffsetZ + 2*rock.z);
+
+            // Exibir a rocha na posição atual
             this.rocks[i].display();
-            
+
+            // Restaurar a matriz de transformação
             this.scene.popMatrix();
-            
 
-            // Increment the offset for the next rock in the row
-            currentOffset += rock.radius * 2;
+            // Incrementar os deslocamentos para a próxima rocha
+            currentOffsetX += offsetXIncrement;
+            currentOffsetY += (currentRow + 1) * offsetYIncrement; // Incrementar mais verticalmente para cada nova linha
+            currentOffsetZ += (numRows - currentRow) * offsetZIncrement; // Incrementar menos frontalmente para cada nova linha
 
-            // Check if we need to move to the next row
-            if (currentOffset > baseWidth) {
-                currentRow++; // Move to the next row
-                currentOffset = 0; // Reset the offset for the new row
+            // Verificar se é necessário mudar para a próxima linha
+            if (i % baseWidth === baseWidth - 1) {
+                currentOffsetX = 0; 
+                currentOffsetY ++;
+                currentOffsetZ = 0; 
             }
         }
+
     }
 }

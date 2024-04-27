@@ -23,6 +23,9 @@ export class MyRock extends CGFobject {
       this.indices = [];
       this.normals = [];
       this.texCoords = [];
+      this.x = 0;
+      this.y = 0;
+      this.z = 0;
 
       var alpha = 0; // angulo vertical 
       var theta = 0; // angulo com a horizontal
@@ -33,20 +36,20 @@ export class MyRock extends CGFobject {
           for (let j = 0; j <= this.slices; j++) { // largura 
 
             if(this.prob >= 0.66){
-                var x =  this.radius * this.size * Math.cos(theta) * Math.sin(alpha);
-                var y =  this.radius / this.size * Math.cos(alpha);
-                var z =  this.radius * Math.sin(-theta) * Math.sin(alpha);
+                this.x =  this.radius * this.size * Math.cos(theta) * Math.sin(alpha);
+                this.y =  this.radius / this.size * Math.cos(alpha);
+                this.z =  this.radius * Math.sin(-theta) * Math.sin(alpha);
             }
             else if(this.prob >= 0.33){
-                var x =  this.radius * Math.cos(theta) * Math.sin(alpha);
-                var y =  this.radius * this.size * Math.cos(alpha);
-                var z =  this.radius / this.size * Math.sin(-theta) * Math.sin(alpha);
+                this.x =  this.radius * Math.cos(theta) * Math.sin(alpha);
+                this.y =  this.radius * this.size * Math.cos(alpha);
+                this.z =  this.radius / this.size * Math.sin(-theta) * Math.sin(alpha);
             }
             else{
 
-                var x =  this.radius / this.size * Math.cos(theta) * Math.sin(alpha);
-                var y =  this.radius * Math.cos(alpha);
-                var z =  this.radius * this.size * Math.sin(-theta) * Math.sin(alpha);
+                this.x =  this.radius / this.size * Math.cos(theta) * Math.sin(alpha);
+                this.y =  this.radius * Math.cos(alpha);
+                this.z =  this.radius * this.size * Math.sin(-theta) * Math.sin(alpha);
             }
               var noise = Math.random() * this.prob; // Adjust the level of irregularity
               var dx = noise * Math.cos(theta) * Math.sin(alpha);
@@ -54,29 +57,29 @@ export class MyRock extends CGFobject {
               var dz =  noise * Math.sin(-theta) * Math.sin(alpha);
 
               if(noise > 0.8){
-                y -= dy * 0.4;
-                z += dz* 0.7;
+                this.y -= dy * 0.4;
+                this.z += dz* 0.7;
               }
               else if(noise > 0.5){
-                x += dx * 0.2;
-                z -= dz * 0.5;
+                this.x += dx * 0.2;
+                this.z -= dz * 0.5;
               }
               else if(noise > 0.3){
-                x -= dx * 0.6;
-                y += dy * 0.3;
+                this.x -= dx * 0.6;
+                this.y += dy * 0.3;
               }
               else{
-                x += dz * 0.8;
-                y += dy * 0.4;
-                z += dz * 0.6;
+                this.x += dz * 0.8;
+                this.y += dy * 0.4;
+                this.z += dz * 0.6;
               }
 
             
-              this.vertices.push(x, y, z);
-              this.normals.push(x, y, z); 
+              this.vertices.push(this.x, this.y, this.z);
+              this.normals.push(this.x, this.y, this.z); 
 
-              this.vertices.unshift(x, y, z);
-              this.normals.unshift(x, y, z);
+              this.vertices.unshift(this.x, this.y, this.z);
+              this.normals.unshift(this.x, this.y, this.z);
         
 
               if (i < this.stacks && j < this.slices) {

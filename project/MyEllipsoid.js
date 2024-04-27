@@ -47,7 +47,8 @@ export class MyElipsoid extends CGFobject {
                       this.indices.push(first + 1, second, second + 1);
                   
               } 
-              this.texCoords.push(j / this.slices, i/ this.stacks); //
+
+              this.texCoords.push( j / this.slices, i / this.stacks);
             
 
               theta += (2 * Math.PI) / this.slices;
