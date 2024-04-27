@@ -27,7 +27,7 @@ export class MyBeeBody extends CGFobject {
    
 
        
-        this.textureBody = new CGFtexture(this.scene, "images/bee.jpg");
+        this.textureBody = new CGFtexture(this.scene, "textures/head.jpg");
         this.appearanceBody= new CGFappearance(this.scene);
         this.appearanceBody.setDiffuse(1.0, 1.0, 1.0, 1.0);
         this.appearanceBody.setTexture(this.textureBody);
@@ -37,8 +37,19 @@ export class MyBeeBody extends CGFobject {
         this.appearancePata= new CGFappearance(this.scene);
         this.appearancePata.setDiffuse(0.0,0);
         this.appearancePata.setSpecular(0,0,0);
- 
 
+        this.materialWing = new CGFappearance(this.scene);
+
+        // Definindo a cor difusa como cinza claro
+        this.materialWing.setDiffuse(220/255, 220/255, 220/255,0); // R, G, B = 220/255, 220/255, 220/255
+        
+        // Definindo a cor especular como cinza claro
+        this.materialWing.setSpecular(220/255, 220/255, 220/255,0); // R, G, B = 220/255, 220/255, 220/255
+        
+        // Definindo outras propriedades, se necessário
+        this.materialWing.setShininess(10.0); // Brilho
+        
+        
      
    
       
@@ -134,7 +145,7 @@ export class MyBeeBody extends CGFobject {
 
 
         this.scene.pushMatrix();
-        this.material.apply();
+        this.materialWing.apply();
         this.scene.translate(0.2,0.05,0.2);
         this.scene.scale(0.2,0.05,0.2);
         this.scene.rotate(-Math.PI/2,0,1,0);
@@ -144,7 +155,7 @@ export class MyBeeBody extends CGFobject {
         this.scene.popMatrix();
 
         this.scene.pushMatrix();
-        this.material.apply();
+        this.materialWing.apply();
         this.scene.translate(0.2,-0.025,0.15);
         this.scene.scale(0.15,0.035,0.15);
         this.scene.rotate(-Math.PI/2,0,1,0);
@@ -154,7 +165,7 @@ export class MyBeeBody extends CGFobject {
         this.scene.popMatrix();
 
         this.scene.pushMatrix();
-        this.material.apply();
+        this.materialWing.apply();
         this.scene.translate(0.2,0.05,-0.2);
         this.scene.scale(0.2,0.05,0.2);
         this.scene.rotate(-Math.PI/2,0,1,0);
@@ -164,7 +175,7 @@ export class MyBeeBody extends CGFobject {
         this.scene.popMatrix();
 
         this.scene.pushMatrix();
-        this.material.apply();
+        this.materialWing.apply();
         this.scene.translate(0.2,-0.025,-0.15);
         this.scene.scale(0.15,0.035,0.15);
         this.scene.rotate(-Math.PI/2,0,1,0);

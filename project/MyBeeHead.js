@@ -19,11 +19,7 @@ export class MyBeeHead extends CGFobject {
 	}
 
     initMaterials(){
-        this.appearanceEye= new CGFappearance(this.scene);
-   
-        this.appearanceEye.setAmbient(1,0,0);
-        this.appearanceEye.setDiffuse(1,0,0);
-        this.appearanceEye.setSpecular(1,0,0);
+       
 
         
 
@@ -32,11 +28,19 @@ export class MyBeeHead extends CGFobject {
         this.appearanceAntena.setSpecular(0,0,0);
 
 
-        this.textureHead = new CGFtexture(this.scene, "images/beeHead.jpg");
+        this.textureHead = new CGFtexture(this.scene, "textures/head.jpg");
         this.appearanceHead= new CGFappearance(this.scene);
-        this.appearanceHead.setDiffuse(1.0, 1.0, 1.0, 1.0);
-        this.appearanceHead.setTexture(this.textureBody);
+                
+        this.appearanceHead.setTexture(this.textureHead);
+        //this.appearanceHead.setDiffuse(0.72, 0.54, 0, 1.0); 
         this.appearanceHead.setTextureWrap('REPEAT', 'REPEAT');
+
+
+        this.eyeBody = new CGFtexture(this.scene, "textures/eye.jpg");
+        this.appearanceEye= new CGFappearance(this.scene);
+        
+        this.appearanceEye.setTexture(this.eyeBody);
+        this.appearanceEye.setTextureWrap('REPEAT', 'REPEAT');
 
         
     }
@@ -53,7 +57,7 @@ export class MyBeeHead extends CGFobject {
         // Display body
         this.scene.pushMatrix();
         this.appearanceHead.apply();
-        this.scene.scale(0.7,0.7,0.7);
+        this.scene.scale(0.5,0.5,0.5);
         this.head.display();
         this.scene.popMatrix();
     
@@ -81,11 +85,9 @@ export class MyBeeHead extends CGFobject {
 
         this.scene.pushMatrix();
         this.scene.scale(0.7,0.7,0.7);
-        this.scene.translate(-0.25,0.05,-0.05);
+        this.scene.translate(-0.15,0.05,-0.05);
         this.scene.rotate(-Math.PI/2,0,0,1);
-        this.scene.scale(0.15,0.1,0.1);
-       
-   
+        this.scene.scale(0.12,0.1,0.1);
         this.appearanceEye.apply(); // Apply eye appearance
         this.eye.display();
         this.scene.popMatrix();
@@ -93,9 +95,9 @@ export class MyBeeHead extends CGFobject {
 
         this.scene.pushMatrix();
         this.scene.scale(0.7,0.7,0.7);
-        this.scene.translate(-0.25,0.05,0.05);
+        this.scene.translate(-0.15,0.05,0.05);
         this.scene.rotate(-Math.PI/2,0,0,1);
-        this.scene.scale(0.15,0.1,0.1);
+        this.scene.scale(0.12,0.1,0.1);
        
    
         this.appearanceEye.apply(); // Apply eye appearance
