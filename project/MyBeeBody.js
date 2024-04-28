@@ -61,7 +61,7 @@ export class MyBeeBody extends CGFobject {
         this.body = new MyElipsoid(this.scene, 1, 100,100);
         this.backBody = new MyElipsoid(this.scene,1,100,100);
         this.pata = new MyStem(this.scene,100,100,0.01,0.3);
-        this.wing = new MyElipsoid(this.scene,1,10,10);
+  
     }
 
     display(){
@@ -143,46 +143,6 @@ export class MyBeeBody extends CGFobject {
 
 
 
-
-        this.scene.pushMatrix();
-        this.materialWing.apply();
-        this.scene.translate(0.2,0.05,0.2);
-        this.scene.scale(0.2,0.05,0.2);
-        this.scene.rotate(-Math.PI/2,0,1,0);
-        this.scene.rotate(-Math.PI/2,1,0,0);
-
-        this.wing.display(); // asa esquerda de cima
-        this.scene.popMatrix();
-
-        this.scene.pushMatrix();
-        this.materialWing.apply();
-        this.scene.translate(0.2,-0.025,0.15);
-        this.scene.scale(0.15,0.035,0.15);
-        this.scene.rotate(-Math.PI/2,0,1,0);
-        this.scene.rotate(-Math.PI/2,1,0,0);
-        this.scene.scale(1,1,0);
-        this.wing.display(); // asa esquerda de baixo
-        this.scene.popMatrix();
-
-        this.scene.pushMatrix();
-        this.materialWing.apply();
-        this.scene.translate(0.2,0.05,-0.2);
-        this.scene.scale(0.2,0.05,0.2);
-        this.scene.rotate(-Math.PI/2,0,1,0);
-        this.scene.rotate(-Math.PI/2,1,0,0);
-
-        this.wing.display(); // asa direita de cima
-        this.scene.popMatrix();
-
-        this.scene.pushMatrix();
-        this.materialWing.apply();
-        this.scene.translate(0.2,-0.025,-0.15);
-        this.scene.scale(0.15,0.035,0.15);
-        this.scene.rotate(-Math.PI/2,0,1,0);
-        this.scene.rotate(-Math.PI/2,1,0,0);
-        this.scene.scale(1,1,0);
-        this.wing.display(); // asa esquerda de baixo
-        this.scene.popMatrix();
 
 
     }

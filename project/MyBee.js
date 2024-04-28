@@ -1,45 +1,118 @@
-
-import { CGFobject } from '../lib/CGF.js';
-import { MyBeeBody } from './MyBeeBody.js';
+import { CGFobject,CGFappearance } from '../lib/CGF.js';
 import { MyBeeHead } from './MyBeeHead.js';
- 
-import { MySphere } from './MySphere.js';
+import { MyBeeBody } from './MyBeeBody.js';
+import { MyElipsoid } from './MyEllipsoid.js';
 
-/**
- * MyBee
- * @constructor
- * @param scene
- */
+
 export class MyBee extends CGFobject {
-	constructor(scene) {
-		super(scene); 
-        this.initParts(); 
+    constructor(scene) {
+        super(scene);
+        this.orientation = 0; // Y
+        this.velocity = 0;
+        this.position = [0,3,0] // X,Y,Z
+        this.isMoving = true;
+        this.beatAngle = 0;
+        this.beatDirection = 1;
+        this.oscilateDirection = 1;
+        this.oscilateHeight = 0;
+        this.isGoingDown = false;
+            this.isGoingUp = false;
+        this.minDistance = 1;
+        this.minHeight;
+        this.augmentHeight;
+        this.initParts();
+
+
+
+        this.materialWing = new CGFappearance(this.scene);
         
-	}
+        // Definindo a cor difusa como cinza claro
+        this.materialWing.setDiffuse(220/255, 220/255, 220/255,0); // R, G, B = 220/255, 220/255, 220/255
+        
+        // Definindo a cor especular como cinza claro
+        this.materialWing.setSpecular(220/255, 220/255, 220/255,0); // R, G, B = 220/255, 220/255, 220/255
+        
+        // Definindo outras propriedades, se necessário
+        this.materialWing.setShininess(10.0); // Brilho
+        
 
-    initParts(){
 
+    }
+  
+    initParts() {
         this.head = new MyBeeHead(this.scene);
         this.body = new MyBeeBody(this.scene);
-    }
+        this.wing = new MyElipsoid(this.scene,1,10,10);
 
-    display(){
+   
+        
+    
+      
+      }
+
+
 
   
+  
+    display ()
+    {
+  
+        // HEAD
+        this.scene.translate(0, 3, 0);
+        this.scene.pushMatrix();
+  
         this.head.display();
+  
+        // BODY
         this.body.display();
-       
-
-        
-    }
-    }
+        this.scene.popMatrix();
 
 
 
-       
-    
-    
+        this.scene.pushMatrix();
+        this.materialWing.apply();
+        this.scene.translate(0.2,0.05,0.2);
+        this.scene.scale(0.2,0.05,0.2);
+        this.scene.rotate(-Math.PI/2,0,1,0);
+        this.scene.rotate(-Math.PI/2,1,0,0);
+   
+
+        this.wing.display(); // asa esquerda de cima
+        this.scene.popMatrix();
+
+        this.scene.pushMatrix();
+        this.materialWing.apply();
+        this.scene.translate(0.2,-0.025,0.15);
+        this.scene.scale(0.15,0.035,0.15);
+        this.scene.rotate(-Math.PI/2,0,1,0);
+        this.scene.rotate(-Math.PI/2,1,0,0);
+        this.scene.scale(1,1,0);
+        this.wing.display(); // asa esquerda de baixo
+        this.scene.popMatrix();
+
+        this.scene.pushMatrix();
+        this.materialWing.apply();
+        this.scene.translate(0.2,0.05,-0.2);
+        this.scene.scale(0.2,0.05,0.2);
+        this.scene.rotate(-Math.PI/2,0,1,0);
+        this.scene.rotate(-Math.PI/2,1,0,0);
+
      
 
-      
+        this.wing.display(); // asa direita de cima
+        this.scene.popMatrix();
+
+        this.scene.pushMatrix();
+        this.materialWing.apply();
+        this.scene.translate(0.2,-0.025,-0.15);
+        this.scene.scale(0.15,0.035,0.15);
+        this.scene.rotate(-Math.PI/2,0,1,0);
+        this.scene.rotate(-Math.PI/2,1,0,0);
    
+        this.scene.scale(1,1,0);
+        this.wing.display(); // asa direira de baixo
+        this.scene.popMatrix();
+  
+    }
+  }
+  

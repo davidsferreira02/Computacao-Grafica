@@ -51,7 +51,7 @@ export class MyScene extends CGFscene {
     this.scaleFactor = 1;
     this.displaySphere = false;
     this.displayPanorama = true;
-    this.displayPlane = true;
+    this.displayPlane = false;
     this.displayFlower=false;
     this.displayBee=true;
     this.displayRock= false;
@@ -78,6 +78,12 @@ export class MyScene extends CGFscene {
 
 
   }
+
+ 
+
+
+
+
   initLights() {
     this.lights[0].setPosition(15, 0, 5, 1);
     this.lights[0].setDiffuse(1.0, 1.0, 1.0, 1.0);

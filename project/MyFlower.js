@@ -75,15 +75,24 @@ export class MyFlower extends CGFobject {
    }
 
    loadTextures() {
-      this.texture = new CGFtexture(this.scene, "textures/texture.jpg");
-      this.texture2 = new CGFtexture(this.scene, "textures/FEUP.jpg");
-      this.texture3= new CGFtexture(this.scene,"textures/waterTex.jpg");
-      this.texture4= new CGFtexture(this.scene,"textures/waterMap.jpg");  
+      this.textureCaule1 = new CGFtexture(this.scene,"textures/caule1.jpg");
+      this.textureCaule2 = new CGFtexture(this.scene,"textures/caule2.jpg");
+      this.textureFolha1 = new CGFtexture(this.scene,"textures/folha1.jpg");
+      this.textureFolha2 = new CGFtexture(this.scene,"textures/folha2.jpg");
+      this.texturePetala1 = new CGFtexture(this.scene,"textures/petala1.jpg");
+      this.texturePetala2 = new CGFtexture(this.scene,"textures/petala2.jpg");
+      this.textureReceptacle1 = new CGFtexture(this.scene,"textures/receptacle1.jpg");
+      this.textureReceptacle2 = new CGFtexture(this.scene,"textures/receptacle2.jpg");
+
+
+
+
+ 
       // Load textures for petals, leaves, stem, etc.
-      this.petalsTextures = [this.texture, this.texture2, this.texture3, this.texture4]; // Array of textures for petals
-      this.leavesTexture = [this.texture, this.texture2, this.texture3, this.texture4]; // Array of textures for leaves
-      this.stemTexture = [this.texture, this.texture2, this.texture3, this.texture4]; // Array of textures for stem
-      this.receptacleTexture = [this.texture, this.texture2, this.texture3, this.texture4]; // Array of textures for receptacle
+      this.petalsTextures = [this.texturePetala1, this.texturePetala2]; // Array of textures for petals
+      this.leavesTexture = [this.textureFolha1, this.textureFolha2]; // Array of textures for leaves
+      this.stemTexture = [this.textureCaule1,this.textureCaule2]; // Array of textures for stem
+      this.receptacleTexture = [this.textureReceptacle1, this.textureReceptacle2]; // Array of textures for receptacle
       // Load other textures...
 
       // Randomly select textures for each component
