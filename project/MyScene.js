@@ -3,13 +3,13 @@ import { MyPlane } from "./MyPlane.js";
 import { MySphere } from "./MySphere.js";
 import { MyPanorama } from "./MyPanorama.js";
 import { MyStem } from "./MyStem.js";
-import { MyPetal } from "./MyPetal.js";
 import { MyGarden } from "./MyGarden.js";
 
 import { MyReceptacle } from "./MyReceptacle.js";
 import { MyFlower } from "./MyFlower.js";
 import { MyBee } from "./MyBee.js";
 import { MyRock } from "./MyRock.js";
+import { MyAnimatedObject } from "./MyAnimatedObject.js";
 
 /**
  * MyScene
@@ -53,9 +53,9 @@ export class MyScene extends CGFscene {
     this.displayPanorama = true;
     this.displayPlane = false;
     this.displayFlower=false;
-    this.displayBee=true;
+    this.displayBee=false;
     this.displayRock= false;
-    this.displayGarden = false;
+    this.displayGarden = true;
 
 
 
@@ -75,12 +75,102 @@ export class MyScene extends CGFscene {
     this.appearance3.setTextureWrap('REPEAT', 'REPEAT');
 
 
+        // animation
+        this.setUpdatePeriod(50); // **at least** 50 ms between animations
+
+        this.appStartTime=Date.now(); // current time in milisecs
+    
+    
+        this.animVal1=0;
+        this.animVal2=0;
+        this.animVal3=0;
+    
+        //#region Pars for anim 3
+        this.startVal=0;
+        this.endVal=6;
+        this.animStartTimeSecs=2;
+        this.animDurationSecs=3;
+        this.length=(this.endVal-this.startVal);
+        //#endregion
+      
+        //#region Ex. 4
+        this.numAnimObjs=4;
+
+        this.animObjs= [
+          new MyAnimatedObject(this,0,5,1,3),
+          new MyAnimatedObject(this,0,2,2,3),
+          new MyAnimatedObject(this,0,1,3,2),
+          new MyAnimatedObject(this,-5,5,4,3)
+        ]
+
+
 
 
   }
 
+  checkKeys()  {
+    var text="Keys pressed: ";
+    var keysPressed=false;
+  
  
+    if (this.gui.isKeyPressed("KeyA")) {
+      this.bee.turn(1);
+      text+=" A ";
+      keysPressed=true;
+    }
+    if (this.gui.isKeyPressed("KeyD")) {
+      this.bee.turn(-1);
+      text+=" D ";
+      keysPressed=true;
+    }
+    if (this.gui.isKeyPressed("KeyR")) {
+      this.bee.reset();
+      text+=" R ";
+      keysPressed=true;
+    }
+    if (this.gui.isKeyPressed("KeyP")) {
+      this.bee.goDown(-1);
+      text+=" P ";
+      keysPressed=true;
+    }
 
+    if (this.gui.isKeyPressed("KeyU")) {
+      this.bee.goUp(1);
+      text+=" P ";
+      keysPressed=true;
+    }
+    if (keysPressed)
+      console.log(text);
+  }
+
+  
+
+  updateAnimations(t) {
+    // Update without considering time - BAD
+    this.animVal1 += 0.1;
+  
+    // Continuous animation based on current time and app start time 
+    var timeSinceAppStart = (t - this.appStartTime) / 1000.0;
+    this.animVal2 = -2 + 2 * Math.sin(timeSinceAppStart * Math.PI * 3);
+  
+    // Animation based on elapsed time since animation start
+    var elapsedTimeSecs = timeSinceAppStart - this.animStartTimeSecs;
+    if (elapsedTimeSecs >= 0 && elapsedTimeSecs <= this.animDurationSecs)
+      this.animVal3 = this.startVal + elapsedTimeSecs / this.animDurationSecs * this.length;
+  
+    // Delegate animations to objects
+    for (var i = 0; i < this.numAnimObjs; i++)
+      this.animObjs[i].update(timeSinceAppStart);
+  }
+  
+ 
+  update(t) {
+    // Update animations
+    this.updateAnimations(t);
+  
+    // Check for key inputs
+    this.checkKeys();
+  }
 
 
 
@@ -156,9 +246,12 @@ export class MyScene extends CGFscene {
 
     if(this.displayBee){
       this.pushMatrix();
-      this.scale(10,10,10);
+  
+
       this.bee.display();
+  
       this.popMatrix();
+  
 
     }
 

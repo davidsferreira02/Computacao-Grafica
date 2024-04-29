@@ -8,18 +8,11 @@ export class MyBee extends CGFobject {
     constructor(scene) {
         super(scene);
         this.orientation = 0; // Y
-        this.velocity = 0;
         this.position = [0,3,0] // X,Y,Z
-        this.isMoving = true;
-        this.beatAngle = 0;
         this.beatDirection = 1;
         this.oscilateDirection = 1;
-        this.oscilateHeight = 0;
-        this.isGoingDown = false;
-            this.isGoingUp = false;
-        this.minDistance = 1;
-        this.minHeight;
-        this.augmentHeight;
+        this.oscilateHeight = 0
+        this.minHeight=0;
         this.initParts();
 
 
@@ -51,14 +44,40 @@ export class MyBee extends CGFobject {
       }
 
 
+      goDown(minHeight){
+   
+          this.position[1]+=minHeight;
+        }
 
-  
+
+        goUp(minHeight){
+   
+          this.position[1]+=minHeight;
+        }
+
+
+
+  reset(){
+    this.orientation = 0;
+    this.position = [0,3,0];
+  }
+
+
+
+    
+        turn(angle){
+          var rad = Math.PI * angle/ 180;
+          this.orientation += rad;
+        }
+      
   
     display ()
     {
   
         // HEAD
         this.scene.translate(0, 3, 0);
+        this.scene.translate(this.position[0],this.position[1],this.position[2]);
+        this.scene.rotate(this.orientation, 0, 1, 0);  
         this.scene.pushMatrix();
   
         this.head.display();
