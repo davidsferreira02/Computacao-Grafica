@@ -145,38 +145,14 @@ export class MyScene extends CGFscene {
 
   
 
-  updateAnimations(t) {
-    // Update without considering time - BAD
-    this.animVal1 += 0.1;
-  
-    // Continuous animation based on current time and app start time 
-    var timeSinceAppStart = (t - this.appStartTime) / 1000.0;
-    this.animVal2 = -2 + 2 * Math.sin(timeSinceAppStart * Math.PI * 3);
-  
-    // Animation based on elapsed time since animation start
-    var elapsedTimeSecs = (t - this.animStartTimeSecs * 1000) / 1000; // Convert milliseconds to seconds
-    if (elapsedTimeSecs >= 0 && elapsedTimeSecs <= this.animDurationSecs) {
-      // Calculate the progress of the animation (0 to 1)
-      var progress = elapsedTimeSecs / this.animDurationSecs;
-      // Interpolate between start and end values
-      this.animVal3 = this.startVal + progress * this.length;
-    }
-  
-    // Delegate animations to objects
-    for (var i = 0; i < this.numAnimObjs; i++)
-      this.animObjs[i].update(timeSinceAppStart);
-  }
-  
-  
+
  
   update(t) {
-    // Update animations
-    this.updateAnimations(t);
-  
+   
+    this.bee.beatWings();
     // Check for key inputs
     this.checkKeys();
-
-    this.bee.beatWings();
+   
   }
 
 
@@ -253,7 +229,7 @@ export class MyScene extends CGFscene {
 
     if(this.displayBee){
       this.pushMatrix();
-      this.scale(10,10,10);
+      this.scale(10,10,10)
       this.bee.display();
   
       this.popMatrix();
