@@ -37,12 +37,7 @@ export class MyBeeBody extends CGFobject {
         this.appearancePata= new CGFappearance(this.scene);
         this.appearancePata.setDiffuse(0.0,0);
         this.appearancePata.setSpecular(0,0,0);
- 
-
-     
-   
-      
-
+         
     }
 
     initBuffers(){

@@ -35,23 +35,18 @@ export class MyRock extends CGFobject {
           theta = 0;
           for (let j = 0; j <= this.slices; j++) { // largura 
 
-            if(this.prob >= 0.66){
-                this.x =  this.radius * this.size * Math.cos(theta) * Math.sin(alpha);
-                this.y =  this.radius / this.size * Math.cos(alpha);
+            if(this.prob >= 0.5){
+                this.x =  this.radius * (this.size*0.5) * Math.cos(theta) * Math.sin(alpha);
+                this.y =  this.radius / (this.size*0.5) * Math.cos(alpha);
                 this.z =  this.radius * Math.sin(-theta) * Math.sin(alpha);
             }
-            else if(this.prob >= 0.33){
-                this.x =  this.radius * Math.cos(theta) * Math.sin(alpha);
-                this.y =  this.radius * this.size * Math.cos(alpha);
-                this.z =  this.radius / this.size * Math.sin(-theta) * Math.sin(alpha);
-            }
+          
             else{
-
-                this.x =  this.radius / this.size * Math.cos(theta) * Math.sin(alpha);
+                this.x =  this.radius / (this.size*0.5) * Math.cos(theta) * Math.sin(alpha);
                 this.y =  this.radius * Math.cos(alpha);
-                this.z =  this.radius * this.size * Math.sin(-theta) * Math.sin(alpha);
+                this.z =  this.radius * (this.size*0.5) * Math.sin(-theta) * Math.sin(alpha);
             }
-              var noise = Math.random() * this.prob; // Adjust the level of irregularity
+              var noise = Math.random() * this.prob; 
               var dx = noise * Math.cos(theta) * Math.sin(alpha);
               var dy = noise * Math.cos(alpha);
               var dz =  noise * Math.sin(-theta) * Math.sin(alpha);
@@ -86,21 +81,16 @@ export class MyRock extends CGFobject {
                   var first = i * latVert + j;
                   var second = first + latVert;
 
-             
-                      this.indices.push(first + 1, first, second);
-                      this.indices.push(first + 1, second, second + 1);
+          
+                  this.indices.push(first + 1, first, second);
+                  this.indices.push(first + 1, second, second + 1);
 
-                      this.indices.push(first + 1, second, first);
-                      this.indices.push(first + 1, second + 1, second);
+                  this.indices.push(first + 1, second, first);
+                  this.indices.push(first + 1, second + 1, second);
                   
               }
            
                   this.texCoords.push( -(j / this.slices), -(i / this.stacks));
-
-                  
-                  
-                
-              
 
               theta += (2 * Math.PI) / this.slices;
           }

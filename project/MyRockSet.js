@@ -15,11 +15,11 @@ export class MyRockSet extends CGFobject {
 
     generateRocks() {
         for (let i = 0; i < this.numRocks; i++) {
-            const radius = Math.random() ;
-            const slices = 10;
-            const stacks = Math.floor(Math.random() * (5 - 1)) + 1;
+            const radius = Math.random() + 0.5;
+            const slices = 20;
+            const stacks = Math.floor(Math.random() * 20) + 10;
             const prob = Math.random();
-            const size = Math.random() * (3 - 1) + 1;
+            const size = Math.random() * (2 - 1) + 1;
             const rock = new MyRock(this.scene, radius, slices, stacks, prob, size);
             this.rocks.push(rock);
         }
@@ -46,7 +46,7 @@ export class MyRockSet extends CGFobject {
 
             // Aplicar os deslocamentos na matriz de transformação
             this.scene.pushMatrix();
-            this.scene.translate(currentOffsetX + 2*rock.x, currentOffsetY + 2*rock.y, currentOffsetZ + 2*rock.z);
+            this.scene.translate(currentOffsetX + 10*rock.x, currentOffsetY + 10*rock.y, currentOffsetZ + 10*rock.z);
 
             // Exibir a rocha na posição atual
             this.rocks[i].display();
@@ -55,9 +55,9 @@ export class MyRockSet extends CGFobject {
             this.scene.popMatrix();
 
             // Incrementar os deslocamentos para a próxima rocha
-            currentOffsetX += offsetXIncrement;
-            currentOffsetY += (currentRow + 1) * offsetYIncrement; // Incrementar mais verticalmente para cada nova linha
-            currentOffsetZ += (numRows - currentRow) * offsetZIncrement; // Incrementar menos frontalmente para cada nova linha
+            currentOffsetX += 10*offsetXIncrement;
+            currentOffsetY += 10*(currentRow + 1) * offsetYIncrement; // Incrementar mais verticalmente para cada nova linha
+            currentOffsetZ += 10*(numRows - currentRow) * offsetZIncrement; // Incrementar menos frontalmente para cada nova linha
 
             // Verificar se é necessário mudar para a próxima linha
             if (i % baseWidth === baseWidth - 1) {
