@@ -8,11 +8,13 @@ export class MyBee extends CGFobject {
     constructor(scene) {
         super(scene);
         this.orientation = 0; // Y
-        this.position = [0,3,0] // X,Y,Z
+        this.position = [0,0,0] // X,Y,Z
         this.beatDirection = 1;
         this.oscilateDirection = 1;
         this.oscilateHeight = 0
         this.minHeight=0;
+        this.beatAngle=0;
+       
         this.initParts();
 
 
@@ -63,6 +65,26 @@ export class MyBee extends CGFobject {
   }
 
 
+  
+  beatWings() {
+    // valores de incremento minimo e máximo
+    const beatIncrementMin = 0.02;
+    const beatIncrementMax = 0.9;
+  
+    // o incremento conforme a velocidade do passaro
+    const speedFactor = Math.min(Math.abs(0.7) / 5, 1); // Limita o fator a um máximo de 1
+    const beatIncrement = beatIncrementMin + (beatIncrementMax - beatIncrementMin) * speedFactor ;
+  
+    // Atualizar o ângulo de bater as asas com base na direção atual e no incremento
+    if (this.beatAngle >= 0.2) {
+      this.beatDirection = -1;
+    } else if (this.beatAngle <= -0.2) {
+      this.beatDirection = 1;
+    }
+    this.beatAngle += beatIncrement * this.beatDirection;
+  }
+
+
 
     
         turn(angle){
@@ -75,7 +97,7 @@ export class MyBee extends CGFobject {
     {
   
         // HEAD
-        this.scene.translate(0, 3, 0);
+      
         this.scene.translate(this.position[0],this.position[1],this.position[2]);
         this.scene.rotate(this.orientation, 0, 1, 0);  
         this.scene.pushMatrix();
@@ -95,7 +117,7 @@ export class MyBee extends CGFobject {
         this.scene.rotate(-Math.PI/2,0,1,0);
         this.scene.rotate(-Math.PI/2,1,0,0);
    
-
+        this.scene.rotate(-this.beatAngle, 0, 1, 0);
         this.wing.display(); // asa esquerda de cima
         this.scene.popMatrix();
 
@@ -106,6 +128,7 @@ export class MyBee extends CGFobject {
         this.scene.rotate(-Math.PI/2,0,1,0);
         this.scene.rotate(-Math.PI/2,1,0,0);
         this.scene.scale(1,1,0);
+        this.scene.rotate(-this.beatAngle, 0, 1, 0);
         this.wing.display(); // asa esquerda de baixo
         this.scene.popMatrix();
 
@@ -116,7 +139,7 @@ export class MyBee extends CGFobject {
         this.scene.rotate(-Math.PI/2,0,1,0);
         this.scene.rotate(-Math.PI/2,1,0,0);
 
-     
+        this.scene.rotate(this.beatAngle, 0, 1, 0 );
 
         this.wing.display(); // asa direita de cima
         this.scene.popMatrix();
@@ -129,6 +152,7 @@ export class MyBee extends CGFobject {
         this.scene.rotate(-Math.PI/2,1,0,0);
    
         this.scene.scale(1,1,0);
+        this.scene.rotate(this.beatAngle, 0, 1, 0 );
         this.wing.display(); // asa direira de baixo
         this.scene.popMatrix();
   

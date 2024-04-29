@@ -53,9 +53,9 @@ export class MyScene extends CGFscene {
     this.displayPanorama = true;
     this.displayPlane = false;
     this.displayFlower=false;
-    this.displayBee=false;
+    this.displayBee=true;
     this.displayRock= false;
-    this.displayGarden = true;
+    this.displayGarden = false;
 
 
 
@@ -154,14 +154,19 @@ export class MyScene extends CGFscene {
     this.animVal2 = -2 + 2 * Math.sin(timeSinceAppStart * Math.PI * 3);
   
     // Animation based on elapsed time since animation start
-    var elapsedTimeSecs = timeSinceAppStart - this.animStartTimeSecs;
-    if (elapsedTimeSecs >= 0 && elapsedTimeSecs <= this.animDurationSecs)
-      this.animVal3 = this.startVal + elapsedTimeSecs / this.animDurationSecs * this.length;
+    var elapsedTimeSecs = (t - this.animStartTimeSecs * 1000) / 1000; // Convert milliseconds to seconds
+    if (elapsedTimeSecs >= 0 && elapsedTimeSecs <= this.animDurationSecs) {
+      // Calculate the progress of the animation (0 to 1)
+      var progress = elapsedTimeSecs / this.animDurationSecs;
+      // Interpolate between start and end values
+      this.animVal3 = this.startVal + progress * this.length;
+    }
   
     // Delegate animations to objects
     for (var i = 0; i < this.numAnimObjs; i++)
       this.animObjs[i].update(timeSinceAppStart);
   }
+  
   
  
   update(t) {
@@ -170,6 +175,8 @@ export class MyScene extends CGFscene {
   
     // Check for key inputs
     this.checkKeys();
+
+    this.bee.beatWings();
   }
 
 
@@ -246,8 +253,7 @@ export class MyScene extends CGFscene {
 
     if(this.displayBee){
       this.pushMatrix();
-  
-
+      this.scale(10,10,10);
       this.bee.display();
   
       this.popMatrix();
