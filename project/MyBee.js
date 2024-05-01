@@ -14,7 +14,12 @@ export class MyBee extends CGFobject {
         this.oscilateHeight = 0
         this.minHeight=0;
         this.beatAngle=0;
-       
+       this.velocity=0;
+      this.phase=0;
+      this.frequency=2;
+      this.amplitude=0.1;
+      this.BeePositionY=0;
+      this.startY=0;
         this.initParts();
 
 
@@ -46,6 +51,20 @@ export class MyBee extends CGFobject {
       }
 
 
+
+      updateVelocity(newVelocity) {
+        this.velocity = newVelocity;
+      }
+    
+
+      accelerate(acceleration){
+        if(this.velocity+acceleration >= 0){
+          this.velocity += acceleration;
+        }
+      }
+    
+    
+
       goDown(minHeight){
    
           this.position[1]+=minHeight;
@@ -59,30 +78,59 @@ export class MyBee extends CGFobject {
 
 
 
+        beatWings() {
+          // valores de incremento minimo e máximo
+          const beatIncrementMin = 0.02;
+          const beatIncrementMax = 0.9;
+        
+          // o incremento conforme a velocidade do passaro
+          const speedFactor = Math.min(Math.abs(0.7) / 5, 1); // Limita o fator a um máximo de 1
+          const beatIncrement = beatIncrementMin + (beatIncrementMax - beatIncrementMin) * speedFactor ;
+        
+          // Atualizar o ângulo de bater as asas com base na direção atual e no incremento
+          if (this.beatAngle >= 0.2) {
+            this.beatDirection = -1;
+          } else if (this.beatAngle <= -0.2) {
+            this.beatDirection = 1;
+          }
+          this.beatAngle += beatIncrement * this.beatDirection;
+        }
+
+
+        update(t) {
+          console.log("Bird position: " + this.position);
+          var timeSinceAppStart = (t-Date.now())/1000;
+         
+            this.position[0] += this.velocity * Math.cos(this.orientation); // X
+            this.position[2] += this.velocity * Math.sin(this.orientation); // Z
+          
+
+          const angle = this.phase + timeSinceAppStart * this.frequency;
+          const offsetY = Math.sin(angle) * this.amplitude;
+          this.BeePositionY = this.startY + offsetY;
+   
+          
+          this.beatWings();
+        }
+      
+
+
   reset(){
     this.orientation = 0;
-    this.position = [0,3,0];
+    this.velocity = 0;
+    this.position = [0,0,0];
+    this.beatAngle = 0;
+    this.beatDirection = 1;
+    this.oscilateHeight = 0;
+    this.oscilateDirection = 1;
+    this.isMoving = false;
+
+   
   }
 
 
   
-  beatWings() {
-    // valores de incremento minimo e máximo
-    const beatIncrementMin = 0.02;
-    const beatIncrementMax = 0.9;
-  
-    // o incremento conforme a velocidade do passaro
-    const speedFactor = Math.min(Math.abs(0.7) / 5, 1); // Limita o fator a um máximo de 1
-    const beatIncrement = beatIncrementMin + (beatIncrementMax - beatIncrementMin) * speedFactor ;
-  
-    // Atualizar o ângulo de bater as asas com base na direção atual e no incremento
-    if (this.beatAngle >= 0.2) {
-      this.beatDirection = -1;
-    } else if (this.beatAngle <= -0.2) {
-      this.beatDirection = 1;
-    }
-    this.beatAngle += beatIncrement * this.beatDirection;
-  }
+
 
 
 
@@ -98,7 +146,7 @@ export class MyBee extends CGFobject {
   
         // HEAD
       
-        this.scene.translate(this.position[0],this.position[1],this.position[2]);
+        this.scene.translate(this.position[0], this.BeePositionY+ this.position[1],this.position[2]);
         this.scene.rotate(this.orientation, 0, 1, 0);  
         this.scene.pushMatrix();
   

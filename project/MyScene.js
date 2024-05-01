@@ -9,7 +9,7 @@ import { MyReceptacle } from "./MyReceptacle.js";
 import { MyFlower } from "./MyFlower.js";
 import { MyBee } from "./MyBee.js";
 import { MyRock } from "./MyRock.js";
-import { MyAnimatedObject } from "./MyAnimatedObject.js";
+
 
 /**
  * MyScene
@@ -77,32 +77,9 @@ export class MyScene extends CGFscene {
 
         // animation
         this.setUpdatePeriod(50); // **at least** 50 ms between animations
-
-        this.appStartTime=Date.now(); // current time in milisecs
     
-    
-        this.animVal1=0;
-        this.animVal2=0;
-        this.animVal3=0;
-    
-        //#region Pars for anim 3
-        this.startVal=0;
-        this.endVal=6;
-        this.animStartTimeSecs=2;
-        this.animDurationSecs=3;
-        this.length=(this.endVal-this.startVal);
-        //#endregion
-      
-        //#region Ex. 4
-        this.numAnimObjs=4;
-
-        this.animObjs= [
-          new MyAnimatedObject(this,0,5,1,3),
-          new MyAnimatedObject(this,0,2,2,3),
-          new MyAnimatedObject(this,0,1,3,2),
-          new MyAnimatedObject(this,-5,5,4,3)
-        ]
-
+  
+     
 
 
 
@@ -111,8 +88,18 @@ export class MyScene extends CGFscene {
   checkKeys()  {
     var text="Keys pressed: ";
     var keysPressed=false;
-  
- 
+
+    if (this.gui.isKeyPressed("KeyW")) {
+      this.bee.accelerate(0.1);
+      text+=" W ";
+      keysPressed=true;
+    }
+    if (this.gui.isKeyPressed("KeyS"))  {
+      this.bee.accelerate(-0.1);
+      text+=" S ";
+      keysPressed=true;
+    }
+
     if (this.gui.isKeyPressed("KeyA")) {
       this.bee.turn(1);
       text+=" A ";
@@ -129,13 +116,13 @@ export class MyScene extends CGFscene {
       keysPressed=true;
     }
     if (this.gui.isKeyPressed("KeyP")) {
-      this.bee.goDown(-1);
+      this.bee.goDown(-0.1);
       text+=" P ";
       keysPressed=true;
     }
 
     if (this.gui.isKeyPressed("KeyU")) {
-      this.bee.goUp(1);
+      this.bee.goUp(0.1);
       text+=" P ";
       keysPressed=true;
     }
@@ -148,10 +135,9 @@ export class MyScene extends CGFscene {
 
  
   update(t) {
-   
-    this.bee.beatWings();
-    // Check for key inputs
+  
     this.checkKeys();
+    this.bee.update(50);
    
   }
 
