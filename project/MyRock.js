@@ -32,7 +32,7 @@ export class MyRock extends CGFobject {
           for (let j = 0; j <= this.slices; j++) { // largura 
 
             if(this.prob >= 0.66){
-                var x =  this.radius * 2 * Math.cos(theta) * Math.sin(alpha);
+                var x =  this.radius  * Math.cos(theta) * Math.sin(alpha);
                 var y =  this.radius / 2 * Math.cos(alpha);
                 var z =  this.radius * Math.sin(-theta) * Math.sin(alpha);
             }
