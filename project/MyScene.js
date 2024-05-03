@@ -225,9 +225,8 @@ export class MyScene extends CGFscene {
 
     if(this.displayBee){
       this.pushMatrix();
-      this.scale(10,10,10)
+      this.scale(10,10,10);
       this.bee.display();
-  
       this.popMatrix();
   
 
@@ -235,8 +234,6 @@ export class MyScene extends CGFscene {
 
     if(this.displayRock){
       this.pushMatrix();
-      //this.rock.display();
-      //this.rockSet.display();
       this.popMatrix();
     }
 

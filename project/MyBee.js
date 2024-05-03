@@ -101,17 +101,20 @@ export class MyBee extends CGFobject {
           console.log("Bird position: " + this.position);
           var timeSinceAppStart = (t-Date.now())/1000;
          
-            this.position[0] += this.velocity * Math.cos(this.orientation); // X
-            this.position[2] += this.velocity * Math.sin(this.orientation); // Z
-          
-
           const angle = this.phase + timeSinceAppStart * this.frequency;
           const offsetY = Math.sin(angle) * this.amplitude;
           this.BeePositionY = this.startY + offsetY;
-   
-          
+      
+          // Calcular as componentes X e Z do vetor de velocidade
+          const velocityX = -this.velocity * Math.cos(-this.orientation);
+          const velocityZ = -this.velocity * Math.sin(-this.orientation);
+      
+          // Atualizar a posição da abelha usando as componentes X e Z do vetor de velocidade
+          this.position[0] += velocityX;
+          this.position[2] += velocityZ;
+      
           this.beatWings();
-        }
+      }
       
 
 
