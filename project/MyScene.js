@@ -55,20 +55,21 @@ export class MyScene extends CGFscene {
     this.scaleFactor = 1;
     this.displaySphere = false;
     this.displayPanorama = true;
-    this.displayPlane = false;
+    this.displayPlane = true;
     this.displayFlower=false;
-    this.displayBee=true;
+    this.displayBee=false;
     this.displayRock= false;
     this.displayGarden = false;
-    this.displayRockSet=false;
+    this.displayRockSet=true;
 
 
 
     this.enableTextures(true);
 
     this.texture = new CGFtexture(this, "images/terrain.jpg");
+    this.grass=new CGFtexture(this,"textures/relva.jpg");
     this.textureEarth = new CGFtexture(this, "images/earth.jpg");
-    this.panorama = new CGFtexture(this, "images/panorama4.jpg");
+    this.panorama = new CGFtexture(this, "images/panorama3.jpg");
     this.textureRock = new CGFtexture(this,"textures/rock.jpg");
     this.appearance = new CGFappearance(this);
     this.appearance.setTexture(this.texture);
@@ -83,6 +84,11 @@ export class MyScene extends CGFscene {
     this.appearance4 = new CGFappearance(this);
     this.appearance4.setTexture(this.textureRock);
     this.appearance4.setTextureWrap('REPEAT', 'REPEAT');
+    
+
+    this.appearance5=new CGFappearance(this);
+    this.appearance5.setTexture(this.grass);
+    this.appearance5.setTextureWrap('REPEAT','REPEAT');
 
 
         // animation
@@ -207,9 +213,9 @@ export class MyScene extends CGFscene {
 
     if (this.displayPlane) {
       this.pushMatrix();
-      this.appearance.apply();
-      this.translate(0, -100, 0);
-      this.scale(400, 400, 400);
+      this.appearance5.apply();
+      this.translate(0, -150, 0);
+      this.scale(400, 400,400);
       this.rotate(-Math.PI / 2.0, 1, 0, 0);
       this.plane.display();
       this.popMatrix();
@@ -245,13 +251,17 @@ export class MyScene extends CGFscene {
       this.popMatrix();
     }
 
-    if(this.displayRockSet){
-      this.pushMatrix();
-      this.appearance4.apply();
-      this.rockSet.display();
-      this.popMatrix();
+    if (this.displayRockSet) {
+   
+        this.pushMatrix();
+        this.appearance4.apply();
+        this.scale(3, 3, 3);
+        this.translate(i, -50, i);
+        this.rockSet.display();
+        this.popMatrix();
+      
     }
-
+    
 
     
 
