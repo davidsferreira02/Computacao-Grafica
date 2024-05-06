@@ -4,6 +4,7 @@ import { MyReceptacle } from './MyReceptacle.js';
 import { MyStem } from './MyStem.js';
 import { CGFscene, CGFcamera, CGFaxis, CGFappearance, CGFshader, CGFtexture } from "../lib/CGF.js";
 import { MyLeaf } from './MyLeaf.js';
+import { MyPollen } from './MyPollen.js';
 
 /**
  * MySphere
@@ -65,6 +66,7 @@ export class MyFlower extends CGFobject {
       this.stem=new MyStem(this.scene,100,100,this.raioCilind,this.tamanhoCaule);
       this.stemFolha=new MyStem(this.scene,100,100,this.raioCilind,this.tamanhoCaule/3);
       this.receptacle = new MyReceptacle(this.scene,10,10,this.raioCirc);
+      this.pollen = new MyPollen(this.scene, -0.8, this.tamanhoCaule+ this.raioCirc, -0.8);
       this.raioFlor = this.raio - this.raioCirc;
       this.raioFlor=this.raioFlor/2;
      
@@ -107,7 +109,6 @@ export class MyFlower extends CGFobject {
 
       this.appearanceCirc.setTexture(this.receptacleTexture[Math.floor(Math.random() * this.receptacleTexture.length)]); 
       this.appearanceCirc.setTextureWrap('REPEAT', 'REPEAT');
-      console.log(this.appearanceCirc);
     
     }
 
@@ -136,6 +137,10 @@ export class MyFlower extends CGFobject {
       this.receptacle.display();
       this.scene.popMatrix();
 
+      this.scene.pushMatrix();
+      this.pollen.display();
+      this.scene.popMatrix();
+      
  
 
   //Petal 

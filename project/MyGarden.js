@@ -6,7 +6,6 @@ export class MyGarden extends CGFobject {
         super(scene);
         this.numRows = numRows;
         this.numColumns = numColumns;
-
         this.flowers = [];
         this.createFlowers();
     }
