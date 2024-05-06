@@ -59,6 +59,11 @@ export class MyFlower extends CGFobject {
       this.appearanceFolha.setAmbient(this.corFolha[0],this.corFolha[1],this.corFolha[2],this.corFolha[3]);
       this.appearanceFolha.setDiffuse(this.corFolha[0],this.corFolha[1],this.corFolha[2],this.corFolha[3]);
       this.appearanceFolha.setSpecular(this.corFolha[0],this.corFolha[1],this.corFolha[2],this.corFolha[3]); 
+
+      this.appearancePollen= new CGFappearance(this.scene);
+      this.appearancePollen.setAmbient(1, 1, 1, 1);
+      this.appearancePollen.setDiffuse(1, 1, 1, 1);
+      this.appearancePollen.setSpecular(1, 1, 1, 1);
       
   }
 
@@ -85,6 +90,7 @@ export class MyFlower extends CGFobject {
       this.texturePetala2 = new CGFtexture(this.scene,"textures/petala2.jpg");
       this.textureReceptacle1 = new CGFtexture(this.scene,"textures/receptacle1.jpg");
       this.textureReceptacle2 = new CGFtexture(this.scene,"textures/receptacle2.jpg");
+      this.texturePollen = new CGFtexture(this.scene,"textures/pollen.jpg");
 
 
 
@@ -109,6 +115,9 @@ export class MyFlower extends CGFobject {
 
       this.appearanceCirc.setTexture(this.receptacleTexture[Math.floor(Math.random() * this.receptacleTexture.length)]); 
       this.appearanceCirc.setTextureWrap('REPEAT', 'REPEAT');
+
+      this.appearancePollen.setTexture(this.texturePollen);
+      this.appearancePollen.setTextureWrap('REPEAT', 'REPEAT');
     
     }
 
@@ -138,6 +147,7 @@ export class MyFlower extends CGFobject {
       this.scene.popMatrix();
 
       this.scene.pushMatrix();
+      this.appearancePollen.apply();
       this.pollen.display();
       this.scene.popMatrix();
       

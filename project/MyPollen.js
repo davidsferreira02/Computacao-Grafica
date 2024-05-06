@@ -10,20 +10,11 @@ export class MyPollen extends CGFobject {
         this.sphere = new MySphere(scene, 1, 10, 10);
 
         this.scaleFactors = [0.5, 1, 0.5]; // X, Y, Z
-
-        // Adicione aqui o material e a textura para o pólen
-        this.material = new CGFappearance(scene);
-        this.texture = new CGFtexture(scene, 'textures/pollen_texture.jpg');
-        this.material.setTexture(this.texture);
-        this.material.setAmbient(1, 1, 1, 1);
-        this.material.setDiffuse(1, 1, 1, 1);
-        this.material.setSpecular(1, 1, 1, 1);
-        this.material.setShininess(10.0);
+        
         [this.a, this.b, this.c] = this.randomRotation();
     }
 
     display() {
-        this.material.apply();
         this.scene.pushMatrix();
 
         // Aplicar os fatores de escala
@@ -34,7 +25,7 @@ export class MyPollen extends CGFobject {
         this.scene.scale(this.scaleFactors[0], this.scaleFactors[1], this.scaleFactors[2]);
 
         this.sphere.display();
-
+        
         this.scene.popMatrix();
     }
 
