@@ -234,6 +234,8 @@ export class MyScene extends CGFscene {
 
     if(this.displayRock){
       this.pushMatrix();
+      this.appearance4.apply();
+      this.rock.display();
       this.popMatrix();
     }
 
@@ -245,7 +247,7 @@ export class MyScene extends CGFscene {
 
     if(this.displayRockSet){
       this.pushMatrix();
-     this.appearance4.apply();
+      this.appearance4.apply();
       this.rockSet.display();
       this.popMatrix();
     }
