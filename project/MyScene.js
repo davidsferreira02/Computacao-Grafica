@@ -52,7 +52,8 @@ export class MyScene extends CGFscene {
 
     //Objects connected to MyInterface
     this.displayAxis = true;
-    this.scaleFactor = 1;
+    this.scaleFactor = 5;
+    this.speedFactor = 0.1;
     this.displaySphere = false;
     this.displayPanorama = true;
     this.displayPlane = true;
@@ -91,6 +92,32 @@ export class MyScene extends CGFscene {
     this.appearance5.setTextureWrap('REPEAT','REPEAT');
 
 
+
+    this.testShaders = [
+			new CGFshader(this.gl, "shaders/water.vert", "shaders/water.frag"),
+		];
+
+    this.testShaders[0].setUniformsValues({ uSampler2: 3});
+
+
+    this.shadersList = {
+		
+			'grass':0
+		};
+
+    // shader code panels references
+		this.shadersDiv = document.getElementById("shaders");
+		this.vShaderDiv = document.getElementById("vshader");
+		this.fShaderDiv = document.getElementById("fshader");
+
+    this.showShaderCode = false;
+    this.selectedExampleShader = 0;
+
+		// force initial setup of shader code panels
+
+		
+	
+
         // animation
         this.setUpdatePeriod(50); // **at least** 50 ms between animations
     
@@ -106,12 +133,12 @@ export class MyScene extends CGFscene {
     var keysPressed=false;
 
     if (this.gui.isKeyPressed("KeyW")) {
-      this.bee.accelerate(0.1);
+      this.bee.accelerate(this.speedFactor);
       text+=" W ";
       keysPressed=true;
     }
     if (this.gui.isKeyPressed("KeyS"))  {
-      this.bee.accelerate(-0.1);
+      this.bee.accelerate(-this.speedFactor);
       text+=" S ";
       keysPressed=true;
     }
@@ -214,8 +241,8 @@ export class MyScene extends CGFscene {
     if (this.displayPlane) {
       this.pushMatrix();
       this.appearance5.apply();
-      this.translate(0, -150, 0);
-      this.scale(400, 400,400);
+      this.translate(0, -100, 0);
+      this.scale(300,400,400);
       this.rotate(-Math.PI / 2.0, 1, 0, 0);
       this.plane.display();
       this.popMatrix();
@@ -231,7 +258,7 @@ export class MyScene extends CGFscene {
 
     if(this.displayBee){
       this.pushMatrix();
-      this.scale(10,10,10);
+      this.scale(this.scaleFactor,this.scaleFactor,this.scaleFactor);
       this.bee.display();
       this.popMatrix();
   
@@ -256,7 +283,7 @@ export class MyScene extends CGFscene {
         this.pushMatrix();
         this.appearance4.apply();
         this.scale(3, 3, 3);
-        this.translate(i, -50, i);
+        this.translate(0,-40,0);
         this.rockSet.display();
         this.popMatrix();
       
@@ -277,8 +304,9 @@ export class MyScene extends CGFscene {
 
 
 
-
-
     // ---- END Primitive drawing section
   }
+
+ 
+
 }
