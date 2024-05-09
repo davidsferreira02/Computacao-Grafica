@@ -10,6 +10,7 @@ import { MyFlower } from "./MyFlower.js";
 import { MyBee } from "./MyBee.js";
 import { MyRock } from "./MyRock.js";
 import { MyRockSet } from "./MyRockSet.js";
+import { MyHive } from "./MyHive.js";
 
 
 
@@ -47,7 +48,7 @@ export class MyScene extends CGFscene {
     this.bee = new MyBee(this);
     this.rock=new MyRock(this,0.5,10,3, 0.8);
     this.rockSet=new MyRockSet(this,28);
-  
+    this.hive = new MyHive(this);
 
 
     //Objects connected to MyInterface
@@ -56,13 +57,12 @@ export class MyScene extends CGFscene {
     this.displaySphere = false;
     this.displayPanorama = true;
     this.displayPlane = false;
-    this.displayFlower=false;
-    this.displayBee=true;
-    this.displayRock= false;
-    this.displayGarden = false;
-    this.displayRockSet=false;
-
-
+    this.displayFlower = false;
+    this.displayBee = true;
+    this.displayRock = false;
+    this.displayGarden = true;
+    this.displayRockSet = true;
+    this.displayHive = true;
 
     this.enableTextures(true);
 
@@ -83,16 +83,8 @@ export class MyScene extends CGFscene {
     this.appearance4 = new CGFappearance(this);
     this.appearance4.setTexture(this.textureRock);
     this.appearance4.setTextureWrap('REPEAT', 'REPEAT');
-
-
-        // animation
-        this.setUpdatePeriod(50); // **at least** 50 ms between animations
-    
-  
-     
-
-
-
+        
+    this.setUpdatePeriod(50); 
   }
 
   checkKeys()  {
@@ -140,18 +132,11 @@ export class MyScene extends CGFscene {
       console.log(text);
   }
 
-  
-
-
- 
   update(t) {
   
     this.checkKeys();
     this.bee.update(50);
-   
   }
-
-
 
   initLights() {
     this.lights[0].setPosition(15, 0, 5, 1);
@@ -203,8 +188,6 @@ export class MyScene extends CGFscene {
 
     // ---- BEGIN Primitive drawing section
 
-
-
     if (this.displayPlane) {
       this.pushMatrix();
       this.appearance.apply();
@@ -214,7 +197,6 @@ export class MyScene extends CGFscene {
       this.plane.display();
       this.popMatrix();
     }
-
   
 
     if(this.displayFlower){
@@ -245,28 +227,15 @@ export class MyScene extends CGFscene {
 
     if(this.displayRockSet){
       this.pushMatrix();
-     this.appearance4.apply();
+      this.appearance4.apply();
       this.rockSet.display();
       this.popMatrix();
     }
 
-
-    
-
-
-
-   
-
-
-
-
-
-
-
-
-
-
-
-    // ---- END Primitive drawing section
+    if(this.displayHive){
+      this.pushMatrix();
+      this.hive.display();
+      this.popMatrix();
+    }
   }
 }

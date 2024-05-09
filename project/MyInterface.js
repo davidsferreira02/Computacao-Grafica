@@ -27,6 +27,7 @@ export class MyInterface extends CGFinterface {
         this.gui.add(this.scene,'displayRock').name('Display Rock');
         this.gui.add(this.scene,'displayGarden').name('Display Garden');
         this.gui.add(this.scene,'displayRockSet').name('Display RockSet');
+        this.gui.add(this.scene, 'displayHive').name('Display Hive');
 
         //Slider element in GUI
         this.gui.add(this.scene, 'scaleFactor', 0.1, 5).name('Scale Factor');
