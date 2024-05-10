@@ -11,6 +11,8 @@ import { MyBee } from "./MyBee.js";
 import { MyRock } from "./MyRock.js";
 import { MyRockSet } from "./MyRockSet.js";
 
+import { MyTriangle } from "./MyTriangle.js";
+
 
 
 /**
@@ -47,6 +49,7 @@ export class MyScene extends CGFscene {
     this.bee = new MyBee(this);
     this.rock=new MyRock(this,0.5,10,3, 0.8);
     this.rockSet=new MyRockSet(this,28);
+    this.triangle=new MyTriangle(this,1,3);
   
 
 
@@ -56,12 +59,13 @@ export class MyScene extends CGFscene {
     this.speedFactor = 0.1;
     this.displaySphere = false;
     this.displayPanorama = true;
-    this.displayPlane = true;
+    this.displayPlane = false;
     this.displayFlower=false;
     this.displayBee=false;
     this.displayRock= false;
     this.displayGarden = false;
     this.displayRockSet=true;
+    this.displayGrass=true;
 
 
 
@@ -280,15 +284,31 @@ export class MyScene extends CGFscene {
 
     if (this.displayRockSet) {
    
+         
         this.pushMatrix();
         this.appearance4.apply();
-        this.scale(3, 3, 3);
+        this.scale(2, 2, 2);
         this.translate(0,-40,0);
         this.rockSet.display();
         this.popMatrix();
       
     }
     
+    if (this.displayGrass) {
+      for (let i = 0; i < 50 ; i++) {
+        for (let j = 0; j < 50; j++) {
+            this.pushMatrix();
+            this.appearance5.apply();
+            this.scale(3,1,3);
+            this.translate(i-40, -80, j-45);
+            //this.rotate(-Math.PI / 2, 1, 0, 0); // Rotate to be horizontal
+            this.triangle.display(); // Call display on the triangle
+            this.popMatrix();
+        
+  }
+}
+    }
+  
 
     
 
