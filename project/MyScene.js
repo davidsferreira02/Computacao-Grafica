@@ -96,26 +96,27 @@ export class MyScene extends CGFscene {
     this.appearance5.setTextureWrap('REPEAT','REPEAT');
 
 
-
     this.testShaders = [
-			new CGFshader(this.gl, "shaders/water.vert", "shaders/water.frag"),
-		];
+      new CGFshader(this.gl, "shaders/grass.vert", "shaders/grass.frag"),
+    ];
 
-    this.testShaders[0].setUniformsValues({ uSampler2: 3});
+    this.testShaders[0].setUniformsValues({ time: performance.now() / 1000, xOff: 20 });
+    this.testShaders[0].setUniformsValues({ time: performance.now() / 1000, xOff: 20 });
+    this.setActiveShader(this.testShaders[0]);
+
+    //Quad's Normal vector 
+     this.quadNormals = [0, 0, 1];
+
+    // Camera position vector;
+    this.camPos = [this.camera.position[0], 0, this.camera.position[2]];
+
+    this.angle = Math.acos((vec3.dot(this.quadNormals, this.camPos)) * (Math.PI / 180));
+
+    this.rotAxis = [0, 0, 1];
 
 
-    this.shadersList = {
-		
-			'grass':0
-		};
 
-    // shader code panels references
-		this.shadersDiv = document.getElementById("shaders");
-		this.vShaderDiv = document.getElementById("vshader");
-		this.fShaderDiv = document.getElementById("fshader");
 
-    this.showShaderCode = false;
-    this.selectedExampleShader = 0;
 
 		// force initial setup of shader code panels
 
@@ -299,10 +300,13 @@ export class MyScene extends CGFscene {
         for (let j = 0; j < 50; j++) {
             this.pushMatrix();
             this.appearance5.apply();
+            vec3.cross(this.rotAxis, this.quadNormals, this.camPos);
+            this.setActiveShader(this.testShaders[0]);
             this.scale(3,1,3);
             this.translate(i-40, -80, j-45);
-            //this.rotate(-Math.PI / 2, 1, 0, 0); // Rotate to be horizontal
+            this.rotate(this.angle, this.rotAxis[0], this.rotAxis[1], this.rotAxis[2]);
             this.triangle.display(); // Call display on the triangle
+            this.setActiveShader(this.defaultShader);
             this.popMatrix();
         
   }
