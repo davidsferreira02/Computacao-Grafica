@@ -285,7 +285,7 @@ export class MyScene extends CGFscene {
 
     if(this.displayGarden){
       this.pushMatrix();
-      this.translate(-40,0,-40);
+      this.translate(-35,0,-30);
       this.garden.display();
       this.popMatrix();
     }
@@ -295,7 +295,7 @@ export class MyScene extends CGFscene {
          
         this.pushMatrix();
         this.appearance4.apply();
-        this.translate(-15,0,-30);
+        this.translate(-15,-8,-21);
         this.scale(2, 2, 2);
         
         this.rockSet.display();
@@ -303,26 +303,23 @@ export class MyScene extends CGFscene {
       
     }
     
-    if (this.displayGrass) {
-      for (let i = 0; i < 50 ; i++) {
-        for (let j = 0; j < 50; j++) {
-            this.pushMatrix();
-            this.appearance5.apply();
-           // vec3.cross(this.rotAxis, this.quadNormals, this.camPos);
-          //  this.setActiveShader(this.testShaders[0]);
-          
-          
-          this.scale(4,1,4);
-            this.translate(-20+(i/4),-60, -20+(j/4));
-          //  this.rotate(this.angle, this.rotAxis[0], this.rotAxis[1], this.rotAxis[2]);
-            this.triangle.display(); // Call display on the triangle
-           // this.setActiveShader(this.defaultShader);
-            this.popMatrix();
-        
+   if (this.displayGrass) {
+      for (let i = 0; i < 50; i++) {
+          for (let j = 0; j < 50; j++) {
+              this.pushMatrix();
+              this.appearance5.apply();
+              
+              this.translate(-60 + i* 0.5, -60, -25 + j*0.5 -20);
+              this.triangle.display(); // Call display on the triangle
+              this.popMatrix();
+          }
+      }
   }
-}
-    }
   
+
+
+
+
 
     
 
