@@ -15,9 +15,9 @@ export class MyGarden extends CGFobject {
         for (let i = 0; i < this.numRows; i++) {
             this.flowers[i] = [];
             for (let j = 0; j < this.numColumns; j++) {
-                const x = i * 20; // adjust spacing as needed
-                const z = j * 20; // adjust spacing as needed
-                const flower = new MyFlower(this.scene, x, -100, z);
+                const x = -i * 10; // adjust spacing as needed
+                const z = -j * 10; // adjust spacing as needed
+                const flower = new MyFlower(this.scene, x, -60, z);
                 this.flowers[i][j] = flower;
             }
         }

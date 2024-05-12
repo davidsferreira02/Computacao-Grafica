@@ -2,10 +2,11 @@ import { MyRock } from './MyRock.js';
 import { CGFobject,CGFtexture } from '../lib/CGF.js';
 
 export class MyRockSet extends CGFobject {
-    constructor(scene, nrOfRocks) {
+    constructor(scene, nrOfRocks,nr) {
         super(scene);
         this.nrOfRocks = nrOfRocks;
         this.rocks = [];
+        this.nr=nr;
         this.initRocks();
     }
 
@@ -41,12 +42,14 @@ export class MyRockSet extends CGFobject {
     }
 
     display() {
+        for(let i =0 ;i< this.nr;i++){
         this.rocks.forEach(({ rock, scale, position }) => {
             this.scene.pushMatrix();
-            this.scene.translate(position[0], position[1], position[2]);
+            this.scene.translate(position[0] -i -20, position[1]-30, -(position[2]+ 3*i*2));
             this.scene.scale(scale, scale, scale);
             rock.display();
             this.scene.popMatrix();
         });
+    }
     }
 }

@@ -45,10 +45,10 @@ export class MyScene extends CGFscene {
     //this.petal = new MyPetal(this);
     this.receptacle = new MyReceptacle(this, 10, 10);       
     this.flower = new MyFlower(this, 0, 0, 0);
-    this.garden = new MyGarden(this, 5, 5)
+    this.garden = new MyGarden(this,2,1);
     this.bee = new MyBee(this);
     this.rock=new MyRock(this,0.5,10,3, 0.8);
-    this.rockSet=new MyRockSet(this,28);
+    this.rockSet=new MyRockSet(this,28,3);
     this.triangle=new MyTriangle(this,1,3);
   
 
@@ -61,9 +61,9 @@ export class MyScene extends CGFscene {
     this.displayPanorama = true;
     this.displayPlane = false;
     this.displayFlower=false;
-    this.displayBee=false;
+    this.displayBee=true;
     this.displayRock= false;
-    this.displayGarden = false;
+    this.displayGarden =true;
     this.displayRockSet=true;
     this.displayGrass=true;
 
@@ -91,12 +91,18 @@ export class MyScene extends CGFscene {
     this.appearance4.setTextureWrap('REPEAT', 'REPEAT');
     
 
-    this.appearance5=new CGFappearance(this);
+    this.appearance5 = new CGFappearance(this);
     this.appearance5.setTexture(this.grass);
-    this.appearance5.setTextureWrap('REPEAT','REPEAT');
+    this.appearance5.setTextureWrap('REPEAT', 'REPEAT');
+    this.appearance5.setShininess(100); // Ajuste o valor conforme desejado
+    this.appearance5.setAmbient(0.8, 0.8, 0.8, 1); // Cor ambiente mais clara
+    this.appearance5.setDiffuse(0.8, 0.8, 0.8, 1); // Cor difusa mais clara
+    this.appearance5.setSpecular(0.8, 0.8, 0.8, 1); // Cor especular mais clara
+    
+    
 
 
-    this.testShaders = [
+   /* this.testShaders = [
       new CGFshader(this.gl, "shaders/grass.vert", "shaders/grass.frag"),
     ];
 
@@ -114,7 +120,7 @@ export class MyScene extends CGFscene {
 
     this.rotAxis = [0, 0, 1];
 
-
+*/
 
 
 
@@ -279,6 +285,7 @@ export class MyScene extends CGFscene {
 
     if(this.displayGarden){
       this.pushMatrix();
+      this.translate(-40,0,-40);
       this.garden.display();
       this.popMatrix();
     }
@@ -288,8 +295,9 @@ export class MyScene extends CGFscene {
          
         this.pushMatrix();
         this.appearance4.apply();
+        this.translate(-15,0,-30);
         this.scale(2, 2, 2);
-        this.translate(0,-40,0);
+        
         this.rockSet.display();
         this.popMatrix();
       
@@ -300,13 +308,15 @@ export class MyScene extends CGFscene {
         for (let j = 0; j < 50; j++) {
             this.pushMatrix();
             this.appearance5.apply();
-            vec3.cross(this.rotAxis, this.quadNormals, this.camPos);
-            this.setActiveShader(this.testShaders[0]);
-            this.scale(3,1,3);
-            this.translate(i-40, -80, j-45);
-            this.rotate(this.angle, this.rotAxis[0], this.rotAxis[1], this.rotAxis[2]);
+           // vec3.cross(this.rotAxis, this.quadNormals, this.camPos);
+          //  this.setActiveShader(this.testShaders[0]);
+          
+          
+          this.scale(4,1,4);
+            this.translate(-20+(i/4),-60, -20+(j/4));
+          //  this.rotate(this.angle, this.rotAxis[0], this.rotAxis[1], this.rotAxis[2]);
             this.triangle.display(); // Call display on the triangle
-            this.setActiveShader(this.defaultShader);
+           // this.setActiveShader(this.defaultShader);
             this.popMatrix();
         
   }
