@@ -99,38 +99,14 @@ export class MyScene extends CGFscene {
     this.appearance5.setDiffuse(0.8, 0.8, 0.8, 1); // Cor difusa mais clara
     this.appearance5.setSpecular(0.8, 0.8, 0.8, 1); // Cor especular mais clara
     
-    
-
-
-   /* this.testShaders = [
+    this.testShaders = [
       new CGFshader(this.gl, "shaders/grass.vert", "shaders/grass.frag"),
-    ];
-
-    this.testShaders[0].setUniformsValues({ time: performance.now() / 1000, xOff: 20 });
-    this.testShaders[0].setUniformsValues({ time: performance.now() / 1000, xOff: 20 });
-    this.setActiveShader(this.testShaders[0]);
-
-    //Quad's Normal vector 
-     this.quadNormals = [0, 0, 1];
-
-    // Camera position vector;
-    this.camPos = [this.camera.position[0], 0, this.camera.position[2]];
-
-    this.angle = Math.acos((vec3.dot(this.quadNormals, this.camPos)) * (Math.PI / 180));
-
-    this.rotAxis = [0, 0, 1];
-
-*/
+  ];
 
 
-
-		// force initial setup of shader code panels
-
-		
-	
 
         // animation
-        this.setUpdatePeriod(50); // **at least** 50 ms between animations
+        this.setUpdatePeriod(100); // **at least** 50 ms between animations
     
   
      
@@ -232,6 +208,8 @@ export class MyScene extends CGFscene {
     // Draw axis
     if (this.displayAxis) this.axis.display();
 
+    this.setActiveShader(this.defaultShader);
+
     if (this.displaySphere) {
       this.pushMatrix();
       this.appearance2.apply();
@@ -308,8 +286,11 @@ export class MyScene extends CGFscene {
           for (let j = 0; j < 50; j++) {
               this.pushMatrix();
               this.appearance5.apply();
-              
-              this.translate(-60 + i* 0.5, -60, -25 + j*0.5 -20);
+              this.testShaders[0].setUniformsValues({ time: performance.now() / 1000, xOff: 20 });
+              this.testShaders[0].setUniformsValues({ time: performance.now() / 1000, xOff: 20 });
+              this.setActiveShader(this.testShaders[0]);
+              this.scale(2,1,2);      
+              this.translate(-40 + i* 0.5, -60, -5 + j*0.5 -20);
               this.triangle.display(); // Call display on the triangle
               this.popMatrix();
           }

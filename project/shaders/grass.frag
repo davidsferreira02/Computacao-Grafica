@@ -1,20 +1,10 @@
 #ifdef GL_ES
-precision highp float;
+precision mediump float;
 #endif
 
 varying vec2 vTextureCoord;
-varying vec3 vVertexNormal;
-
-uniform sampler2D uSampler4;
-uniform float xOff;
-uniform float time;
-
+uniform sampler2D uSampler;
 
 void main() {
-    vec4 color = texture2D(uSampler4, vTextureCoord);
-    if (color.a < 0.9) discard;
-
-    gl_FragColor = color;
-
-    
+    gl_FragColor = texture2D(uSampler, vTextureCoord);
 }
