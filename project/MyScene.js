@@ -281,21 +281,24 @@ export class MyScene extends CGFscene {
       
     }
     
-   if (this.displayGrass) {
+    if (this.displayGrass) {
+      this.pushMatrix();
+      this.appearance5.apply();
+      this.testShaders[0].setUniformsValues({ time: performance.now() / 1000, xOff: 20 });
+      this.setActiveShader(this.testShaders[0]);
       for (let i = 0; i < 50; i++) {
           for (let j = 0; j < 50; j++) {
-              this.pushMatrix();
-              this.appearance5.apply();
-              this.testShaders[0].setUniformsValues({ time: performance.now() / 1000, xOff: 20 });
-              this.testShaders[0].setUniformsValues({ time: performance.now() / 1000, xOff: 20 });
-              this.setActiveShader(this.testShaders[0]);
-              this.scale(2,1,2);      
-              this.translate(-40 + i* 0.5, -60, -5 + j*0.5 -20);
-              this.triangle.display(); // Call display on the triangle
-              this.popMatrix();
+              this.pushMatrix(); 
+              this.scale(3, 1, 3); 
+              this.translate(-40 + i * 0.5, -80, -10 + j * 0.5 - 20);
+        
+              this.triangle.display(); 
+              this.popMatrix();  
           }
       }
+      this.popMatrix();  // Restaura a matriz ao estado original antes do loop
   }
+  
   
 
 

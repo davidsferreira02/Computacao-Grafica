@@ -1,6 +1,5 @@
-#ifdef GL_ES
+// Versão otimizada do grass.frag
 precision mediump float;
-#endif
 
 varying vec2 vTextureCoord;
 uniform sampler2D uSampler;
