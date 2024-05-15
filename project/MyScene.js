@@ -1,5 +1,4 @@
 import { CGFscene, CGFcamera, CGFaxis, CGFappearance, CGFshader, CGFtexture } from "../lib/CGF.js";
-import { MyPlane } from "./MyPlane.js";
 import { MySphere } from "./MySphere.js";
 import { MyPanorama } from "./MyPanorama.js";
 import { MyStem } from "./MyStem.js";
@@ -39,7 +38,7 @@ export class MyScene extends CGFscene {
 
     //Initialize scene objects
     this.axis = new CGFaxis(this);
-    this.plane = new MyPlane(this, 30);
+
     this.sphere = new MySphere(this, 10, 50, 50, false);
     this.stem = new MyStem(this, 10, 10);
     //this.petal = new MyPetal(this);
@@ -50,6 +49,7 @@ export class MyScene extends CGFscene {
     this.rock=new MyRock(this,0.5,10,3, 0.8);
     this.rockSet=new MyRockSet(this,28,3);
     this.triangle=new MyTriangle(this,1,3);
+   
   
 
 
@@ -59,7 +59,7 @@ export class MyScene extends CGFscene {
     this.speedFactor = 0.1;
     this.displaySphere = false;
     this.displayPanorama = true;
-    this.displayPlane = false;
+ 
     this.displayFlower=false;
     this.displayBee=true;
     this.displayRock= false;
@@ -102,6 +102,7 @@ export class MyScene extends CGFscene {
     this.testShaders = [
       new CGFshader(this.gl, "shaders/grass.vert", "shaders/grass.frag"),
   ];
+  this.testShaders[0].setUniformsValues({ time: performance.now() / 1000, xOff: 20 });
 
 
 
@@ -227,16 +228,7 @@ export class MyScene extends CGFscene {
 
 
 
-    if (this.displayPlane) {
-      this.pushMatrix();
-      this.appearance5.apply();
-      this.translate(0, -100, 0);
-      this.scale(300,400,400);
-      this.rotate(-Math.PI / 2.0, 1, 0, 0);
-      this.plane.display();
-      this.popMatrix();
-    }
-
+  
   
 
     if(this.displayFlower){
@@ -282,43 +274,19 @@ export class MyScene extends CGFscene {
     }
     
     if (this.displayGrass) {
-      this.pushMatrix();
       this.appearance5.apply();
-      this.testShaders[0].setUniformsValues({ time: performance.now() / 1000, xOff: 20 });
       this.setActiveShader(this.testShaders[0]);
       for (let i = 0; i < 50; i++) {
           for (let j = 0; j < 50; j++) {
               this.pushMatrix(); 
               this.scale(3, 1, 3); 
               this.translate(-40 + i * 0.5, -80, -10 + j * 0.5 - 20);
-        
               this.triangle.display(); 
               this.popMatrix();  
           }
       }
-      this.popMatrix();  // Restaura a matriz ao estado original antes do loop
+        // Restaura a matriz ao estado original antes do loop
   }
-  
-  
-
-
-
-
-
-    
-
-
-
-   
-
-
-
-
-
-
-
-
-
     // ---- END Primitive drawing section
   }
 
