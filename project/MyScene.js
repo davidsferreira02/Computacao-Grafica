@@ -64,6 +64,17 @@ export class MyScene extends CGFscene {
     this.displayRockSet = true;
     this.displayHive = true;
 
+
+    this.hasPollen = false;
+    this.descentBee = false;
+    this.ascentBee = false;
+    this.beeInHive = false;
+    this.lastVelocity = 0;
+    this.lastOrientation = 0;
+    this.lastY = 0;
+
+    
+
     this.enableTextures(true);
 
     this.texture = new CGFtexture(this, "images/terrain.jpg");
@@ -91,43 +102,64 @@ export class MyScene extends CGFscene {
     var text="Keys pressed: ";
     var keysPressed=false;
 
-    if (this.gui.isKeyPressed("KeyW")) {
-      this.bee.accelerate(0.1);
-      text+=" W ";
-      keysPressed=true;
-    }
-    if (this.gui.isKeyPressed("KeyS"))  {
-      this.bee.accelerate(-0.1);
-      text+=" S ";
-      keysPressed=true;
-    }
+    if (!this.descentBee && !this.ascentBee){
+      if (this.gui.isKeyPressed("KeyW")) {
+        this.bee.accelerate(0.1);
+        text+=" W ";
+        keysPressed=true;
+      }
+      if (this.gui.isKeyPressed("KeyS"))  {
+        this.bee.accelerate(-0.1);
+        text+=" S ";
+        keysPressed=true;
+      }
 
-    if (this.gui.isKeyPressed("KeyA")) {
-      this.bee.turn(1);
-      text+=" A ";
-      keysPressed=true;
+      if (this.gui.isKeyPressed("KeyA")) {
+        this.bee.turn(1);
+        text+=" A ";
+        keysPressed=true;
+      }
+      if (this.gui.isKeyPressed("KeyD")) {
+        this.bee.turn(-1);
+        text+=" D ";
+        keysPressed=true;
+      }
+      if (this.gui.isKeyPressed("KeyR")) {
+        this.bee.reset();
+        text+=" R ";
+        keysPressed=true;
+      }
+      if (this.gui.isKeyPressed("KeyL")) {
+        this.bee.goDown(-0.1);
+        text+=" L ";
+        keysPressed=true;
+      }
+      if (this.gui.isKeyPressed("KeyU")) {
+        this.bee.goUp(0.1);
+        text+=" U ";
+        keysPressed=true;
+      }
+      if (this.gui.isKeyPressed("KeyF") && !this.hasPollen) {
+        this.lastOrientation = this.bee.orientation;
+        this.lastVelocity = this.bee.velocity;
+        this.lastY = this.bee.position[1];
+        this.bee.velocity = 0;
+        this.bee.goDown(-0.1); 
+        this.descentBee = true;
+        this.flagFlower = true;
+      }
+      if (this.gui.isKeyPressed("KeyO") && this.hasPollen) {
+         this.turnTowardsHive();
+         this.beeInHive = true;
+         this.bee.velocity = 0;
+      }
     }
-    if (this.gui.isKeyPressed("KeyD")) {
-      this.bee.turn(-1);
-      text+=" D ";
-      keysPressed=true;
-    }
-    if (this.gui.isKeyPressed("KeyR")) {
-      this.bee.reset();
-      text+=" R ";
-      keysPressed=true;
-    }
-    if (this.gui.isKeyPressed("KeyP")) {
-      this.bee.goDown(-0.1);
-      text+=" P ";
-      keysPressed=true;
-    }
+    else if (this.gui.isKeyPressed("KeyP")) {
+      this.bee.goUp(0.1); 
+      this.ascentBee = true;
+      this.descentBee = false;
+    } 
 
-    if (this.gui.isKeyPressed("KeyU")) {
-      this.bee.goUp(0.1);
-      text+=" P ";
-      keysPressed=true;
-    }
     if (keysPressed)
       console.log(text);
   }
@@ -137,6 +169,24 @@ export class MyScene extends CGFscene {
     this.checkKeys();
     this.bee.update(50);
   }
+
+  turnTowardsHive() {
+    let hivePosition = [-30, -83, -17.4];
+    let directionX = hivePosition[0] - this.bee.position[0];
+    let directionZ = hivePosition[2] - this.bee.position[2];
+
+    let targetAngle = Math.atan2(-directionZ, -directionX);
+    
+    let angleDiff = targetAngle - (this.bee.orientation);
+
+    this.bee.turn(angleDiff *180 /Math.PI);
+
+    if (Math.abs(this.bee.position[1] + 83) > 0.001){
+      this.bee.goDown(-0.1);
+    }
+  }
+
+
 
   initLights() {
     this.lights[0].setPosition(15, 0, 5, 1);
@@ -237,5 +287,65 @@ export class MyScene extends CGFscene {
       this.hive.display();
       this.popMatrix();
     }
+
+    if (this.descentBee){
+      let nearestFlower = null;
+      let minDistance = Number.MAX_VALUE;
+      if(this.flagFlower){
+        for (let flowerArray of this.garden.flowers) {
+          for (let flower of flowerArray) {
+            const distance = Math.sqrt(
+              Math.pow(this.bee.position[0] - flower.x, 2) +
+              Math.pow(this.bee.position[1] - flower.y, 2) +
+              Math.pow(this.bee.position[2] - flower.z, 2)
+            );
+            console.log(distance);
+
+            if (distance < minDistance && flower.hasPollen) {
+                minDistance = distance;
+                nearestFlower = flower;
+            }
+            console.log(nearestFlower);
+
+          }
+        }
+      }
+      this.flagFlower = false;
+    }
+    
+      /*if (!this.beeFlower) this.bee.goDown(-0.1); 
+      this.bee.accelerate(-0.1);
+      this.beeFlower = true;
+      if(flower.hasPollen){
+        flower.hasPollen = false;   
+        this.hasPollen = true;
+        this.descentBee = false;
+        this.bee.hasPollen = true;   
+      } */
+    
+
+    if (this.ascentBee){
+      if (Math.abs(this.bee.position[1] - this.lastY) < 0.001){
+        this.bee.accelerate(-0.1);
+        this.ascentBee = false;
+        this.bee.velocity = this.lastVelocity;
+        this.bee.orientation = this.lastOrientation;
+      }
+      else {
+        this.bee.goUp(0.15);
+      }
+    }
+
+    if (this.beeInHive){
+      if (Math.abs(this.bee.position[0] + 30) < 0.001  &&  Math.abs(this.bee.position[1] + 83) < 0.001  &&  Math.abs(this.bee.position[2] + 20) < 0.001){
+        this.bee.accelerate(-0.1);
+        this.beeInHive = false;
+        
+      }
+      else if (Math.abs(this.bee.position[1] + 83) > 0.001){
+        this.bee.goDown(-0.1);
+      }
+    }
+
   }
 }

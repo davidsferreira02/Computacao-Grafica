@@ -26,6 +26,7 @@ export class MyFlower extends CGFobject {
       this.tamanhoCaule= Math.random() * 10 + 4;
       this.corCaule=[Math.floor(Math.random() * 256)/256, Math.floor(Math.random() * 256)/256, Math.floor(Math.random() * 256)/256, 1.0];
       this.corFolha=[Math.floor(Math.random() * 256)/256, Math.floor(Math.random() * 256)/256, Math.floor(Math.random() * 256)/256, 1.0];
+      this.hasPollen = true;
       this.initMaterials();
       this.initFlower();
       this.loadTextures();
@@ -145,11 +146,12 @@ export class MyFlower extends CGFobject {
       this.scene.translate(0,this.tamanhoCaule+ this.raioCirc,0);
       this.receptacle.display();
       this.scene.popMatrix();
-
-      this.scene.pushMatrix();
-      this.appearancePollen.apply();
-      this.pollen.display();
-      this.scene.popMatrix();
+      if (this.hasPollen){
+        this.scene.pushMatrix();
+        this.appearancePollen.apply();
+        this.pollen.display();
+        this.scene.popMatrix();
+      }
       
  
 

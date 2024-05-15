@@ -1,7 +1,8 @@
-import { CGFobject,CGFappearance } from '../lib/CGF.js';
+import { CGFobject,CGFappearance, CGFtexture } from '../lib/CGF.js';
 import { MyBeeHead } from './MyBeeHead.js';
 import { MyBeeBody } from './MyBeeBody.js';
 import { MyElipsoid } from './MyEllipsoid.js';
+import { MyPollen } from './MyPollen.js';
 
 
 export class MyBee extends CGFobject {
@@ -9,18 +10,20 @@ export class MyBee extends CGFobject {
         super(scene);
         this.orientation = 0; // Y
         this.position = [0,0,0] // X,Y,Z
+        this.direction = [-1,0]
         this.beatDirection = 1;
         this.oscilateDirection = 1;
         this.oscilateHeight = 0
         this.minHeight=0;
         this.beatAngle=0;
-       this.velocity=0;
-      this.phase=0;
-      this.frequency=2;
-      this.amplitude=0.1;
-      this.BeePositionY=0;
-      this.startY=0;
+        this.velocity=0;
+        this.phase=0;
+        this.frequency=2;
+        this.amplitude=0.1;
+        this.BeePositionY=0;
+        this.startY=0;
         this.initParts();
+        this.hasPollen = false;
 
 
 
@@ -36,6 +39,14 @@ export class MyBee extends CGFobject {
         this.materialWing.setShininess(10.0); // Brilho
         
 
+        this.texturePollen = new CGFtexture(this.scene,"textures/pollen.jpg");
+
+        this.appearancePollen= new CGFappearance(this.scene);
+        this.appearancePollen.setAmbient(1, 1, 1, 1);
+        this.appearancePollen.setDiffuse(1, 1, 1, 1);
+        this.appearancePollen.setSpecular(1, 1, 1, 1);
+        this.appearancePollen.setTexture(this.texturePollen);
+        this.appearancePollen.setTextureWrap('REPEAT', 'REPEAT');
 
     }
   
@@ -43,101 +54,94 @@ export class MyBee extends CGFobject {
         this.head = new MyBeeHead(this.scene);
         this.body = new MyBeeBody(this.scene);
         this.wing = new MyElipsoid(this.scene,1,10,10);
+        this.pollen = new MyPollen(this.scene,2,-2,0);
       }
 
 
 
-      updateVelocity(newVelocity) {
-        this.velocity = newVelocity;
-      }
-    
-
-      accelerate(acceleration){
-        if(this.velocity+acceleration >= 0){
-          this.velocity += acceleration;
-        }
-      }
-    
-    
-
-      goDown(minHeight){
-   
-          this.position[1]+=minHeight;
-        }
-
-
-        goUp(minHeight){
-   
-          this.position[1]+=minHeight;
-        }
-
-
-
-        beatWings() {
-          // valores de incremento minimo e máximo
-          const beatIncrementMin = 0.02;
-          const beatIncrementMax = 0.9;
-        
-          // o incremento conforme a velocidade do passaro
-          const speedFactor = Math.min(Math.abs(0.7) / 5, 1); // Limita o fator a um máximo de 1
-          const beatIncrement = beatIncrementMin + (beatIncrementMax - beatIncrementMin) * speedFactor ;
-        
-          // Atualizar o ângulo de bater as asas com base na direção atual e no incremento
-          if (this.beatAngle >= 0.2) {
-            this.beatDirection = -1;
-          } else if (this.beatAngle <= -0.2) {
-            this.beatDirection = 1;
-          }
-          this.beatAngle += beatIncrement * this.beatDirection;
-        }
-
-
-        update(t) {
-          console.log("Bird position: " + this.position);
-          var timeSinceAppStart = (t-Date.now())/1000;
-         
-          const angle = this.phase + timeSinceAppStart * this.frequency;
-          const offsetY = Math.sin(angle) * this.amplitude;
-          this.BeePositionY = this.startY + offsetY;
-      
-          // Calcular as componentes X e Z do vetor de velocidade
-          const velocityX = -this.velocity * Math.cos(-this.orientation);
-          const velocityZ = -this.velocity * Math.sin(-this.orientation);
-      
-          // Atualizar a posição da abelha usando as componentes X e Z do vetor de velocidade
-          this.position[0] += velocityX;
-          this.position[2] += velocityZ;
-      
-          this.beatWings();
-      }
-      
-
-
-  reset(){
-    this.orientation = 0;
-    this.velocity = 0;
-    this.position = [0,0,0];
-    this.beatAngle = 0;
-    this.beatDirection = 1;
-    this.oscilateHeight = 0;
-    this.oscilateDirection = 1;
-    this.isMoving = false;
-
-   
-  }
-
-
+    updateVelocity(newVelocity) {
+      this.velocity = newVelocity;
+    }
   
 
+    accelerate(acceleration){
+      if(this.velocity+acceleration >= 0){
+        this.velocity += acceleration;
+      }
+    }
+    
+    
+
+    goDown(minHeight){
+  
+      this.position[1]+=minHeight;
+    }
 
 
+    goUp(minHeight){
+
+      this.position[1]+=minHeight;
+    }
+
+
+
+    beatWings() {
+      // valores de incremento minimo e máximo
+      const beatIncrementMin = 0.02;
+      const beatIncrementMax = 0.9;
+    
+      // o incremento conforme a velocidade do passaro
+      const speedFactor = Math.min(Math.abs(0.7) / 5, 1); // Limita o fator a um máximo de 1
+      const beatIncrement = beatIncrementMin + (beatIncrementMax - beatIncrementMin) * speedFactor ;
+    
+      // Atualizar o ângulo de bater as asas com base na direção atual e no incremento
+      if (this.beatAngle >= 0.2) {
+        this.beatDirection = -1;
+      } else if (this.beatAngle <= -0.2) {
+        this.beatDirection = 1;
+      }
+      this.beatAngle += beatIncrement * this.beatDirection;
+    }
+
+
+    update(t) {
+      console.log("Bird position: " + this.position);
+      var timeSinceAppStart = (t-Date.now())/1000;
+      
+      const angle = this.phase + timeSinceAppStart * this.frequency;
+      const offsetY = Math.sin(angle) * this.amplitude;
+      this.BeePositionY = this.startY + offsetY;
+  
+      // Calcular as componentes X e Z do vetor de velocidade
+      const velocityX = -this.velocity * Math.cos(-this.orientation);
+      const velocityZ = -this.velocity * Math.sin(-this.orientation);
+  
+      // Atualizar a posição da abelha usando as componentes X e Z do vetor de velocidade
+      this.position[0] += velocityX;
+      this.position[2] += velocityZ;
+  
+      this.beatWings();
+    }
+      
+
+
+    reset(){
+      this.orientation = 0;
+      this.velocity = 0;
+      this.position = [0,0,0];
+      this.beatAngle = 0;
+      this.beatDirection = 1;
+      this.oscilateHeight = 0;
+      this.oscilateDirection = 1;
+      this.isMoving = false;
+    }
 
     
-        turn(angle){
-          var rad = Math.PI * angle/ 180;
-          this.orientation += rad;
-        }
-      
+    turn(angle){
+      var rad = Math.PI * angle/ 180;
+      this.orientation += rad;
+    }
+  
   
     display ()
     {
@@ -201,7 +205,14 @@ export class MyBee extends CGFobject {
         this.scene.rotate(this.beatAngle, 0, 1, 0 );
         this.wing.display(); // asa direira de baixo
         this.scene.popMatrix();
+
+        if (this.hasPollen){
+          this.scene.pushMatrix();
+          this.scene.scale(0.1,0.1,0.1);
+          this.appearancePollen.apply();
+          this.pollen.display();
+          this.scene.popMatrix();
+        }
   
     }
   }
-  
