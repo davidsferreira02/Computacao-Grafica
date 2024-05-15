@@ -41,16 +41,12 @@ export class MyScene extends CGFscene {
     //Initialize scene objects
     this.axis = new CGFaxis(this);
     this.sphere = new MySphere(this, 10, 50, 50, false);
-    this.stem = new MyStem(this, 10, 10);
-    //this.petal = new MyPetal(this);
-    this.receptacle = new MyReceptacle(this, 10, 10);       
-    this.flower = new MyFlower(this, 0, 0, 0);
-    this.garden = new MyGarden(this,2,1);
+    this.garden = new MyGarden(this, 2, 1);
     this.bee = new MyBee(this);
-    this.rock=new MyRock(this,0.5,10,3, 0.8);
-    this.rockSet=new MyRockSet(this,28,3);
-    this.triangle=new MyTriangle(this,1,3,0.8);
     this.hive = new MyHive(this);
+    this.rockSet = new MyRockSet(this, 28, 1);
+    this.triangle = new MyTriangle(this, 1, 3, Math.random(0.5) + 0.5);
+    
 
 
     //Objects connected to MyInterface
@@ -59,23 +55,20 @@ export class MyScene extends CGFscene {
     this.speedFactor = 0.1;
     this.displaySphere = false;
     this.displayPanorama = true;
-    
-    this.displayFlower=false;
-    this.displayBee=true;
-    this.displayRock= false;
-    this.displayGarden =true;
-    this.displayRockSet=true;
-    this.displayGrass=true;
+    this.displayBee = true;
+    this.displayGarden = true;
+    this.displayRockSet = true;
+    this.displayGrass = true;
     this.displayHive = true;
 
 
     this.enableTextures(true);
 
     this.texture = new CGFtexture(this, "images/terrain.jpg");
-    this.grass=new CGFtexture(this,"textures/relva.jpg");
+    this.grass = new CGFtexture(this, "textures/relva.jpg");
     this.textureEarth = new CGFtexture(this, "images/earth.jpg");
     this.panorama = new CGFtexture(this, "images/panorama3.jpg");
-    this.textureRock = new CGFtexture(this,"textures/rock.jpg");
+    this.textureRock = new CGFtexture(this, "textures/rock.jpg");
     this.appearance = new CGFappearance(this);
     this.appearance.setTexture(this.texture);
     this.appearance.setTextureWrap('REPEAT', 'REPEAT');
@@ -85,83 +78,85 @@ export class MyScene extends CGFscene {
     this.appearance3 = new CGFappearance(this);
     this.appearance3.setTexture(this.panorama);
     this.appearance3.setTextureWrap('REPEAT', 'REPEAT');
-    
+
     this.appearance4 = new CGFappearance(this);
     this.appearance4.setTexture(this.textureRock);
     this.appearance4.setTextureWrap('REPEAT', 'REPEAT');
-    
+
 
     this.appearance5 = new CGFappearance(this);
     this.appearance5.setTexture(this.grass);
     this.appearance5.setTextureWrap('REPEAT', 'REPEAT');
-    this.appearance5.setAmbient(1,1,1);
+    this.appearance5.setAmbient(1, 1, 1);
+
     
-    
-   
-    
+
+
+
+
     this.testShaders = [
       new CGFshader(this.gl, "shaders/grass.vert", "shaders/grass.frag"),
-  ];
+    ];
 
 
 
-        // animation
-        this.setUpdatePeriod(100); // **at least** 50 ms between animations
-    
-  
-     
+    // animation
+    this.setUpdatePeriod(100); // **at least** 50 ms between animations
+
+
+
 
 
 
   }
 
-  checkKeys()  {
-    var text="Keys pressed: ";
-    var keysPressed=false;
+  checkKeys() {
+    var text = "Keys pressed: ";
+    var keysPressed = false;
 
     if (this.gui.isKeyPressed("KeyW")) {
       this.bee.accelerate(this.speedFactor);
-      text+=" W ";
-      keysPressed=true;
+      text += " W ";
+      keysPressed = true;
     }
-    if (this.gui.isKeyPressed("KeyS"))  {
+    if (this.gui.isKeyPressed("KeyS")) {
       this.bee.accelerate(-this.speedFactor);
-      text+=" S ";
-      keysPressed=true;
+      text += " S ";
+      keysPressed = true;
     }
 
     if (this.gui.isKeyPressed("KeyA")) {
       this.bee.turn(1);
-      text+=" A ";
-      keysPressed=true;
+      text += " A ";
+      keysPressed = true;
     }
     if (this.gui.isKeyPressed("KeyD")) {
       this.bee.turn(-1);
-      text+=" D ";
-      keysPressed=true;
+      text += " D ";
+      keysPressed = true;
     }
     if (this.gui.isKeyPressed("KeyR")) {
       this.bee.reset();
-      text+=" R ";
-      keysPressed=true;
+      text += " R ";
+      keysPressed = true;
     }
     if (this.gui.isKeyPressed("KeyP")) {
       this.bee.goDown(-0.1);
-      text+=" P ";
-      keysPressed=true;
+      text += " P ";
+      keysPressed = true;
     }
 
     if (this.gui.isKeyPressed("KeyU")) {
       this.bee.goUp(0.1);
-      text+=" P ";
-      keysPressed=true;
+      text += " P ";
+      keysPressed = true;
     }
     if (keysPressed)
       console.log(text);
   }
 
   update(t) {
-  
+
     this.checkKeys();
     this.bee.update(50);
   }
@@ -220,51 +215,49 @@ export class MyScene extends CGFscene {
 
 
 
-   
 
-  
-
-    if(this.displayFlower){
+    if (this.displayBee) {
       this.pushMatrix();
-      this.flower.display();
-      this.popMatrix();
-    }
-
-    if(this.displayBee){
-      this.pushMatrix();
-      this.scale(this.scaleFactor,this.scaleFactor,this.scaleFactor);
+      this.scale(this.scaleFactor, this.scaleFactor, this.scaleFactor);
       this.bee.display();
       this.popMatrix();
-  
+
 
     }
 
-    if(this.displayRock){
-      this.pushMatrix();
-      this.appearance4.apply();
-      this.rock.display();
-      this.popMatrix();
-    }
 
-    if(this.displayGarden){
+
+    if (this.displayGarden) {
       this.pushMatrix();
-      this.translate(-35,0,-30);
+      this.translate(-35, 0, -30);
       this.garden.display();
       this.popMatrix();
     }
 
     if (this.displayRockSet) {
-   
-         
-        this.pushMatrix();
-        this.appearance4.apply();
-        this.translate(-15,-8,-21);
-        this.scale(2, 2, 2);
-        
-        this.rockSet.display();
-        this.popMatrix();
-      
+
+
+      this.pushMatrix();
+      this.appearance4.apply();
+      this.scale(4, 4, 4);
+
+      this.translate(-5, 8, -18);
+
+
+      this.rockSet.display();
+      this.popMatrix();
+
     }
+
+    if(this.displayHive){
+      this.pushMatrix();
+      this.scale(1/8,1/8,1/8);
+      this.translate(60,20,-60);
+      this.hive.display();
+      this.popMatrix();
+    }
+
+
     
     if (this.displayGrass) {
       this.pushMatrix();
@@ -272,29 +265,31 @@ export class MyScene extends CGFscene {
       this.testShaders[0].setUniformsValues({ time: performance.now() / 1000, xOff: 20 });
       this.setActiveShader(this.testShaders[0]);
       for (let i = 0; i < 50; i++) {
-          for (let j = 0; j < 50; j++) {
-              this.pushMatrix(); 
-              this.scale(3, 2,3); 
-              this.translate(-40 + i * 0.5, -40, -10 + j * 0.5 - 20);
-        
-              this.triangle.display(); 
-              this.popMatrix();  
-          }
+        for (let j = 0; j < 50; j++) {
+          this.pushMatrix();
+          this.scale(3, 2, 3);
+          this.translate(-40 + i * 0.5, -40, -10 + j * 0.5 - 20);
+          this.triangle.display();
+          this.popMatrix();
+        }
       }
       this.popMatrix();  // Restaura a matriz ao estado original antes do loop
-  }
-  
-  
-
-
-
-
-
-    
-
+    }
 
 
    
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -307,6 +302,6 @@ export class MyScene extends CGFscene {
     // ---- END Primitive drawing section
   }
 
- 
+
 
 }

@@ -1,78 +1,66 @@
+import { CGFobject } from '../lib/CGF.js';
 
-import {CGFobject} from '../lib/CGF.js';
 /**
- * MyStem
- * @constructor
- * @param scene - Reference to MyScene object
- */ 
-
+ * MyStem - Represents a stem-like 3D object in a graphics scene.
+ */
 export class MyStem extends CGFobject {
-	constructor(scene, slices, stacks,radius,height) {
-		super(scene);
-		this.slices = slices; 
-		this.stacks = stacks;
-        this.radius=radius;
-        this.height=height; 
-		this.initBuffers();
-	}
-	
-	initBuffers() {
-        this.vertices = [];
-        this.indices = [];
-        this.normals = [];
-        this.texCoords = [];
+    constructor(scene, slices, stacks, radius, height) {
+        super(scene);
+        this.slices = slices;
+        this.stacks = stacks;
+        this.radius = radius;
+        this.height = height;
+        this.initBuffers();
+    }
 
-    
-        var alphaAng = 2*Math.PI/this.slices;
-		
-        
+    initBuffers() {
+        const vertexCount = (this.slices + 1) * (this.stacks + 1);
+        this.vertices = new Float32Array(vertexCount * 3);
+        this.indices = new Uint16Array(this.slices * this.stacks * 6);
+        this.normals = new Float32Array(vertexCount * 3);
+        this.texCoords = new Float32Array(vertexCount * 2);
 
-        for(var i = 0; i <=this.slices; i++){
+        const alphaAng = 2 * Math.PI / this.slices;
+        let vertexIndex = 0;
+        let indexIndex = 0;
 
-            var x=this.radius*Math.cos(alphaAng*i);
-            var y=this.radius*Math.sin(alphaAng*i);
-            var z = this.height/this.stacks;
+        for (let i = 0; i <= this.slices; i++) {
+            let angle = alphaAng * i;
+            let x = this.radius * Math.cos(angle);
+            let y = this.radius * Math.sin(angle);
+            let zIncrement = this.height / this.stacks;
 
-			for (var j = 0; j <=this.stacks; j++){
-				var k = z * j;
-				this.vertices.push(x, y, k);
-                
-                var u = i / this.slices;
-                var v = j / this.stacks;
-                this.texCoords.push(u, v);
-			}
-        }
-            
-      for(var i=0;i<this.slices;i++){
-        for(var j=0;j<this.stacks;j++){
-            this.indices.push(i*(this.stacks+1)+j,i*(this.stacks+1)+1+this.stacks+j,i*(this.stacks+1)+2+this.stacks+j);
-            this.indices.push(i*(this.stacks+1)+j,i*(this.stacks+1)+2+this.stacks+j,i*(this.stacks+1)+1+j);
-             this.indices.push(i*(this.stacks+1)+2+this.stacks+j,i*(this.stacks+1)+1+this.stacks+j,i*(this.stacks+1)+j);
-             this.indices.push(i*(this.stacks+1)+1+j,i*(this.stacks+1)+2+this.stacks+j,i*(this.stacks+1)+j);
+            for (let j = 0; j <= this.stacks; j++) {
+                let zIndex = j * zIncrement;
+                this.vertices[vertexIndex] = x;
+                this.vertices[vertexIndex + 1] = y;
+                this.vertices[vertexIndex + 2] = zIndex;
+                this.normals[vertexIndex] = x;
+                this.normals[vertexIndex + 1] = y;
+                this.normals[vertexIndex + 2] = 0;
+                this.texCoords[j * 2] = i / this.slices;
+                this.texCoords[j * 2 + 1] = j / this.stacks;
+                vertexIndex += 3;
 
-        }
-      }
-
-      for(var i=0;i<=this.slices;i++){
-            var x=this.radius*Math.cos(alphaAng*i);
-            var y=this.radius*Math.sin(alphaAng*i);
-            for(var j=0;j<=this.stacks;j++){
-               this.normals.push(x, y, 0);
+                if (i < this.slices && j < this.stacks) {
+                    let a = i * (this.stacks + 1) + j;
+                    let b = a + this.stacks + 1;
+                    this.indices[indexIndex++] = a;
+                    this.indices[indexIndex++] = b;
+                    this.indices[indexIndex++] = a + 1;
+                    this.indices[indexIndex++] = a + 1;
+                    this.indices[indexIndex++] = b;
+                    this.indices[indexIndex++] = b + 1;
+                }
             }
         }
 
         this.primitiveType = this.scene.gl.TRIANGLES;
         this.initGLBuffers();
     }
-    /**
-     * Called when user interacts with GUI to change object's complexity.
-     * @param {integer} complexity - changes number of slices
-     */
-    updateBuffers(complexity){
-        this.slices = 3 + Math.round(9 * complexity); //complexity varies 0-1, so slices varies 3-12
 
-        // reinitialize buffers
+    updateBuffers(complexity) {
+        this.slices = 3 + Math.round(9 * complexity); // Complexity varies 0-1, slices vary 3-12
         this.initBuffers();
-        this.initNormalVizBuffers();
     }
 }

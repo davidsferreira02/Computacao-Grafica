@@ -16,61 +16,64 @@ export class MySphere extends CGFobject {
       this.initBuffers();
   }
 
+  
   initBuffers() {
-      this.vertices = [];
-      this.indices = [];
-      this.normals = [];
-      this.texCoords = [];
+    const vertexCount = (this.slices + 1) * (this.stacks + 1);
+    this.vertices = new Float32Array(vertexCount * 3);
+    this.indices = new Uint16Array(this.stacks * this.slices * 6);
+    this.normals = new Float32Array(vertexCount * 3);
+    this.texCoords = new Float32Array(vertexCount * 2);
 
-      var alpha = 0; // angulo vertical 
-      var theta = 0; // angulo com a horizontal
-      var latVert = this.slices + 1; // vertices em largura vai ter que ter sempre um a mais
+    let alpha = 0; // vertical angle
+    const deltaAlpha = Math.PI / this.stacks;
+    const deltaTheta = 2 * Math.PI / this.slices;
 
-      for (let i = 0; i <= this.stacks; i++) { // altura 
-          theta = 0;
-          for (let j = 0; j <= this.slices; j++) { // largura 
-              var x =  this.radius * Math.cos(theta) * Math.sin(alpha);
-              var y =  this.radius * Math.cos(alpha);
-              var z =  this.radius * Math.sin(-theta) * Math.sin(alpha);
+    for (let i = 0, index = 0; i <= this.stacks; i++, alpha += deltaAlpha) {
+        let theta = 0;
+        for (let j = 0; j <= this.slices; j++, theta += deltaTheta, index += 3) {
+            let cosAlpha = Math.cos(alpha);
+            let sinAlpha = Math.sin(alpha);
+            let cosTheta = Math.cos(theta);
+            let sinTheta = Math.sin(theta);
 
-              if (this.inverted) {
-                // Reverse order of vertices and normals if inverted
-                this.vertices.unshift(x, y, z);
-                this.normals.unshift(-x, -y, -z); // Negate normals for inverted sphere
-              } else {
-                  this.vertices.push(x, y, z);
-                  this.normals.push(x, y, z); // Keep normals unchanged for non-inverted sphere
-              }
+            let x = this.radius * cosTheta * sinAlpha;
+            let y = this.radius * cosAlpha;
+            let z = this.radius * sinTheta * sinAlpha;
+            
+            let normalDirection = this.inverted ? -1 : 1;
+            this.vertices[index] = x;
+            this.vertices[index + 1] = y;
+            this.vertices[index + 2] = z;
+            this.normals[index] = normalDirection * x;
+            this.normals[index + 1] = normalDirection * y;
+            this.normals[index + 2] = normalDirection * z;
 
-              if (i < this.stacks && j < this.slices) {
-                  var first = i * latVert + j;
-                  var second = first + latVert;
+            this.texCoords[index / 3 * 2] = j / this.slices;
+            this.texCoords[index / 3 * 2 + 1] = this.inverted ? i / this.stacks : 1 - (i / this.stacks);
 
-                  if (this.inverted) {
-                      // Reverse order of indices if inverted
-                      this.indices.push(first + 1, second, first);
-                      this.indices.push(first + 1, second + 1, second);
-                  } else {
-                      this.indices.push(first + 1, first, second);
-                      this.indices.push(first + 1, second, second + 1);
-                  }
-              }
+            if (i < this.stacks && j < this.slices) {
+                let base = i * (this.slices + 1) + j;
+                let indicesBase = i * this.slices * 6 + j * 6;
+                if (this.inverted) {
+                    this.indices[indicesBase] = base;
+                    this.indices[indicesBase + 1] = base + this.slices + 2;
+                    this.indices[indicesBase + 2] = base + this.slices + 1;
+                    this.indices[indicesBase + 3] = base;
+                    this.indices[indicesBase + 4] = base + 1;
+                    this.indices[indicesBase + 5] = base + this.slices + 2;
+                } else {
+                    this.indices[indicesBase] = base;
+                    this.indices[indicesBase + 1] = base + 1;
+                    this.indices[indicesBase + 2] = base + this.slices + 1;
+                    this.indices[indicesBase + 3] = base + 1;
+                    this.indices[indicesBase + 4] = base + this.slices + 2;
+                    this.indices[indicesBase + 5] = base + this.slices + 1;
+                }
+            }
+        }
+    }
 
-              // Modify texture coordinates to invert V coordinate if inverted
-              if (this.inverted) {
-                  this.texCoords.push(j / this.slices, 1 - (i / this.stacks));
-              } else {
-                  this.texCoords.push( j / this.slices, i / this.stacks);
-                  
-                
-              }
-
-              theta += (2 * Math.PI) / this.slices;
-          }
-          alpha += Math.PI / this.stacks;
-      }
-
-      this.primitiveType = this.scene.gl.TRIANGLES;
-      this.initGLBuffers();
-  }
+    this.primitiveType = this.scene.gl.TRIANGLES;
+    this.initGLBuffers();
+}
 }
