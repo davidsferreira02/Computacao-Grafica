@@ -6,7 +6,6 @@ export class MyGarden extends CGFobject {
         super(scene);
         this.numRows = numRows;
         this.numColumns = numColumns;
-
         this.flowers = [];
         this.createFlowers();
     }
@@ -15,12 +14,16 @@ export class MyGarden extends CGFobject {
         for (let i = 0; i < this.numRows; i++) {
             this.flowers[i] = [];
             for (let j = 0; j < this.numColumns; j++) {
-                const x = -i * 10; // adjust spacing as needed
-                const z = -j * 10; // adjust spacing as needed
-                const flower = new MyFlower(this.scene, x, -60, z);
+                const flower = this.createFlower(i, j);
                 this.flowers[i][j] = flower;
             }
         }
+    }
+
+    createFlower(i, j) {
+        const x = -i * 10; 
+        const z = -j * 10; 
+        return new MyFlower(this.scene, x, -60, z);
     }
 
     display() {

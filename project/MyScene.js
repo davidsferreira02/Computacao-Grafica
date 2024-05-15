@@ -94,8 +94,7 @@ export class MyScene extends CGFscene {
     this.appearance5.setTexture(this.grass);
     this.appearance5.setTextureWrap('REPEAT', 'REPEAT');
     this.appearance5.setAmbient(1,1,1);
-    this.appearance5.setDiffuse(1,1,1);
-    this.appearance5.setSpecular(1,1,1);
+    
     
    
     
