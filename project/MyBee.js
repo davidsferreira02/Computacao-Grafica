@@ -2,6 +2,7 @@ import { CGFobject,CGFappearance } from '../lib/CGF.js';
 import { MyBeeHead } from './MyBeeHead.js';
 import { MyBeeBody } from './MyBeeBody.js';
 import { MyElipsoid } from './MyEllipsoid.js';
+import { MySphere } from './MySphere.js';
 
 
 export class MyBee extends CGFobject {
@@ -24,16 +25,20 @@ export class MyBee extends CGFobject {
 
 
 
+
+        this.scene.gl.enable(this.scene.gl.BLEND);
+        this.scene.gl.blendFunc(this.scene.gl.SRC_ALPHA, this.scene.gl.ONE_MINUS_SRC_ALPHA);
+       this.scene.gl.disable(this.scene.gl.CULL_FACE);
+
         this.materialWing = new CGFappearance(this.scene);
+        this.materialWing.setAmbient(1,1,1,0.1);
+      
         
-        // Definindo a cor difusa como cinza claro
-        this.materialWing.setDiffuse(220/255, 220/255, 220/255,0); // R, G, B = 220/255, 220/255, 220/255
+          this.materialWing.setDiffuse(0.5,0.5,0.5,0.1); // R, G, B = 220/255, 220/255, 220/255
         
         // Definindo a cor especular como cinza claro
-        this.materialWing.setSpecular(220/255, 220/255, 220/255,0); // R, G, B = 220/255, 220/255, 220/255
-        
-        // Definindo outras propriedades, se necessário
-        this.materialWing.setShininess(10.0); // Brilho
+        this.materialWing.setSpecular(0.1, 0.1,0.1,0.1); 
+        this.materialWing.setEmission(1,1,1,0.1);
         
 
 
@@ -43,6 +48,7 @@ export class MyBee extends CGFobject {
         this.head = new MyBeeHead(this.scene);
         this.body = new MyBeeBody(this.scene);
         this.wing = new MyElipsoid(this.scene,1,10,10);
+        //this.wing = new MySphere(this.scene,1,10,10);
 
    
         
@@ -163,6 +169,7 @@ export class MyBee extends CGFobject {
 
         this.scene.pushMatrix();
         this.materialWing.apply();
+   
         this.scene.translate(0.2,0.05,0.2);
         this.scene.scale(0.2,0.05,0.2);
         this.scene.rotate(-Math.PI/2,0,1,0);
@@ -174,6 +181,7 @@ export class MyBee extends CGFobject {
 
         this.scene.pushMatrix();
         this.materialWing.apply();
+  
         this.scene.translate(0.2,-0.025,0.15);
         this.scene.scale(0.15,0.035,0.15);
         this.scene.rotate(-Math.PI/2,0,1,0);
@@ -184,6 +192,7 @@ export class MyBee extends CGFobject {
         this.scene.popMatrix();
 
         this.scene.pushMatrix();
+    
         this.materialWing.apply();
         this.scene.translate(0.2,0.05,-0.2);
         this.scene.scale(0.2,0.05,0.2);
@@ -197,6 +206,7 @@ export class MyBee extends CGFobject {
 
         this.scene.pushMatrix();
         this.materialWing.apply();
+
         this.scene.translate(0.2,-0.025,-0.15);
         this.scene.scale(0.15,0.035,0.15);
         this.scene.rotate(-Math.PI/2,0,1,0);

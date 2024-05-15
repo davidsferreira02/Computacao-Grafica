@@ -1,65 +1,55 @@
 import { CGFobject } from '../lib/CGF.js';
 
-/**
- * MyTriangle
- * @param gl {WebGLRenderingContext}
- * @constructor
- */
 export class MyTriangle extends CGFobject {
-	constructor(scene, base, height) {
-		super(scene);
+    constructor(scene, base, height,curvature) {
+        super(scene);
+        this.base = base;
+        this.height = height;
+        this.curvature = curvature; // Curvatura adicionada para simular a folha de relva
+        this.initBuffers();
+    }
 
-		this.base = base;
-		this.height = height;
+    initBuffers() {
+        const halfBase = this.base / 2;
+        const halfHeight = this.height / 2;
+        const curvatureOffset = Math.random() * this.curvature - this.curvature / 2;
 
-		this.initBuffers();
-	}
+        // Vértices com uma leve curvatura para simular a folha de relva
+        this.vertices = [
+            -halfBase, -halfHeight, 0, 
+            halfBase, -halfHeight, 0, 
+            0, halfHeight, curvatureOffset,
+            -halfBase, -halfHeight, 0, 
+            halfBase, -halfHeight, 0, 
+            0, halfHeight, curvatureOffset,
+        ];
 
-	initBuffers() {
-		const halfBase = this.base / 2;
-		const halfHeight = this.height / 2;
+        this.indices = [
+            0, 1, 2, 
+            3, 4, 5,
+        ];
 
-		this.vertices = [
-			-halfBase, -halfHeight, 0, 
-			halfBase, -halfHeight, 0, 
-			0, halfHeight, 0, 
-			-halfBase, -halfHeight, 0, 
-			halfBase, -halfHeight, 0, 
-			0, halfHeight, 0,
-		];
+        // Normais atualizadas para ambos os lados do triângulo
+        this.normals = [
+            0, 0, 1,
+            0, 0, 1,
+            0, 0, 1,
+            0, 0, -1,
+            0, 0, -1,
+            0, 0, -1,
+        ];
 
-		this.indices = [
-			0, 1, 2, 
-			1, 2, 0,
-			5, 4, 3, 
+        // Coordenadas de textura (se necessário)
+        this.texCoords = [
+            -halfBase, -halfHeight, 
+            halfBase, -halfHeight, 
+            0, halfHeight,
+            -halfBase, -halfHeight, 
+            halfBase, -halfHeight, 
+            0, halfHeight,
+        ];
 
-		];
-
-	
-	
-
-		this.normals = [
-			0, 0, 1,
-			0, 0, 1,
-			0, 0, 1,
-			0, 0, -1,
-			0, 0, -1,
-			0, 0, -1,
-
-			
-		
-		];
-
-		this.texCoords = [
-			-halfBase, -halfHeight, 0, 
-			halfBase, -halfHeight, 0, 
-			0, halfHeight, 0, 
-			-halfBase, -halfHeight, 0, 
-			halfBase, -halfHeight, 0, 
-			0, halfHeight, 0,
-		];
-
-		this.primitiveType = this.scene.gl.TRIANGLES;
-		this.initGLBuffers();
-	}
+        this.primitiveType = this.scene.gl.TRIANGLES;
+        this.initGLBuffers();
+    }
 }

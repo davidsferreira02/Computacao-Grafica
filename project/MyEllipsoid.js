@@ -17,46 +17,48 @@ export class MyElipsoid extends CGFobject {
   }
 
   initBuffers() {
-      this.vertices = [];
-      this.indices = [];
-      this.normals = [];
-      this.texCoords = [];
+    this.vertices = [];
+    this.indices = [];
+    this.normals = [];
+    this.texCoords = [];
 
-      var alpha = 0; // angulo vertical 
-      var theta = 0; // angulo com a horizontal
-      var latVert = this.slices + 1; // vertices em largura vai ter que ter sempre um a mais
+    var alpha = 0; // ângulo vertical
+    var theta = 0; // ângulo horizontal
+    var latVert = this.slices + 1;
 
-      for (let i = 0; i <= this.stacks; i++) { // altura 
-          theta = 0;
-          for (let j = 0; j <= this.slices; j++) { // largura 
-              var x =  this.radius/2 * Math.cos(theta) * Math.sin(alpha);
-              var y =  this.radius/4 * Math.cos(alpha);
-              var z =   this.radius/4 * Math.sin(-theta) * Math.sin(alpha);
+    for (let i = 0; i <= this.stacks; i++) {
+        theta = 0;
+        for (let j = 0; j <= this.slices; j++) {
+            var x = this.radius/2 * Math.cos(theta) * Math.sin(alpha);
+            var y = this.radius/4 * Math.cos(alpha);
+            var z = this.radius/4 * Math.sin(-theta) * Math.sin(alpha);
 
-       
-                  this.vertices.push(x, y, z);
-                  this.normals.push(x, y, z); // Keep normals unchanged for non-inverted sphere
-              
+            this.vertices.push(x, y, z);
 
-              if (i < this.stacks && j < this.slices) {
-                  var first = i * latVert + j;
-                  var second = first + latVert;
+            // Calcular e normalizar as normais
+            var nx = x / Math.pow(this.radius/2, 2);
+            var ny = y / Math.pow(this.radius/4, 2);
+            var nz = z / Math.pow(this.radius/4, 2);
+            var length = Math.sqrt(nx*nx + ny*ny + nz*nz);
+            this.normals.push(nx / length, ny / length, nz / length);
 
-               
-                      this.indices.push(first + 1, first, second);
-                      this.indices.push(first + 1, second, second + 1);
-                  
-              } 
+            if (i < this.stacks && j < this.slices) {
+                var first = i * latVert + j;
+                var second = first + latVert;
 
-              this.texCoords.push( j / this.slices, i / this.stacks);
-            
+                this.indices.push(first + 1, first, second);
+                this.indices.push(first + 1, second, second + 1);
+            }
 
-              theta += (2 * Math.PI) / this.slices;
-          }
-          alpha += Math.PI / this.stacks;
-      }
+            this.texCoords.push(j / this.slices, i / this.stacks);
 
-      this.primitiveType = this.scene.gl.TRIANGLES;
-      this.initGLBuffers();
-  }
+            theta += (2 * Math.PI) / this.slices;
+        }
+        alpha += Math.PI / this.stacks;
+    }
+
+    this.primitiveType = this.scene.gl.TRIANGLES;
+    this.initGLBuffers();
+}
+
 }

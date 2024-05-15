@@ -1,5 +1,5 @@
 import { CGFscene, CGFcamera, CGFaxis, CGFappearance, CGFshader, CGFtexture } from "../lib/CGF.js";
-import { MyPlane } from "./MyPlane.js";
+
 import { MySphere } from "./MySphere.js";
 import { MyPanorama } from "./MyPanorama.js";
 import { MyStem } from "./MyStem.js";
@@ -39,7 +39,6 @@ export class MyScene extends CGFscene {
 
     //Initialize scene objects
     this.axis = new CGFaxis(this);
-    this.plane = new MyPlane(this, 30);
     this.sphere = new MySphere(this, 10, 50, 50, false);
     this.stem = new MyStem(this, 10, 10);
     //this.petal = new MyPetal(this);
@@ -49,7 +48,7 @@ export class MyScene extends CGFscene {
     this.bee = new MyBee(this);
     this.rock=new MyRock(this,0.5,10,3, 0.8);
     this.rockSet=new MyRockSet(this,28,3);
-    this.triangle=new MyTriangle(this,1,3);
+    this.triangle=new MyTriangle(this,1,3,0.8);
   
 
 
@@ -59,7 +58,7 @@ export class MyScene extends CGFscene {
     this.speedFactor = 0.1;
     this.displaySphere = false;
     this.displayPanorama = true;
-    this.displayPlane = false;
+    
     this.displayFlower=false;
     this.displayBee=true;
     this.displayRock= false;
@@ -94,10 +93,11 @@ export class MyScene extends CGFscene {
     this.appearance5 = new CGFappearance(this);
     this.appearance5.setTexture(this.grass);
     this.appearance5.setTextureWrap('REPEAT', 'REPEAT');
-    this.appearance5.setShininess(100); // Ajuste o valor conforme desejado
-    this.appearance5.setAmbient(0.8, 0.8, 0.8, 1); // Cor ambiente mais clara
-    this.appearance5.setDiffuse(0.8, 0.8, 0.8, 1); // Cor difusa mais clara
-    this.appearance5.setSpecular(0.8, 0.8, 0.8, 1); // Cor especular mais clara
+    this.appearance5.setAmbient(1,1,1);
+    this.appearance5.setDiffuse(1,1,1);
+    this.appearance5.setSpecular(1,1,1);
+    
+   
     
     this.testShaders = [
       new CGFshader(this.gl, "shaders/grass.vert", "shaders/grass.frag"),
@@ -227,15 +227,7 @@ export class MyScene extends CGFscene {
 
 
 
-    if (this.displayPlane) {
-      this.pushMatrix();
-      this.appearance5.apply();
-      this.translate(0, -100, 0);
-      this.scale(300,400,400);
-      this.rotate(-Math.PI / 2.0, 1, 0, 0);
-      this.plane.display();
-      this.popMatrix();
-    }
+   
 
   
 
@@ -289,8 +281,8 @@ export class MyScene extends CGFscene {
       for (let i = 0; i < 50; i++) {
           for (let j = 0; j < 50; j++) {
               this.pushMatrix(); 
-              this.scale(3, 1, 3); 
-              this.translate(-40 + i * 0.5, -80, -10 + j * 0.5 - 20);
+              this.scale(3, 2,3); 
+              this.translate(-40 + i * 0.5, -40, -10 + j * 0.5 - 20);
         
               this.triangle.display(); 
               this.popMatrix();  

@@ -16,7 +16,7 @@ export class MyPetal extends CGFobject {
 
 	display(){
         this.scene.pushMatrix();
-        this.triangle=new MyTriangle(this.scene,this.raio,this.raio);
+        this.triangle=new MyTriangle(this.scene,this.raio,this.raio,0);
         this.scene.translate(0,this.raio,0);
         this.scene.rotate(Math.PI/4,0,1,0);
         this.scene.rotate(-(this.angulo* Math.PI / 180),1,0,0);
@@ -26,7 +26,7 @@ export class MyPetal extends CGFobject {
         this.scene.popMatrix();
         this.scene.pushMatrix();
     
-        this.triangle2= new MyTriangle(this.scene,this.raio,this.raio);
+        this.triangle2= new MyTriangle(this.scene,this.raio,this.raio,0);
         this.scene.translate(0,-this.raio*0.9,0);
         this.scene.rotate(Math.PI/4,0,1,0);
         
