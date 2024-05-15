@@ -4,6 +4,7 @@ import { MyReceptacle } from './MyReceptacle.js';
 import { MyStem } from './MyStem.js';
 import { CGFscene, CGFcamera, CGFaxis, CGFappearance, CGFshader, CGFtexture } from "../lib/CGF.js";
 import { MyLeaf } from './MyLeaf.js';
+import { MyPollen } from './MyPollen.js';
 
 /**
  * MySphere
@@ -34,6 +35,7 @@ export class MyFlower extends CGFobject {
     this.tamanhoCaule= Math.random() * 10 + 4;
     this.corCaule=[Math.floor(Math.random() * 256)/256, Math.floor(Math.random() * 256)/256, Math.floor(Math.random() * 256)/256, 1.0];
     this.corFolha=[Math.floor(Math.random() * 256)/256, Math.floor(Math.random() * 256)/256, Math.floor(Math.random() * 256)/256, 1.0];
+    this.corPolen=[Math.floor(Math.random() * 256)/256, Math.floor(Math.random() * 256)/256, Math.floor(Math.random() * 256)/256, 1.0];
 
   }
   initMaterials() {
@@ -51,7 +53,8 @@ export class MyFlower extends CGFobject {
         petala: this.corPetalas,
         circ: this.corCirc,
         caule: this.corCaule,
-        folha: this.corFolha
+        folha: this.corFolha,
+        polen:this.corPolen
     };
 
     // Criar aparências usando o método auxiliar
@@ -59,6 +62,7 @@ export class MyFlower extends CGFobject {
     this.appearanceCirc = createAndSetupAppearance(this.scene, colors.circ);
     this.appearanceCaule = createAndSetupAppearance(this.scene, colors.caule);
     this.appearanceFolha = createAndSetupAppearance(this.scene, colors.folha);
+    this.apperancePolen=createAndSetupAppearance(this.scene,colors.polen);
 }
 
 
@@ -71,6 +75,7 @@ export class MyFlower extends CGFobject {
       this.folha = new MyLeaf(this.scene,this.raioFlor,this.nrPetalas,Math.PI/3);
       var angulo =Math.random() * Math.PI/4 + Math.PI/2;
       this.petal = new MyPetal(this.scene,this.raioFlor,this.nrPetalas,angulo ); // erro porque que o anguloCaule ao mudar não faz nada o valor do anguloCaule é sempre 1.04719 
+      this.pollen = new MyPollen(this.scene, -0.8, this.tamanhoCaule+ this.raioCirc, -0.8);
     }
  
     loadTextures() { 
@@ -82,7 +87,8 @@ export class MyFlower extends CGFobject {
           caule: ["textures/caule1.jpg", "textures/caule2.jpg"],
           folha: ["textures/folha1.jpg", "textures/folha2.jpg"],
           petala: ["textures/petala1.jpg", "textures/petala2.jpg"],
-          receptacle: ["textures/receptacle1.jpg", "textures/receptacle2.jpg"]
+          receptacle: ["textures/receptacle1.jpg", "textures/receptacle2.jpg"],
+          polen:["textures/pollen.jpg"]
       };
   
       // Carregar texturas e armazenar em um objeto
@@ -96,6 +102,7 @@ export class MyFlower extends CGFobject {
       this.configureAppearance(this.appearanceFolha, this.textures.folha);
       this.configureAppearance(this.appearanceCaule, this.textures.caule);
       this.configureAppearance(this.appearanceCirc, this.textures.receptacle);
+      this.configureAppearance(this.apperancePolen,this.textures.polen);
     }   
   // Função para configurar a aparência com uma textura aleatória
   configureAppearance(appearance, textureArray) {
@@ -131,6 +138,10 @@ displayStem() {
         this.scene.rotate(Math.PI/4, 0, 1, 0);
         this.scene.translate(0, this.tamanhoCaule + this.raioCirc, 0);
         this.receptacle.display();
+        this.scene.popMatrix();
+        this.scene.pushMatrix()
+        this.apperancePolen.apply();
+        this.pollen.display();
         this.scene.popMatrix();
       }
   
@@ -170,3 +181,5 @@ displayStem() {
         }
       
       }
+
+ 

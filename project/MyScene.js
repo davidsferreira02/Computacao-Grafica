@@ -10,6 +10,7 @@ import { MyFlower } from "./MyFlower.js";
 import { MyBee } from "./MyBee.js";
 import { MyRock } from "./MyRock.js";
 import { MyRockSet } from "./MyRockSet.js";
+import { MyHive } from "./MyHive.js";
 
 import { MyTriangle } from "./MyTriangle.js";
 
@@ -49,7 +50,7 @@ export class MyScene extends CGFscene {
     this.rock=new MyRock(this,0.5,10,3, 0.8);
     this.rockSet=new MyRockSet(this,28,3);
     this.triangle=new MyTriangle(this,1,3,0.8);
-  
+    this.hive = new MyHive(this);
 
 
     //Objects connected to MyInterface
@@ -65,7 +66,7 @@ export class MyScene extends CGFscene {
     this.displayGarden =true;
     this.displayRockSet=true;
     this.displayGrass=true;
-
+    this.displayHive = true;
 
 
     this.enableTextures(true);
@@ -159,18 +160,11 @@ export class MyScene extends CGFscene {
       console.log(text);
   }
 
-  
-
-
- 
   update(t) {
   
     this.checkKeys();
     this.bee.update(50);
-   
   }
-
-
 
   initLights() {
     this.lights[0].setPosition(15, 0, 5, 1);
