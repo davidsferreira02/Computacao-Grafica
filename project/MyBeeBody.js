@@ -58,8 +58,8 @@ export class MyBeeBody extends CGFobject {
 
     initBuffers(){
 
-        this.body = new MyElipsoid(this.scene, 1, 100,100);
-        this.backBody = new MyElipsoid(this.scene,1,100,100);
+       this.body=new MySphere(this.scene,1,100,100);
+       this.backBody = new MySphere(this.scene,1,100,100);
         this.pata = new MyStem(this.scene,100,100,0.01,0.3);
   
     }
@@ -69,17 +69,18 @@ export class MyBeeBody extends CGFobject {
 
         this.scene.pushMatrix();
         this.appearanceBody.apply();
+        this.scene.scale(1/2,1/4,1/4);
         this.scene.scale(0.5,0.5,0.5);
-        this.scene.translate(0.5,0,0);
+        this.scene.translate(1,0,0);
         this.body.display();
         this.scene.popMatrix();
 
 
         this.scene.pushMatrix();
         this.appearanceBody.apply();
-        this.scene.scale(0.4,0.4,0.4);
-        this.scene.translate(1.3,-0.2,0);
         this.scene.rotate(-Math.PI/4,0,0,1);
+        this.scene.scale(0.4*(1/2),0.4*(1/4),0.4*(1/4));
+        this.scene.translate(2.3,3,0);
         this.backBody.display();
         this.scene.popMatrix();
 

@@ -94,7 +94,9 @@ moveToHive() {
     initParts() {
         this.head = new MyBeeHead(this.scene);
         this.body = new MyBeeBody(this.scene);
-        this.wing = new MyElipsoid(this.scene,1,10,10);
+        //this.wing = new MyElipsoid(this.scene,1,10,10);
+        this.wing = new MyElipsoid(this.scene,1,200,200);
+        
         
 
    
