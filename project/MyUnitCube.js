@@ -153,22 +153,21 @@ export class MyUnitCube extends CGFobject {
 	}
 
       display() {
-            this.scene.pushMatrix();
-            this.hiveMaterial.apply(); // Aplique o material de madeira antes de desenhar
-            this.scene.translate(-30, -87, -30);
-            this.scene.scale(25,25,25);
-            super.display();
-            this.scene.popMatrix();
+             // Ajustando a parte principal da colmeia
+    this.scene.pushMatrix();
+    this.hiveMaterial.apply(); // Aplica o material da colmeia
+    this.scene.translate(-3, -8.7, -3); // Valores ajustados para posicionar corretamente
+    this.scene.scale(2.5, 2.5, 2.5); // Reduz a escala para um tamanho mais razoável
+    super.display(); // Desenha a parte principal da colmeia
+    this.scene.popMatrix();
 
-
-
-            this.scene.pushMatrix();
-            this.roofMaterial.apply();
-            this.scene.translate(-30, -73, -30);
-            this.scene.scale(27,5,27);
-            
-            super.display();
-            this.scene.popMatrix();
+    // Ajustando o teto da colmeia
+    this.scene.pushMatrix();
+    this.roofMaterial.apply(); // Aplica o material do teto
+    this.scene.translate(-3, -7.3, -3); // Ajusta a posição do teto para alinhar com a base
+    this.scene.scale(2.7, 0.5, 2.7); // Reduz a escala do teto para proporções mais adequadas
+    super.display(); // Desenha o teto da colmeia
+    this.scene.popMatrix();
         }
 }
 

@@ -21,6 +21,9 @@ export class MyBee extends CGFobject {
       this.amplitude=0.1;
       this.BeePositionY=0;
       this.startY=0;
+      this.pollen=null;
+      this.collectingHeight=5; //Altura de coletar o polen 
+      this.flyingHeight= 0 ; // Altura inicial de voo 
         this.initParts();
 
 
@@ -43,6 +46,50 @@ export class MyBee extends CGFobject {
 
 
     }
+
+    capturePollen() {
+      let closestPollen = null;
+      let minDistance = Infinity;
+      this.scene.pollens.forEach(pollen => {
+          let distance = Math.sqrt(
+              Math.pow(this.position[0] - pollen.position[0], 2) +
+              Math.pow(this.position[1] - pollen.position[1], 2) +
+              Math.pow(this.position[2] - pollen.position[2], 2)
+          );
+          if (distance < minDistance) {
+              minDistance = distance;
+              closestPollen = pollen;
+          }
+      });
+  
+      if (closestPollen && minDistance <= this.collectingRange) {
+          this.pollen = closestPollen;  // A abelha agora está carregando o pólen
+          closestPollen.setVisible(false);  // Opcional: faça o pólen desaparecer da cena
+      }
+  }
+  
+  
+
+
+  moveToPollen() {
+    
+}
+
+  calculateDistance(pos1, pos2) {
+    return Math.sqrt(
+        Math.pow(pos1[0] - pos2[0], 2) +
+        Math.pow(pos1[1] - pos2[1], 2) +
+        Math.pow(pos1[2] - pos2[2], 2)
+    );
+}
+  releasePollen() {
+   
+    
+}
+
+moveToHive() {
+ 
+}
   
     initParts() {
         this.head = new MyBeeHead(this.scene);
@@ -56,6 +103,8 @@ export class MyBee extends CGFobject {
       
       }
 
+
+      
 
 
       updateVelocity(newVelocity) {
@@ -104,6 +153,8 @@ export class MyBee extends CGFobject {
 
 
         update(t) {
+
+        this.moveToPollen();
           console.log("Bird position: " + this.position);
           var timeSinceAppStart = (t-Date.now())/1000;
          

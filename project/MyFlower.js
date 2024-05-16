@@ -75,7 +75,8 @@ export class MyFlower extends CGFobject {
       this.folha = new MyLeaf(this.scene,this.raioFlor,this.nrPetalas,Math.PI/3);
       var angulo =Math.random() * Math.PI/4 + Math.PI/2;
       this.petal = new MyPetal(this.scene,this.raioFlor,this.nrPetalas,angulo ); // erro porque que o anguloCaule ao mudar não faz nada o valor do anguloCaule é sempre 1.04719 
-      this.pollen = new MyPollen(this.scene, -0.8, this.tamanhoCaule+ this.raioCirc, -0.8);
+      this.pollen = new MyPollen(this.scene, 0.7, 100,100,[this.x,this.y,this.z]);
+     
     }
  
     loadTextures() { 
@@ -119,6 +120,7 @@ export class MyFlower extends CGFobject {
     this.displayReceptacle();
     this.displayPetals();
     this.displayLeaves();
+    this.displayPollen();
 }
 
 applyTranslation() {
@@ -139,10 +141,7 @@ displayStem() {
         this.scene.translate(0, this.tamanhoCaule + this.raioCirc, 0);
         this.receptacle.display();
         this.scene.popMatrix();
-        this.scene.pushMatrix()
-        this.apperancePolen.apply();
-        this.pollen.display();
-        this.scene.popMatrix();
+      
       }
   
       displayPetals() {
@@ -178,6 +177,17 @@ displayStem() {
             this.scene.translate(0, -this.raioFlor, 0);
             this.folha.display();
             this.scene.popMatrix();
+        }
+
+
+        displayPollen(){
+          
+            this.scene.pushMatrix();
+            this.scene.translate(0,this.tamanhoCaule + this.raioFlor,0);
+            this.pollen.setPosition(this.x,this.y + this.tamanhoCaule+this.raioFlor,this.z);
+            this.pollen.display();
+            this.scene.popMatrix();
+      
         }
       
       }

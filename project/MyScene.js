@@ -13,6 +13,7 @@ import { MyRockSet } from "./MyRockSet.js";
 import { MyHive } from "./MyHive.js";
 
 import { MyTriangle } from "./MyTriangle.js";
+import { MyPollen } from "./MyPollen.js";
 
 
 
@@ -46,7 +47,7 @@ export class MyScene extends CGFscene {
     this.hive = new MyHive(this);
     this.rockSet = new MyRockSet(this, 28, 1);
     this.triangle = new MyTriangle(this, 1, 3, Math.random(0.5) + 0.5);
-    
+   
 
 
     //Objects connected to MyInterface
@@ -148,17 +149,38 @@ export class MyScene extends CGFscene {
 
     if (this.gui.isKeyPressed("KeyU")) {
       this.bee.goUp(0.1);
-      text += " P ";
+      text += " U ";
       keysPressed = true;
     }
+
+    if (this.gui.isKeyPressed("KeyF")) {
+      this.bee.capturePollen();
+      text += " F ";
+      console.log("Key F pressed for pollen capture");
+      keysPressed = true;
+    }
+
+    if (this.gui.isKeyPressed("KeyL")) {
+      this.bee.releasePollen();
+      text += "L ";
+      keysPressed = true;
+    }
+
+    if (this.gui.isKeyPressed("KeyO")) {
+      this.bee.moveToHive();
+      text += "O ";
+      keysPressed = true;
+    }
+
+
     if (keysPressed)
       console.log(text);
   }
 
   update(t) {
 
-    this.checkKeys();
     this.bee.update(50);
+    this.checkKeys();
   }
 
   initLights() {
@@ -251,8 +273,7 @@ export class MyScene extends CGFscene {
 
     if(this.displayHive){
       this.pushMatrix();
-      this.scale(1/8,1/8,1/8);
-      this.translate(60,20,-60);
+      this.hive.getPosition();
       this.hive.display();
       this.popMatrix();
     }
