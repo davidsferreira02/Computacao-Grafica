@@ -35,4 +35,16 @@ export class MyGarden extends CGFobject {
             }
         }
     }
+    getPollenPositions() {
+        const positions = [];
+        for (let i = 0; i < this.numRows; i++) {
+            for (let j = 0; j < this.numColumns; j++) {
+                const flower = this.flowers[i][j];
+                if (flower.Haspollen) {
+                    positions.push(flower.pollen.getPosition());
+                }
+            }
+        }
+        return positions;
+    }
 }

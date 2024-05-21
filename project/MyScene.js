@@ -154,21 +154,20 @@ export class MyScene extends CGFscene {
     }
 
     if (this.gui.isKeyPressed("KeyF")) {
-      this.bee.capturePollen();
-      text += " F ";
-      console.log("Key F pressed for pollen capture");
+      this.bee.moveToPollen();
+      text += " F ";      
       keysPressed = true;
     }
-
+  
     if (this.gui.isKeyPressed("KeyL")) {
       this.bee.releasePollen();
-      text += "L ";
+      text += " L ";      
       keysPressed = true;
     }
-
+  
     if (this.gui.isKeyPressed("KeyO")) {
       this.bee.moveToHive();
-      text += "O ";
+      text += " O ";      
       keysPressed = true;
     }
 
@@ -233,8 +232,8 @@ export class MyScene extends CGFscene {
     };
 
 
-    // ---- BEGIN Primitive drawing section
 
+    // ---- BEGIN Primitive drawing section
 
 
 
@@ -243,8 +242,6 @@ export class MyScene extends CGFscene {
       this.scale(this.scaleFactor, this.scaleFactor, this.scaleFactor);
       this.bee.display();
       this.popMatrix();
-
-
     }
 
 

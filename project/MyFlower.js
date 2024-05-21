@@ -13,15 +13,18 @@ import { MyPollen } from './MyPollen.js';
  */
 export class MyFlower extends CGFobject {
   constructor(scene,x,y,z) {
-      super(scene);
-      this.setPosition(x,y,z);
-      this.initializeProperties();
-       this.initMaterials();
-       this.initFlower();
-       this.loadTextures();
-   }
+    super(scene);
+    this.setPosition(x,y,z);
+    this.initializeProperties();
+    this.initMaterials();
+    this.initFlower();
+    this.loadTextures();
+    this.Haspollen = true;
+    this.position = [x,y,z];
+  }
 
-   setPosition(x,y,z){
+
+  setPosition(x,y,z){
     this.x = x;
     this.y = y;
     this.z = z;
@@ -75,7 +78,7 @@ export class MyFlower extends CGFobject {
     this.folha = new MyLeaf(this.scene,this.raioFlor,this.nrPetalas,Math.PI/3);
     var angulo =Math.random() * Math.PI/4 + Math.PI/2;
     this.petal = new MyPetal(this.scene,this.raioFlor,this.nrPetalas,angulo ); 
-    this.pollen = new MyPollen(this.scene, 0.5, 100,100,[ -0.8 , this.tamanhoCaule+ this.raioCirc, -0.8]);
+    this.pollen = new MyPollen(this.scene, 0.5, 100,100,[ this.x, this.y+this.tamanhoCaule+ this.raioCirc, this.z]);
     
   }
  
@@ -173,14 +176,17 @@ export class MyFlower extends CGFobject {
       this.scene.popMatrix();
   }
 
-
+  
   displayPollen(){
-    this.scene.pushMatrix();
-    this.apperancePolen.apply();
-    this.scene.translate(-0.5,this.tamanhoCaule+ this.raioCirc,-0.5);
-    this.pollen.setPosition(this.x,this.y + this.tamanhoCaule+this.raioFlor,this.z);
-    this.pollen.display();
-    this.scene.popMatrix();
+      if(this.Haspollen){
+        this.scene.pushMatrix();
+        this.apperancePolen.apply();
+        this.scene.translate(-0.5,this.tamanhoCaule+ this.raioCirc,-0.5);
+
+        this.pollen.setPosition(this.x,this.y + this.tamanhoCaule+this.raioCirc,this.z);
+        this.pollen.display();
+        this.scene.popMatrix();
+    }
   }
 
 }
