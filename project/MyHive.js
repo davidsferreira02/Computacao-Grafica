@@ -22,7 +22,7 @@ export class MyHive extends CGFobject {
     }
 
     display(){
-        this.setPosition(-92,-41,-66);
+        this.setPosition(0,0,0);
         this.scene.pushMatrix();
         this.scene.translate(this.position[0],this.position[1],this.position[2]);
         this.hive.display();

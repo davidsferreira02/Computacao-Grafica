@@ -42,7 +42,7 @@ export class MyScene extends CGFscene {
     //Initialize scene objects
     this.axis = new CGFaxis(this);
     this.sphere = new MySphere(this, 10, 50, 50, false);
-    this.garden = new MyGarden(this, 2, 1);
+    this.garden = new MyGarden(this, 1, 1);
     this.bee = new MyBee(this);
     this.hive = new MyHive(this);
     this.rockSet = new MyRockSet(this, 28, 1);
@@ -141,9 +141,9 @@ export class MyScene extends CGFscene {
       text += " R ";
       keysPressed = true;
     }
-    if (this.gui.isKeyPressed("KeyP")) {
+    if (this.gui.isKeyPressed("KeyL")) {
       this.bee.goDown(-0.1);
-      text += " P ";
+      text += " L ";
       keysPressed = true;
     }
 
@@ -159,9 +159,9 @@ export class MyScene extends CGFscene {
       keysPressed = true;
     }
   
-    if (this.gui.isKeyPressed("KeyL")) {
+    if (this.gui.isKeyPressed("KeyP")) {
       this.bee.releasePollen();
-      text += " L ";      
+      text += " P ";      
       keysPressed = true;
     }
   
@@ -248,7 +248,7 @@ export class MyScene extends CGFscene {
 
     if (this.displayGarden) {
       this.pushMatrix();
-      this.translate(-35, 0, -30);
+      this.translate(-60, -20, -30);
       this.garden.display();
       this.popMatrix();
     }
@@ -270,7 +270,9 @@ export class MyScene extends CGFscene {
 
     if(this.displayHive){
       this.pushMatrix();
-      this.hive.getPosition();
+      this.scale(3,3,3);
+      this.translate(-90/3,-24/3,-62/3);
+      this.hive.setPosition(-90/3,-24/3,-62/3);
       this.hive.display();
       this.popMatrix();
     }

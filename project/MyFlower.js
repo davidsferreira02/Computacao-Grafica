@@ -37,7 +37,7 @@ export class MyFlower extends CGFobject {
     this.raioCilind = Math.random() * 0.2 + 0.1;
     this.corPetalas=[Math.floor(Math.random() * 256)/256, Math.floor(Math.random() * 256)/256, Math.floor(Math.random() * 256)/256, 1.0];
     this.corCirc=[Math.floor(Math.random() * 256)/256, Math.floor(Math.random() * 256)/256, Math.floor(Math.random() * 256)/256, 1.0];
-    this.tamanhoCaule= Math.random() * 10 + 4;
+    this.tamanhoCaule= Math.random() * 5 + 8;
     this.corCaule=[Math.floor(Math.random() * 256)/256, Math.floor(Math.random() * 256)/256, Math.floor(Math.random() * 256)/256, 1.0];
     this.corFolha=[Math.floor(Math.random() * 256)/256, Math.floor(Math.random() * 256)/256, Math.floor(Math.random() * 256)/256, 1.0];
     this.corPolen=[Math.floor(Math.random() * 256)/256, Math.floor(Math.random() * 256)/256, Math.floor(Math.random() * 256)/256, 1.0];
