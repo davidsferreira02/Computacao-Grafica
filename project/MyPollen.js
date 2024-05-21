@@ -4,7 +4,7 @@ import { MySphere } from './MySphere.js';
 export class MyPollen extends MySphere {
     constructor(scene, radius, stacks, slices,position) {
         super(scene, radius, stacks, slices);
-        this.position = position || [0, 0, 0];  // Posição padrão se nenhuma for fornecida
+        this.position = position || [-0.8, 0, -0.8];  // Posição padrão se nenhuma for fornecida
     }
 
 

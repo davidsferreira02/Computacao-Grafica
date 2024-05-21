@@ -37,7 +37,7 @@ export class MyBee extends CGFobject {
         this.materialWing.setAmbient(1,1,1,0.1);
       
         
-          this.materialWing.setDiffuse(0.5,0.5,0.5,0.1); // R, G, B = 220/255, 220/255, 220/255
+          this.materialWing.setDiffuse(0.5,0.5,0.5,0.1); // R, G, B = 220/255, 220/255, 2 20/255
         
         // Definindo a cor especular como cinza claro
         this.materialWing.setSpecular(0.1, 0.1,0.1,0.1); 
@@ -66,43 +66,37 @@ export class MyBee extends CGFobject {
           this.pollen = closestPollen;  // A abelha agora está carregando o pólen
           closestPollen.setVisible(false);  // Opcional: faça o pólen desaparecer da cena
       }
-  }
+    } 
   
   
 
 
-  moveToPollen() {
-    
-}
+    moveToPollen() {
+        
+    }
 
-  calculateDistance(pos1, pos2) {
-    return Math.sqrt(
-        Math.pow(pos1[0] - pos2[0], 2) +
-        Math.pow(pos1[1] - pos2[1], 2) +
-        Math.pow(pos1[2] - pos2[2], 2)
-    );
-}
-  releasePollen() {
-   
-    
-}
+    calculateDistance(pos1, pos2) {
+      return Math.sqrt(
+          Math.pow(pos1[0] - pos2[0], 2) +
+          Math.pow(pos1[1] - pos2[1], 2) +
+          Math.pow(pos1[2] - pos2[2], 2)
+      );
+    }
 
-moveToHive() {
- 
-}
+    releasePollen() {
+      
+        
+    }
+
+    moveToHive() {
+
+    }
   
     initParts() {
         this.head = new MyBeeHead(this.scene);
         this.body = new MyBeeBody(this.scene);
         //this.wing = new MyElipsoid(this.scene,1,10,10);
         this.wing = new MyElipsoid(this.scene,1,250,250);
-        
-        
-
-   
-        
-    
-      
       }
 
 
@@ -156,7 +150,7 @@ moveToHive() {
 
         update(t) {
 
-        this.moveToPollen();
+          this.moveToPollen();
           console.log("Bird position: " + this.position);
           var timeSinceAppStart = (t-Date.now())/1000;
          

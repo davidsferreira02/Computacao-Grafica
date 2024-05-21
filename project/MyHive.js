@@ -14,13 +14,10 @@ export class MyHive extends CGFobject {
     }
 
     getPosition() {
-        // Simplesmente retorna a posição sem logar aqui
-        //console.log("This hive has ",this.position);
         return this.position;
     }
 
     addPollen(pollen){
-        // Agora, logar fora de getPosition se necessário
         console.log("Pollen added to hive at position", this.position);
     }
 

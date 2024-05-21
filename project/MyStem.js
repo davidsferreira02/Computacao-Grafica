@@ -23,6 +23,7 @@ export class MyStem extends CGFobject {
         const alphaAng = 2 * Math.PI / this.slices;
         let vertexIndex = 0;
         let indexIndex = 0;
+        let texCoordIndex = 0;
 
         for (let i = 0; i <= this.slices; i++) {
             let angle = alphaAng * i;
@@ -38,9 +39,10 @@ export class MyStem extends CGFobject {
                 this.normals[vertexIndex] = x;
                 this.normals[vertexIndex + 1] = y;
                 this.normals[vertexIndex + 2] = 0;
-                this.texCoords[j * 2] = i / this.slices;
-                this.texCoords[j * 2 + 1] = j / this.stacks;
+                this.texCoords[texCoordIndex] = i / this.slices;
+                this.texCoords[texCoordIndex + 1] = j / this.stacks;
                 vertexIndex += 3;
+                texCoordIndex += 2;
 
                 if (i < this.slices && j < this.stacks) {
                     let a = i * (this.stacks + 1) + j;

@@ -26,7 +26,9 @@ export class MyTriangle extends CGFobject {
 
         this.indices = [
             0, 1, 2, 
+            1, 2, 0,
             3, 4, 5,
+            5, 4, 3
         ];
 
         // Normais atualizadas para ambos os lados do triângulo
@@ -41,12 +43,12 @@ export class MyTriangle extends CGFobject {
 
         // Coordenadas de textura (se necessário)
         this.texCoords = [
-            -halfBase, -halfHeight, 
-            halfBase, -halfHeight, 
-            0, halfHeight,
-            -halfBase, -halfHeight, 
-            halfBase, -halfHeight, 
-            0, halfHeight,
+            0, 0, // Corresponds to -halfBase, -halfHeight
+            1, 0, // Corresponds to halfBase, -halfHeight
+            0.5, 1, // Corresponds to 0, halfHeight
+            0, 0, // Corresponds to -halfBase, -halfHeight (for the second triangle)
+            1, 0, // Corresponds to halfBase, -halfHeight (for the second triangle)
+            0.5, 1, // Corresponds to 0, halfHeight (for the second triangle)
         ];
 
         this.primitiveType = this.scene.gl.TRIANGLES;
