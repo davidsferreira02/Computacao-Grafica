@@ -42,7 +42,7 @@ export class MyScene extends CGFscene {
     //Initialize scene objects
     this.axis = new CGFaxis(this);
     this.sphere = new MySphere(this, 10, 50, 50, false);
-    this.garden = new MyGarden(this, 1, 1);
+    this.garden = new MyGarden(this, 4, 4);
     this.bee = new MyBee(this);
     this.hive = new MyHive(this);
     this.rockSet = new MyRockSet(this, 28, 1);
@@ -248,7 +248,7 @@ export class MyScene extends CGFscene {
 
     if (this.displayGarden) {
       this.pushMatrix();
-      this.translate(-60, -20, -30);
+      this.translate(-60, -17, -30);
       this.garden.display();
       this.popMatrix();
     }
@@ -271,7 +271,6 @@ export class MyScene extends CGFscene {
     if(this.displayHive){
       this.pushMatrix();
       this.scale(3,3,3);
-      this.translate(-90/3,-24/3,-62/3);
       this.hive.setPosition(-90/3,-24/3,-62/3);
       this.hive.display();
       this.popMatrix();
@@ -296,30 +295,6 @@ export class MyScene extends CGFscene {
       this.popMatrix();  // Restaura a matriz ao estado original antes do loop
     }
 
-
-   
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    // ---- END Primitive drawing section
   }
 
 

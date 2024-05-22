@@ -30,6 +30,10 @@ export class MyFlower extends CGFobject {
     this.z = z;
   }
 
+  positionPollen(){
+    return [-60 + this.x, -77+this.tamanhoCaule+ this.raioCirc, this.z -30];
+  }
+
   initializeProperties(){
     this.raio=  Math.random() * 4 + 3;
     this.nrPetalas = Math.random() * 10 + 9;

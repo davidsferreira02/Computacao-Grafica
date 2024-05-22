@@ -41,7 +41,7 @@ export class MyGarden extends CGFobject {
             for (let j = 0; j < this.numColumns; j++) {
                 const flower = this.flowers[i][j];
                 if (flower.Haspollen) {
-                    positions.push(flower.pollen.getPosition());
+                    positions.push(flower.positionPollen());
                 }
             }
         }

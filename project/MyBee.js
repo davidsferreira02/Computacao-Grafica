@@ -30,6 +30,8 @@ export class MyBee extends CGFobject {
         this.lastPos = null;
         this.movingHive = false;
         this.flowerPollen = null;
+        this.hivePos = [-97,-43.6,-72];
+        this.addHive = false;
         this.initParts();
 
 
@@ -63,28 +65,28 @@ export class MyBee extends CGFobject {
   
   
     moveToPollen() {
+      this.velocity = 0;
+      this.movingHive = false;
       const gardenPos = this.scene.garden.getPollenPositions();
       let closestPollen = null;
       let minDistance = Infinity;
-      this.lastPos = this.position;
+      this.lastPos = [this.position[0]*5, this.position[1]*5, this.position[2]*5];
       gardenPos.forEach(pos => {
-        let newpos = [pos[0]-35, pos[1], pos[2]-30];
-        const distance = this.calculateDistance(this.position, newpos);
+        const distance = this.calculateDistance([this.position[0]*5, this.position[1]*5, this.position[2]*5], pos);
         if (distance < minDistance) {
           minDistance = distance;
-          closestPollen = newpos;
+          closestPollen = pos;
         }
       });
       
       for (let i = 0; i < this.scene.garden.numRows; i++) {
         for (let j = 0; j < this.scene.garden.numColumns; j++) {
-            const flower = this.scene.garden.flowers[i][j];
-            console.log(flower.position[2] + " " + closestPollen[2]+30);
-            if (flower.position[0] == closestPollen[0]+35 && flower.position[1]+flower.tamanhoCaule+ flower.raioCirc == closestPollen[1] && flower.position[2] == closestPollen[2]+30) {
-                this.flowerPollen = flower;
+            if (this.scene.garden.flowers[i][j].positionPollen()[0] == closestPollen[0] && this.scene.garden.flowers[i][j].positionPollen()[1] == closestPollen[1] && this.scene.garden.flowers[i][j].positionPollen()[2] == closestPollen[2]) {
+                this.flowerPollen = this.scene.garden.flowers[i][j];
+                break;
             }
         }
-    }
+      }
 
       if (closestPollen != null) {
         this.targetPollen = closestPollen;
@@ -109,13 +111,17 @@ export class MyBee extends CGFobject {
         this.position[2] += normalizedDirection[2] * 0.3;
   
         if (length < this.collectingRange) {
-          if(this.pollen && this.movingHive) {
+          
+          if(this.movingHive) {
             this.pollen = false;
+            this.targetPollen = null;
+            this.addHive = true;
           }
           else {
             this.pollen = true;  
             this.movingToPollen = false;  
             this.flowerPollen.Haspollen = false;
+            this.targetPollen = null;
           }      
         }
       }
@@ -131,6 +137,7 @@ export class MyBee extends CGFobject {
 
     releasePollen() {
       if (this.pollen) {
+        this.velocity = 0;
         this.targetPollen = this.lastPos;
         this.movingToPollen = true;
       }
@@ -138,8 +145,8 @@ export class MyBee extends CGFobject {
 
     moveToHive() {
       if (this.pollen) {
-        
-        this.targetPollen = this.scene.hive.getPosition();
+        this.velocity = 0;
+        this.targetPollen = this.hivePos;
         this.movingHive = true;
         this.movingToPollen = true;
       }
@@ -209,6 +216,11 @@ export class MyBee extends CGFobject {
         this.position[2] += velocityZ;
       }
       this.beatWings();
+
+      if(this.addHive){
+        this.scene.hive.addPollen();
+        this.addHive = false;
+      }
     }
         
     reset(){

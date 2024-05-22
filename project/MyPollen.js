@@ -1,4 +1,3 @@
-import { CGFobject } from '../lib/CGF.js';
 import { MySphere } from './MySphere.js';
 
 export class MyPollen extends MySphere {
