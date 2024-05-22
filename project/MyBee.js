@@ -116,6 +116,7 @@ export class MyBee extends CGFobject {
             this.pollen = false;
             this.targetPollen = null;
             this.addHive = true;
+            this.movingToPollen = false;
           }
           else {
             this.pollen = true;  
